@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         moveAction = InputSystem.actions.FindAction("Move");
-        focusAction = InputSystem.actions.FindAction("FocusMove");
-        invincibilityAction = InputSystem.actions.FindAction("Invincibility");
+        focusAction = InputSystem.actions.FindAction("Sprint");
+        invincibilityAction = InputSystem.actions.FindAction("Jump");
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
         moveValue *= Time.deltaTime * (isFocused? FOCUS_SPEED : MOVE_SPEED);
         gameObject.transform.position += new Vector3(moveValue.x, moveValue.y, 0);
-    
+
         // Handle Invincibility
         if (invincible)
         {
@@ -40,16 +40,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 invincible = false;
                 timer -= invincibleTime;
+                Debug.Log("Stopped Invincible");
             }
         } else if (timer < INVINCIBLE_COOLDOWN_TIME)
         {
             timer += Time.deltaTime;
+            if (timer >= INVINCIBLE_COOLDOWN_TIME)
+            {
+                Debug.Log("Cooldown Done");
+            }
         }
 
         if (invincibilityAction.IsPressed() && canGoInvincible())
         {
             invincible = true;
             timer = 0;
+            Debug.Log("Went Invincible");
         }
     }
 
