@@ -10,6 +10,7 @@ public class SnapToTarget : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Something touched me: " + other.name);
         if (other.CompareTag("Player"))
         {
             StartSnapping();
