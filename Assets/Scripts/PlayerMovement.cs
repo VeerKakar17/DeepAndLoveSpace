@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private MovementBox movementBox;
+
     InputAction moveAction;
     InputAction focusAction;
     InputAction invincibilityAction;
@@ -15,12 +17,16 @@ public class PlayerMovement : MonoBehaviour
     private float invincibleTime = 0.5f;
     private float timer = INVINCIBLE_COOLDOWN_TIME;
 
+    private Rigidbody2D rb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         moveAction = InputSystem.actions.FindAction("Move");
         focusAction = InputSystem.actions.FindAction("Sprint");
         invincibilityAction = InputSystem.actions.FindAction("Jump");
+
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -29,8 +35,16 @@ public class PlayerMovement : MonoBehaviour
         // Handle Movement
         bool isFocused = focusAction.IsPressed();
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
-        moveValue *= Time.deltaTime * (isFocused? FOCUS_SPEED : MOVE_SPEED);
-        gameObject.transform.position += new Vector3(moveValue.x, moveValue.y, 0);
+        moveValue *= (isFocused? FOCUS_SPEED : MOVE_SPEED);
+        rb.linearVelocity = moveValue;
+
+        Vector2 dist = gameObject.transform.position - movementBox.gameObject.transform.position;
+        if (dist.magnitude > movementBox.radius)
+        {
+            Vector2 norm = Vector2.Normalize(dist);
+            Debug.Log("test: " + norm.x + " " + norm.y + " " + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)).x + " " + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)).y);
+            gameObject.transform.position = movementBox.gameObject.transform.position + (movementBox.radius * new Vector3(norm.x, norm.y, 0f));
+        }
 
         // Handle Invincibility
         if (invincible)
