@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveAction = InputSystem.actions.FindAction("Move");
         focusAction = InputSystem.actions.FindAction("FocusMove");
-        invincibilityAction = InputSystem.actions.FindAction("Invincible");
+        invincibilityAction = InputSystem.actions.FindAction("Invincibility");
     }
 
     // Update is called once per frame
