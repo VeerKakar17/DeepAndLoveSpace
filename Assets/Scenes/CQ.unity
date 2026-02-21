@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1242133276}
   - component: {fileID: 1242133279}
   - component: {fileID: 1242133280}
+  - component: {fileID: 1242133281}
   m_Layer: 0
   m_Name: Heart_Piece
   m_TagString: Untagged
@@ -301,6 +302,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1242133281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242133275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf8c71f4c4294c81b693c6f6b436669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartDarkCycle
+  lightDuration: 7
+  darkDuration: 5
+  randomDelayMin: 0
+  randomDelayMax: 2
+  flashCount: 2
+  fadeDuration: 0.3
+  lightColor: {r: 1, g: 1, b: 1, a: 1}
+  mediumDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  fullDarkColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  isDark: 0
 --- !u!1 &1714861966
 GameObject:
   m_ObjectHideFlags: 0
