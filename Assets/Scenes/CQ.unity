@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SnapToTarget
   snapTarget: {fileID: 1768199826}
   snapSpeed: 10
-  snapInstantly: 0
+  snapInstantly: 1
 --- !u!212 &1242133277
 SpriteRenderer:
   serializedVersion: 2
@@ -201,7 +201,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4333759381497893594, guid: 11a3f8a48c58b514b8443d82051be186, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
