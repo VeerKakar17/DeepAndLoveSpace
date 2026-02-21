@@ -8,17 +8,28 @@ public class SnapToTarget : MonoBehaviour
 
     private bool snapping = false;
 
+    public bool touched = false;
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Something touched me: " + other.name);
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Start snapping to: " + other.name);
             StartSnapping();
         }
     }
 
     void StartSnapping()
     {
+        // remove dark cycle script
+        HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
+        if (darkCycle != null)
+        {
+            Destroy(darkCycle);
+        }
+        // reparent
+        transform.SetParent(snapTarget, true);
+
         snapping = true;
 
         if (snapInstantly)
@@ -26,7 +37,7 @@ public class SnapToTarget : MonoBehaviour
             transform.position = snapTarget.position;
             transform.rotation = snapTarget.rotation;
             snapping = false;
-        }
+        }   
     }
 
     void Update()
