@@ -8,7 +8,7 @@ public class SnapToTarget : MonoBehaviour
 
     private bool snapping = false;
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Something touched me: " + other.name);
         if (other.CompareTag("Player"))
