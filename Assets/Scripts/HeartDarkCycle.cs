@@ -19,8 +19,14 @@ public class HeartDarkCycle : MonoBehaviour
     public Color lightColor = Color.white;
     public Color mediumDarkColor = new Color(0.5f, 0.5f, 0.5f);
     public Color fullDarkColor = new Color(0.2f, 0.2f, 0.2f);
+    
+    [Header("Floating Motion")]
+    public float circleRadius = 0.1f;
+    public float circleSpeed = 1f;
 
     private SpriteRenderer sr;
+    private Vector3 startPosition;
+    private float circleTime = 0f;
     public bool isDark = false;
 
     void Start()
@@ -28,9 +34,24 @@ public class HeartDarkCycle : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         sr.color = lightColor;
 
+        startPosition = transform.position;
+
         StartCoroutine(CycleRoutine());
     }
+    void Update()
+    {
+        HandleCircularMotion();
+    }
 
+    void HandleCircularMotion()
+    {
+        circleTime += Time.deltaTime * circleSpeed;
+
+        float x = Mathf.Cos(circleTime) * circleRadius;
+        float y = Mathf.Sin(circleTime) * circleRadius;
+
+        transform.position = startPosition + new Vector3(x, y, 0);
+    }
     IEnumerator CycleRoutine()
     {
         while (true)
