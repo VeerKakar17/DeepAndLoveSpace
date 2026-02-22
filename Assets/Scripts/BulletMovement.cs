@@ -4,8 +4,12 @@ public class BulletMovement : MonoBehaviour
 {
     public Vector3 direction = Vector3.down;
     public float speed = 5f;
+
+    float createTime;
     
     BulletSpawner pool;
+
+    AnimationCurve speedCurve;
 
     private SpriteRenderer sr;
     private CircleCollider2D col;
@@ -18,6 +22,11 @@ public class BulletMovement : MonoBehaviour
 
     void Update()
     {
+
+        // update speed
+        float t = Time.time - createTime;
+        if (t <= speedCurve.keys[speedCurve.length - 1].time) speed = speedCurve.Evaluate(t);
+
         transform.position += direction * speed * Time.deltaTime;
 
         // if offscreen: destroy
@@ -37,7 +46,7 @@ public class BulletMovement : MonoBehaviour
         BulletSpawner p,
         Vector3 pos,
         float angle,
-        float spd,
+        AnimationCurve spd,
         Sprite sprite,
         Color color,
         float hitboxRadius,
@@ -53,12 +62,15 @@ public class BulletMovement : MonoBehaviour
         
         direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
 
-        speed = spd;
+        speedCurve = spd;
+        speed = speedCurve.Evaluate(0);
 
         sr.sprite = sprite;
         sr.color = color;
 
         col.radius = hitboxRadius;
+
+        createTime = Time.time;
 
         //gameObject.tag = bulletTag;
     }

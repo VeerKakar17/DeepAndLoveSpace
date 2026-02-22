@@ -12,14 +12,12 @@ public class Bullet {
     public string tagName;
 
     public Bullet(
-        float spd,
         string spr,
         Color col,
         float hitboxRad,
         string tag
     )
     {
-        speed = spd;
         sprite_name = spr;
         color = col;
         hitboxRadius = hitboxRad;
@@ -91,7 +89,8 @@ public class BulletSpawner : MonoBehaviour
     public void SpawnBullet(
         Vector3 position,
         float angle,
-        Bullet bullet
+        Bullet bullet,
+        AnimationCurve speedCurve = null
     )
     {
         GameObject bulletObj = PoolGet();
@@ -103,12 +102,23 @@ public class BulletSpawner : MonoBehaviour
             this,
             position,
             angle,
-            bullet.speed,
+            speedCurve,
             sprite,
             bullet.color,
             bullet.hitboxRadius,
             bullet.tagName
         );
+    }
+
+    public void SpawnBullet(
+        Vector3 position,
+        float angle,
+        Bullet bullet,
+        float speed
+    )
+    {
+        AnimationCurve speedCurve = new AnimationCurve(new Keyframe(0, speed));
+        SpawnBullet(position, angle, bullet, speedCurve);
     }
 
     public void ResetBullets()

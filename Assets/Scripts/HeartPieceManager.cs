@@ -6,6 +6,8 @@ public class HeartPieceManager : MonoBehaviour
 
     public HeartPiece[] pieces;
 
+    public Transform heartSnapTargetGroupTransform;
+
     private int currentActiveIndex = -1;
     private int snappedCount = 0;
 

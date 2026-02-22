@@ -20,7 +20,6 @@ public class BulletConquestBow : MonoBehaviour
     void Awake()
     {
         arrowBullet = new Bullet(
-            3f,
             "bullet_arrow",
             Color.yellow,
             0.1f,
@@ -104,9 +103,7 @@ public class BulletConquestBow : MonoBehaviour
                         + stringTransform.up * Random.Range(-stringTransform.rect.height / 2f, stringTransform.rect.height / 2f);
                     
                     float speed = Random.Range(2f, 3f);
-                    arrowBullet.speed = speed;
-
-                    BulletSpawner.Instance.SpawnBullet(randomPos, angle - 90, arrowBullet);
+                    BulletSpawner.Instance.SpawnBullet(randomPos, angle - 90, arrowBullet, speed);
                         
                 }
             }

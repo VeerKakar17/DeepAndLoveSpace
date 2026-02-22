@@ -12,14 +12,12 @@ public class RadialPatternBow : MonoBehaviour
     void Awake()
     {
         arrowBullet = new Bullet(
-            2f,
             "bullet_arrow",
             Color.yellow,
             0.1f,
             "none"
         );
         homingBullet = new Bullet(
-            4f,
             "bullet_sword",
             Color.yellow,
             0.1f,
@@ -70,7 +68,7 @@ public class RadialPatternBow : MonoBehaviour
 
         for (int i = 0; i < BULLET_COUNT; i++)
         {
-            BulletSpawner.Instance.SpawnBullet(spawnPos, 360 / BULLET_COUNT * i, arrowBullet);
+            BulletSpawner.Instance.SpawnBullet(spawnPos, 360 / BULLET_COUNT * i, arrowBullet, 2.1f);
         }
     }
 
@@ -104,7 +102,7 @@ public class RadialPatternBow : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
             Debug.Log("Spawned Homing");
-            BulletSpawner.Instance.SpawnBullet(startPos, angle+90, homingBullet);
+            BulletSpawner.Instance.SpawnBullet(startPos, angle+90, homingBullet, 3f);
             
             yield return null;
         }

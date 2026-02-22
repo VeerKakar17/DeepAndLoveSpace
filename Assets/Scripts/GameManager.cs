@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine.SceneManagement;
+
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System.Collections;
@@ -11,6 +13,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public Transform patternContainer;
+
+    public HeartPieceManager heartPieceManager;
 
     [Header("Time Settings")]
     public float slowMoScale = 0.3f;
@@ -25,18 +29,6 @@ public class GameManager : MonoBehaviour
 
     public PlayerMovement player;
     public BossControl bossControl;
-
-
-    public GameObject bossHeartSnapTarget;
-    public GameObject heartPrefab;
-    public void SpawnHeart(Vector3 position)
-    {
-        
-        GameObject heartObj = Instantiate(heartPrefab, position, Quaternion.identity, transform);
-
-        SnapToTarget s = heartObj.GetComponent<SnapToTarget>();
-        s.snapTarget = bossHeartSnapTarget.transform;
-    }
 
     [Header("Health Settings")]
     public const int MAX_LIVES = 3;
@@ -70,6 +62,13 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(patternContainer.gameObject);
+            // DontDestroyOnLoad(heartPieceManager.gameObject);
+            // DontDestroyOnLoad(dialogueText.gameObject);
+            // DontDestroyOnLoad(dialogueTextPlayer.gameObject);
+            // DontDestroyOnLoad(pressZIndicator.gameObject);
+            // DontDestroyOnLoad(player.gameObject);
+            // DontDestroyOnLoad(player.movementBox.gameObject);
         }
         else
         {
@@ -105,8 +104,10 @@ public class GameManager : MonoBehaviour
         isSlowMo = false;
     }
 
-    public void LoadSampleLevel() {
-        lives = MAX_LIVES;
+    public IEnumerator LoadLevelConquest() {
+
+        yield return UnLoadLevel();
+
         events.Clear();
 
         GameObject patternObj = Resources.Load<GameObject>("BigBowRadialPrefab");
@@ -123,11 +124,85 @@ public class GameManager : MonoBehaviour
 
         events.Add(new PatternEvent(patternObj2));
         
+        yield return SceneManager.LoadSceneAsync("Main Scene Conquest", LoadSceneMode.Additive);
+
+        LoadLevel();
+        Debug.Log("Finished loading scene, starting events.");
+
+        StartNextEvent();
+        Debug.Log("Started first event.");
+        
+    }
+
+    
+    public IEnumerator LoadLevelWar() {
+
+        yield return UnLoadLevel();
+
+        events.Clear();
+        events.Add(new DialogueEvent("WAR: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
+        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
+        events.Add(new DialogueEvent("WAR: You dare imply that I am ignorant? You� wretched thing?", true));
+        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
+        
+        yield return SceneManager.LoadSceneAsync("Main Scene War", LoadSceneMode.Additive);
+
+        LoadLevel();
+        Debug.Log("Finished loading scene, starting events.");
+
+        StartNextEvent();
+        Debug.Log("Started first event.");
+        
+    }
+
+
+    public IEnumerator LoadLevelFamine() {
+
+        yield return UnLoadLevel();
+
+        events.Clear();
+        events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
+        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
+        events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
+        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
+        
+        yield return SceneManager.LoadSceneAsync("Main Scene Famine", LoadSceneMode.Additive);
+
+        LoadLevel();
+        Debug.Log("Finished loading scene, starting events.");
+
+        StartNextEvent();
+        Debug.Log("Started first event.");
+        
+    }
+
+
+
+    public void LoadLevel()
+    {
+        heartPieceManager.heartSnapTargetGroupTransform.SetParent(bossControl.HeartParent,false);
+        lives = MAX_LIVES;
+    }
+
+    public IEnumerator UnLoadLevel()
+    {
+        heartPieceManager.heartSnapTargetGroupTransform.SetParent(null,false);
+        
+        // unload all scenes except the active one
+        Scene active = SceneManager.GetActiveScene();
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene s = SceneManager.GetSceneAt(i);
+
+            if (s != active)
+                yield return SceneManager.UnloadSceneAsync(s);
+        }
     }
 
     public void Start() {
-        LoadSampleLevel();
-        StartNextEvent();
+
+        StartCoroutine(LoadLevelConquest());
+
     }
 
     void Update()
@@ -160,11 +235,13 @@ public class GameManager : MonoBehaviour
     {
         lives--;
         Debug.Log("Lives: " + lives + " left.");
+
+        BulletSpawner.Instance.ResetBullets();
+
         if (lives < 0)
         {
             Debug.Log("Player lost");
             BulletSpawner.Instance.ResetBullets();
-            LoadSampleLevel();
         }
     }
 

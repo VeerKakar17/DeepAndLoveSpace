@@ -16,7 +16,6 @@ public class BulletConquestBigArrow : MonoBehaviour
     void Awake()
     {
         leafBullet = new Bullet(
-            3f,
             "bullet_leaf",
             Color.yellow,
             0.1f,
@@ -82,8 +81,7 @@ public class BulletConquestBigArrow : MonoBehaviour
                         speed = 1.1f;
                     }
 
-                    leafBullet.speed = speed;
-                    BulletSpawner.Instance.SpawnBullet(position, angle - 90, leafBullet);
+                    BulletSpawner.Instance.SpawnBullet(position, angle - 90, leafBullet, speed);
                 }
             }
         }
