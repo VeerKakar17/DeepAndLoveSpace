@@ -491,7 +491,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face and your eye swells up so you can’t see out of it*",
+            "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face so hard your eye swells up so you can’t see out of it*",
             true
         ));
         LoadLevelFamine();
