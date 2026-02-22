@@ -2221,7 +2221,7 @@ MonoBehaviour:
   slowMoDuration: 2
   player: {fileID: 1384606630}
   bossControl: {fileID: 0}
-  lives: 3
+  lives: 100000
   dialogueText: {fileID: 1216660191}
   dialogueTextPlayer: {fileID: 2021198696}
   pressZIndicator: {fileID: 1820557251}
@@ -2848,7 +2848,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4333759381497893594, guid: 11a3f8a48c58b514b8443d82051be186, type: 3}
-  m_Color: {r: 1, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2867,8 +2867,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0009, y: -3.067, z: -5}
-  m_LocalScale: {x: 0.50175, y: 0.5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 0.99651223, z: 1.9930245}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 485546514}
   m_Father: {fileID: 0}
@@ -2908,7 +2908,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.19
+  m_Radius: 0.1
 --- !u!1 &1457650308
 GameObject:
   m_ObjectHideFlags: 0
