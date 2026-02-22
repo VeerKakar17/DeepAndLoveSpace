@@ -45,6 +45,6 @@ public class BulletMovement : MonoBehaviour
 
         col.radius = hitboxRadius;
 
-        //gameObject.tag = bulletTag;
+        gameObject.tag = bulletTag;
     }
 }

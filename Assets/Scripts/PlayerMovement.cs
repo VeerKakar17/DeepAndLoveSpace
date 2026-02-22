@@ -42,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
         if (dist.magnitude > movementBox.radius)
         {
             Vector2 norm = Vector2.Normalize(dist);
-            Debug.Log("test: " + norm.x + " " + norm.y + " " + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)).x + " " + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)).y);
             gameObject.transform.position = movementBox.gameObject.transform.position + (movementBox.radius * new Vector3(norm.x, norm.y, 0f));
         }
 
@@ -76,5 +75,21 @@ public class PlayerMovement : MonoBehaviour
     private bool canGoInvincible()
     {
         return !invincible && timer >= INVINCIBLE_COOLDOWN_TIME;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+
+        Debug.Log("Collided");
+        if (other.CompareTag("Bullet")) {
+            if (invincible) return;
+
+            invincible = true;
+            timer = 0;
+            GameManager.Instance.LoseLife();
+            Destroy(other.gameObject);
+
+            gameObject.transform.position = movementBox.gameObject.transform.position;
+        }
     }
 }
