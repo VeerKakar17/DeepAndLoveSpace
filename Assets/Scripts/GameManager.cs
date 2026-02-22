@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         lives = MAX_LIVES;
         events.Clear();
 
-        GameObject patternObj = Resources.Load<GameObject>("BigBowPrefabTypeA");
+        GameObject patternObj = Resources.Load<GameObject>("BigBowRadialPrefab");
 
         events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf\\"));
         

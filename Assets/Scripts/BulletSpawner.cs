@@ -32,7 +32,7 @@ public class BulletSpawner : MonoBehaviour
     public GameObject bulletPrefab;
     public static BulletSpawner Instance;
 
-    public int poolSize = 400;
+    public int poolSize = 1000;
     Queue<GameObject> pool = new Queue<GameObject>();
     List<GameObject> activeBullets = new List<GameObject>();
 
