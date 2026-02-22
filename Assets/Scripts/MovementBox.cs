@@ -44,6 +44,30 @@ public class MovementBox : MonoBehaviour
         gameObject.transform.localScale = end;
     }
 
+    public void setScaleInstant(float scale)
+    {
+        gameObject.transform.localScale = new Vector3(scale, scale, gameObject.transform.localScale.z);
+    }
+
+    public IEnumerator setScale(float scale, float seconds)
+    {
+        Vector3 start = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
+        Vector3 end = new Vector3(scale, scale, 1f);
+        float elapsedTime = 0;
+
+        while (elapsedTime < seconds)
+        {
+            float t = elapsedTime / seconds;
+
+            gameObject.transform.localScale = Vector3.Lerp(start, end, t);
+            radius = gameObject.transform.localScale.x / 2f;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        gameObject.transform.localScale = end;
+    }
+
     public void updateScaleImmediate(float scaleX, float scaleY)
     {
         Vector3 end = new Vector3(gameObject.transform.localScale.x * scaleX, gameObject.transform.localScale.y * scaleY, 1f);

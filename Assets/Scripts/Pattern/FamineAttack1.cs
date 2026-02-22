@@ -3,7 +3,6 @@ using System.Collections;
 
 public class FamineAttack1 : MonoBehaviour
 {
-    private Coroutine boxCoroutine = null;
     private Coroutine radialCoroutine = null;
 
     public RectTransform spawnRect;
@@ -24,10 +23,16 @@ public class FamineAttack1 : MonoBehaviour
 
     private IEnumerator RadialCoroutine()
     {
+        int num_spawns = 0;
         while (true)
         {
 
             Spawn();
+            num_spawns++;
+            if (num_spawns == 4)
+            {
+                HeartPieceManager.Instance.ActivateNextPiece();
+            }
             
             yield return new WaitForSeconds(2.8f);
 
