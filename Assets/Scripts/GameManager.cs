@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
     [Header("Health Settings")]
     public const int MAX_LIVES = 3;
     public int lives = MAX_LIVES;
+
+    [Header("Dialogue Settings")]
+    [SerializeField] private TextMeshProUGUI dialogueText;
         
     public void StartNextEvent()
     {
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
         lives = MAX_LIVES;
         events.Clear();
 
-        events.Add(new DialogueEvent("Example Dialogue Hello"));
+        events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf radsgsdr fgserdifgjhyuiersdijgfh sydrfghaesrdgfsrfeg"));
 
         Attack e1 = new Attack();
         for (int i = 0; i < 24; i++) {
@@ -169,5 +173,20 @@ public class GameManager : MonoBehaviour
             BulletSpawner.Instance.ResetBullets();
             LoadSampleLevel();
         }
+    }
+
+    public void StartDialogue()
+    {
+
+    }
+
+    public void SetDialogue(string dialogue)
+    {
+        dialogueText.text = dialogue;
+    }
+
+    public void ClearDialogue()
+    {
+        dialogueText.text = "";
     }
 }

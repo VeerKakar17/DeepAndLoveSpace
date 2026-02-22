@@ -31,6 +31,10 @@ public class GameEvent
 public class DialogueEvent : GameEvent
 {
     public string dialogueText;
+    private int currCharacter;
+    private float timer;
+    private const float TIME_BETWEEN_CHARS = 0.025f;
+    private const float DIALOGUE_END_TIME = 3f;
 
     public DialogueEvent(string dialogueText) : base()
     {
@@ -39,26 +43,45 @@ public class DialogueEvent : GameEvent
 
     public override void StartEvent()
     {
+        currCharacter = 0;
+        timer = 0;
+        GameManager.Instance.StartDialogue();
         Debug.Log("Dialogue: " + dialogueText);
     }
 
     public override void UpdateEvent()
     {
-        // todo - type writer effect
+        timer += Time.deltaTime;
+        if (currCharacter < dialogueText.Length && TIME_BETWEEN_CHARS <= timer)
+        {
+            timer -= TIME_BETWEEN_CHARS;
+            currCharacter++;
+            GameManager.Instance.SetDialogue(dialogueText.Substring(0, currCharacter));
+        }
+
+        if (currCharacter == dialogueText.Length && timer >= DIALOGUE_END_TIME)
+        {
+            EndEvent();
+        }
 
         // detect input (skip dialogue)
-        foreach (var key in Keyboard.current.allKeys)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            if (key.wasPressedThisFrame)
+            if (currCharacter < dialogueText.Length)
+            {
+                timer = 0;
+                currCharacter = dialogueText.Length;
+                GameManager.Instance.SetDialogue(dialogueText);
+            } else if (timer > 0.1f)
             {
                 EndEvent();
-                break;
             }
         }
     }
     
     public override void EndEvent()
     {
+        GameManager.Instance.ClearDialogue();
         GameManager.Instance.StartNextEvent();
     }
 
