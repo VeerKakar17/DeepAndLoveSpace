@@ -39,13 +39,16 @@ public class HeartDarkCycle : MonoBehaviour
     public void ResumeCycle()
     {
         isPaused = false;
-        
+
         StopAllCoroutines();
         StartCoroutine(CycleRoutine());
     }
 
     void Awake()
     {
+
+        lightColor = new Color(0.85f, 0.45f, 0.85f);
+        
         sr = GetComponent<SpriteRenderer>();
         sr.color = lightColor;
 

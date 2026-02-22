@@ -1105,7 +1105,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416226851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.7407121, y: 0.7407121, z: 0.7407121}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1478,11 +1478,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 774824992526145002, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: lightColor.b
-      value: 1
+      value: 0.8490566
       objectReference: {fileID: 0}
     - target: {fileID: 774824992526145002, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: lightColor.g
-      value: 0
+      value: 0.4725881
+      objectReference: {fileID: 0}
+    - target: {fileID: 774824992526145002, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+      propertyPath: lightColor.r
+      value: 0.8490566
       objectReference: {fileID: 0}
     - target: {fileID: 2035515440426473695, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_Sprite
@@ -2169,11 +2173,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 416226852}
   - {fileID: 1216660190}
   - {fileID: 1820557252}
   - {fileID: 2021198695}
   - {fileID: 873863197}
-  - {fileID: 416226852}
   - {fileID: 470986627}
   - {fileID: 1875991631}
   m_Father: {fileID: 0}
