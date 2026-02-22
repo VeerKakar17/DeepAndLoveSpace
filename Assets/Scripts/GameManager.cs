@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI dialogueTextPlayer;
     [SerializeField] private GameObject pressZIndicator;
-    [SerializeField] private Image blackOverlay;
+    [SerializeField] private GameObject blackOverlay;
     private Coroutine pressZCoroutine = null;
 
     public void StartNextEvent()
@@ -218,30 +219,6 @@ public class GameManager : MonoBehaviour
         StartNextEvent();
         Debug.Log("Started first event.");
 
-    }
-
-    public IEnumerator LoadLevelDeath() {
-
-        yield return UnLoadLevel();
-
-        events.Clear();
-        events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
-        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
-        events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
-        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
-
-        GameObject patternObj = Resources.Load<GameObject>("DeathAttackPrefab2");
-        events.Add(new PatternEvent(patternObj));
-
-        yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
-
-
-        LoadLevel();
-        Debug.Log("Finished loading scene, starting events.");
-
-        StartNextEvent();
-        Debug.Log("Started first event.");
-        
     }
 
 
