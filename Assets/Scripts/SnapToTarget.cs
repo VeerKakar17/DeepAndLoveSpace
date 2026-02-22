@@ -10,6 +10,13 @@ public class SnapToTarget : MonoBehaviour
 
     public bool touched = false;
 
+    private HeartPiece heartPiece;
+
+    void Start()
+    {
+        heartPiece = GetComponent<HeartPiece>();
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -63,6 +70,9 @@ public class SnapToTarget : MonoBehaviour
             transform.position = snapTarget.position;
             transform.rotation = snapTarget.rotation;
             snapping = false;
+
+            if (heartPiece != null)
+                heartPiece.OnSnapped();
         }
     }
 }

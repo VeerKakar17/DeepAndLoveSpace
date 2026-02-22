@@ -230,6 +230,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -7134224125491679639, guid: e5bbb51004f874ef0a85be81db5ba695, type: 3}
+    - target: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+      propertyPath: pieceIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_Name
       value: Heart_Piece (2)
@@ -681,6 +685,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5784153309599565916, guid: 570868aad498d44d68a930340854eefa, type: 3}
+    - target: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+      propertyPath: pieceIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_Name
       value: Heart_Piece (1)
