@@ -109,6 +109,8 @@ public class WaitForZEvent : GameEvent
         if (Keyboard.current.zKey.wasPressedThisFrame)
         {
             EndEvent();
+            GameManager.Instance.StartingScene.SetActive(false);
+            GameManager.Instance.IntroScene.SetActive(true);
         }
     }
 

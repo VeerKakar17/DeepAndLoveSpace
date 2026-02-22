@@ -30,6 +30,13 @@ public class HeartPiece : MonoBehaviour
         manager = m;
         pieceIndex = index;
         gameObject.SetActive(false);
+
+        
+        CircleCollider2D col = GetComponent<CircleCollider2D>();
+        if (col != null)
+        {
+            col.enabled = true;
+        }
     }
 
     public void Activate()

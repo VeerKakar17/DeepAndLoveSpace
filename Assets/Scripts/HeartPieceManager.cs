@@ -50,6 +50,12 @@ public class HeartPieceManager : MonoBehaviour
         randomInsideUnitCircle += new Vector2(GameManager.Instance.player.movementBox.gameObject.transform.position.x, GameManager.Instance.player.movementBox.gameObject.transform.position.y);
 
         pieces[currentActiveIndex].Activate(randomInsideUnitCircle);
+
+        SnapToTarget snap = pieces[currentActiveIndex].GetComponent<SnapToTarget>();
+        if (snap != null)
+        {
+            snap.Reactivate();
+        }
     }
 
     public void ActivateNextPiece(Vector2 position)
@@ -64,6 +70,13 @@ public class HeartPieceManager : MonoBehaviour
             return;
 
         pieces[currentActiveIndex].Activate(position);
+        
+        SnapToTarget snap = pieces[currentActiveIndex].GetComponent<SnapToTarget>();
+        if (snap != null)
+        {
+            snap.Reactivate();
+        }
+        
     }
 
     public void OnPieceSnapped(HeartPiece piece)
@@ -105,14 +118,6 @@ public class HeartPieceManager : MonoBehaviour
         {
             piece.gameObject.SetActive(false);
             piece.isSnapped = false;
-
-            SnapToTarget snap = piece.GetComponent<SnapToTarget>();
-            if (snap != null)
-            {
-                snap.Reactivate();
-            }
-
-            
         }
     }
 
