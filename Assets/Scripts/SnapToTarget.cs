@@ -30,6 +30,9 @@ public class SnapToTarget : MonoBehaviour
 
     void StartSnapping()
     {
+
+        SoundManager.Instance.Play("kira1");
+
         // remove dark cycle script
         HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
         if (darkCycle != null)

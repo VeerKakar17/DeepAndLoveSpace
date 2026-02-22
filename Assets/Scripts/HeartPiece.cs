@@ -47,6 +47,9 @@ public class HeartPiece : MonoBehaviour
     {
         if (isSnapped) return;
 
+        
+        SoundManager.Instance.Play("cancel");
+
         isSnapped = true;
         manager.OnPieceSnapped(this);
     }

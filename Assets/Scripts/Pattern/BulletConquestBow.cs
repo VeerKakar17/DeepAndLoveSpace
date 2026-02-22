@@ -122,7 +122,7 @@ public class BulletConquestBow : MonoBehaviour
             
             if (cooldown <= 0)
             {
-                cooldown = 2.0f;
+                cooldown = 2.3f;
                 
                     // this facing direction to angle
                     float angle = Mathf.Atan2(transform.up.y, transform.up.x) * Mathf.Rad2Deg;
