@@ -388,8 +388,8 @@ Transform:
   m_GameObject: {fileID: 485546513}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: 2.3202e-10, y: 0, z: -1}
+  m_LocalScale: {x: 0.4286784, y: 0.4286784, z: 0.61239773}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1384606632}
@@ -486,6 +486,7 @@ MonoBehaviour:
   slowMoDuration: 2
   bossHeartSnapTarget: {fileID: 8367673960609145308}
   heartPrefab: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  lives: 3
 --- !u!4 &1129643543
 Transform:
   m_ObjectHideFlags: 0
@@ -629,8 +630,8 @@ Transform:
   m_GameObject: {fileID: 1384606627}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.07, z: 2}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0.0009, y: -3.067, z: 2}
+  m_LocalScale: {x: 0.50175, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 485546514}
@@ -671,7 +672,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.3
+  m_Radius: 0.19
 --- !u!1 &1769688566
 GameObject:
   m_ObjectHideFlags: 0
