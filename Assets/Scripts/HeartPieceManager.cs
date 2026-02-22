@@ -45,7 +45,7 @@ public class HeartPieceManager : MonoBehaviour
 
         foreach (HeartPiece piece in pieces)
         {
-            piece.PlayCompleteAnimation();
+            //piece.PlayCompleteAnimation();
         }
     }
 }
