@@ -12,11 +12,16 @@ public class HeartPiece : MonoBehaviour
     private SpriteRenderer sr;
 
     Vector3 originalScale;
+    public float rainbowSpeed = .1f;
+    public float glowIntensity = 1.5f;
+    private float hue = 0f;
+    private Color baseColor;
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         originalScale = transform.localScale;
+        baseColor = sr.color;
         
     }
 
@@ -51,21 +56,30 @@ public class HeartPiece : MonoBehaviour
         float t = 0;
 
         Vector3 targetScale = originalScale * 1.25f;
-        Color startColor = sr.color;
-        Color glowColor = Color.white;
 
         while (t < duration)
         {
             float lerp = t / duration;
 
             transform.localScale = Vector3.Lerp(originalScale, targetScale, lerp);
-            sr.color = Color.Lerp(startColor, glowColor, lerp);
 
             t += Time.deltaTime;
             yield return null;
         }
 
         transform.localScale = targetScale;
-        sr.color = glowColor;
+
+        while (true)
+        {
+            hue += Time.deltaTime * rainbowSpeed;
+            if (hue > 1f) hue -= 1f;
+
+            float pulse = 1f + Mathf.Sin(Time.time * 3f) * 0.1f;
+            transform.localScale = originalScale * 1.25f * pulse;
+
+            sr.color = Color.HSVToRGB(hue, 1f, glowIntensity);
+
+            yield return null;
+        }
     }
 }
