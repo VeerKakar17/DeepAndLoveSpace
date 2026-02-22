@@ -58,7 +58,7 @@ public class BulletConquestBigArrow : MonoBehaviour
             
             if (cooldown <= 0)
             {
-                cooldown = 0.3f;
+                cooldown = 0.4f;
 
                 for (int i = 0; i < 4; i++)
                 {
@@ -80,8 +80,8 @@ public class BulletConquestBigArrow : MonoBehaviour
                     if (i >= 2)
                     {
                         speed.AddKey(0f, 0f);
-                        speed.AddKey(0.7f, 0f);
-                        speed.AddKey(0.8f, 1.2f);
+                        speed.AddKey(0.3f, 0f);
+                        speed.AddKey(0.4f, 1.2f);
                     }
                     else
                     {

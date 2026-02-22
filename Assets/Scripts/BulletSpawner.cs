@@ -99,6 +99,10 @@ public class BulletSpawner : MonoBehaviour
 
         position.z = this.transform.position.z; // ensure bullet is on the same plane as spawner
 
+        // play tan1 or tan2 random
+        float rand = Random.value;
+        SoundManager.Instance.Play("tan2", 0.2f, 1.2f, 0.1f);
+
         BulletMovement bm = bulletObj.GetComponent<BulletMovement>();
         bm.Initialize(
             this,

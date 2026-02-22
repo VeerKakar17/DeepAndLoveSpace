@@ -301,6 +301,9 @@ public class GameManager : MonoBehaviour
 
         //BulletSpawner.Instance.ResetBullets();
 
+        
+        SoundManager.Instance.Play("tan1", 0.8f, 0.75f, 0.1f, true);
+
         if (lives < 0)
         {
             Debug.Log("Player lost");
