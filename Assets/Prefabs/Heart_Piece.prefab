@@ -186,5 +186,5 @@ MonoBehaviour:
   pieceIndex: 0
   isSnapped: 0
   isDark: 0
-  rainbowSpeed: 0.00001
+  rainbowSpeed: 0.05
   glowIntensity: 1

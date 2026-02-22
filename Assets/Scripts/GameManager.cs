@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -38,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Dialogue Settings")]
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private GameObject pressZIndicator;
+    private Coroutine pressZCoroutine = null;
         
     public void StartNextEvent()
     {
@@ -175,18 +178,71 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue()
-    {
-
-    }
-
-    public void SetDialogue(string dialogue)
+    public void SetDialogue(string dialogue, bool addPressZ = false)
     {
         dialogueText.text = dialogue;
+        if (addPressZ)
+        {
+            // Convert from TMP local space to world space
+
+            pressZIndicator.SetActive(true);
+            TMP_CharacterInfo lastChar = dialogueText.textInfo.characterInfo[dialogueText.textInfo.characterCount - 1];
+            Vector3 worldBottomRight = dialogueText.transform.TransformPoint(lastChar.bottomRight);
+            pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y-60f, pressZIndicator.transform.position.z);
+            
+            pressZCoroutine = StartCoroutine(PressZCoroutine());
+        }
     }
 
     public void ClearDialogue()
     {
         dialogueText.text = "";
+        pressZIndicator.SetActive(false);
+        if (pressZCoroutine != null)
+        {
+            StopCoroutine(pressZCoroutine);
+            pressZCoroutine = null;
+        }
+    }
+
+    private IEnumerator PressZCoroutine()
+    {
+        const float MAX_ALPHA = 0.6f;
+        const float MIN_ALPHA = 0.2f;
+        const float TIME_TO_FADE = 0.8f;
+
+        TextMeshProUGUI pressZTmp = pressZIndicator.GetComponent<TextMeshProUGUI>();
+
+        while (true)
+        {
+            Color currentColor = pressZTmp.color;
+            currentColor.a = MAX_ALPHA;
+            pressZTmp.color = currentColor;
+
+            float elapsed = 0f;
+            while (elapsed < TIME_TO_FADE)
+            {
+                float t = elapsed / TIME_TO_FADE;
+                currentColor.a = Mathf.Lerp(MAX_ALPHA, MIN_ALPHA, t);
+                pressZTmp.color = currentColor;
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            elapsed = 0f;
+            while (elapsed < TIME_TO_FADE)
+            {
+                float t = elapsed / TIME_TO_FADE;
+                currentColor.a = Mathf.Lerp(MIN_ALPHA, MAX_ALPHA, t);
+                pressZTmp.color = currentColor;
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            currentColor.a = MIN_ALPHA;
+            pressZTmp.color = currentColor;
+        }
     }
 }
