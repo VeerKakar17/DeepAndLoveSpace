@@ -144,6 +144,12 @@ public class GameManager : MonoBehaviour
         events.Add(new DialogueEvent("Calm your fury. Through your neverending violence you have yet to consider the tender embrace of love. I will teach you.\r\n", false));
         events.Add(new DialogueEvent("WAR: This mere human dares to challenge me? Prepare yourself to be impaled by my sword!\r\n", true));
 
+        GameObject patternObj3 = Resources.Load<GameObject>("WarAttackPrefab3");
+        events.Add(new PatternEvent(patternObj3));
+
+        GameObject patternObj = Resources.Load<GameObject>("WarAttackPrefab2");
+        events.Add(new PatternEvent(patternObj));
+
         GameObject patternObj2 = Resources.Load<GameObject>("WarAttackPrefab1");
         events.Add(new PatternEvent(patternObj2));
 
@@ -175,6 +181,13 @@ public class GameManager : MonoBehaviour
         events.Add(new PatternEvent(patternObj));
 
         yield return SceneManager.LoadSceneAsync("Main Scene Famine", LoadSceneMode.Additive);
+
+        
+        GameObject patternObj2 = Resources.Load<GameObject>("FamineAttackPrefab2");
+        events.Add(new PatternEvent(patternObj2));
+
+        GameObject patternObj = Resources.Load<GameObject>("FamineAttackPrefab1");
+        events.Add(new PatternEvent(patternObj));
 
 
         LoadLevel();

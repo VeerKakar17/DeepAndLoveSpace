@@ -68,17 +68,24 @@ public class BulletConquestBigArrow : MonoBehaviour
                     
                     if (i % 2 == 0)
                     {
-                        angle += 20f;
+                        angle += 30f;
                     }
                     else
                     {
-                        angle -= 20f;
+                        angle -= 30f;
                     }
 
-                    float speed = Random.Range(1f, 1f);
+                    AnimationCurve speed = new AnimationCurve();
+
                     if (i >= 2)
                     {
-                        speed = 1.1f;
+                        speed.AddKey(0f, 0f);
+                        speed.AddKey(0.7f, 0f);
+                        speed.AddKey(0.8f, 1.2f);
+                    }
+                    else
+                    {
+                        speed.AddKey(0f, 1.2f);
                     }
 
                     BulletSpawner.Instance.SpawnBullet(position, angle - 90, leafBullet, speed);

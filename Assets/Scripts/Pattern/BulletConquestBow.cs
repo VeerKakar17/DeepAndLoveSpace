@@ -56,7 +56,7 @@ public class BulletConquestBow : MonoBehaviour
         isFiringBig = true;
 
         timerA = 0.0f;
-        cooldown = 4.0f;
+        cooldown = 2.0f;
     }
     void SpawnBigArrow()
     {
@@ -91,7 +91,7 @@ public class BulletConquestBow : MonoBehaviour
             {
                 cooldown = 0.2f;
                 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
 
                     // this facing direction to angle

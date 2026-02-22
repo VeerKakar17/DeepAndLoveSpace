@@ -40,31 +40,33 @@ public class WarFireAttack : MonoBehaviour
         const int NUM_REPS = 2;
         while (true)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
             {
                 DoRadialAttack(new Vector3(-2f, 2.5f, 1f));
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.2f);
             }
-            for (int i = 0; i < 2; i++)
+            yield return new WaitForSeconds(1.2f);
+            for (int i = 0; i < 5; i++)
             {
                 DoRadialAttack(new Vector3(2f, 2.5f, 1f));
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.2f);
             }
+            yield return new WaitForSeconds(1.2f);
         }
     }
 
     private void DoRadialAttack(Vector3 spawnPos)
     {
-        const int BULLET_COUNT = 20;
+        const int BULLET_COUNT = 8;
 
         for (int i = 0; i < BULLET_COUNT; i++)
         {
             AnimationCurve spd = new AnimationCurve();
-            spd.AddKey(0f, 0.5f);
-            spd.AddKey(1.5f, 0.6f);
+            spd.AddKey(0f, 1.0f);
+            spd.AddKey(1.5f, 0.0f);
             spd.AddKey(2.0f, 3.6f);
             
-            BulletSpawner.Instance.SpawnBullet(spawnPos, 360 / BULLET_COUNT * i, bulletA, spd);
+            BulletSpawner.Instance.SpawnBullet(spawnPos, Mathf.Sin((float)Time.time) * 360.0f + 360.0f / BULLET_COUNT * i, bulletA, spd);
         }
     }
 

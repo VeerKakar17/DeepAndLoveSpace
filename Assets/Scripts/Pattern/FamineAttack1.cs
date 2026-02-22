@@ -3,47 +3,56 @@ using System.Collections;
 
 public class FamineAttack1 : MonoBehaviour
 {
+    private Coroutine boxCoroutine = null;
+    private Coroutine radialCoroutine = null;
+
+    public RectTransform spawnRect;
+
+    Bullet bulletA;
+
     void Awake()
     {
-        MoveBox();
+        bulletA = new Bullet(
+            "bullet_big",
+            new Color(0.5f, 0.4f, 0.8f),
+            0.12f,
+            "famine_a_spawner"
+        );
+
+        radialCoroutine = StartCoroutine(RadialCoroutine());
     }
 
-    private void MoveBox()
+    private IEnumerator RadialCoroutine()
     {
-        StartCoroutine(MoveBoxX());
-        StartCoroutine(MoveBoxY());
-        StartCoroutine(MoveBoxScale());
-    }
-
-    private IEnumerator MoveBoxX()
-    {
-        const float SECONDS = 4f;
-        yield return StartCoroutine(GameManager.Instance.player.movementBox.updateXPos(1.5f, SECONDS / 2));
         while (true)
         {
-            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateXPos(-3f, SECONDS));
-            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateXPos(3f, SECONDS));
+
+            Spawn();
+            
+            yield return new WaitForSeconds(2.8f);
+
         }
     }
 
-    private IEnumerator MoveBoxY()
+    private void Spawn()
     {
-        const float SECONDS = 2.8f;
-        yield return StartCoroutine(GameManager.Instance.player.movementBox.updateYPos(0.5f, SECONDS / 2));
-        while (true)
+        const int BULLET_COUNT = 1;
+
+        for (int i = 0; i < BULLET_COUNT; i++)
         {
-            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateYPos(-1f, SECONDS));
-            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateYPos(1f, SECONDS));
+            AnimationCurve spd = new AnimationCurve();
+            spd.AddKey(0f, 0.0f);
+            spd.AddKey(0.5f, 0.1f);
+            spd.AddKey(1.5f, 0.8f);
+            spd.AddKey(2.0f, 1.4f);
+
+            // position is random position inside of spawn rect
+            Vector3 randomPos = spawnRect.position
+                + spawnRect.right * Random.Range(-spawnRect.rect.width / 2f, spawnRect.rect.width / 2f)
+                + spawnRect.up * Random.Range(-spawnRect.rect.height / 2f, spawnRect.rect.height / 2f);
+
+            BulletSpawner.Instance.SpawnBullet(randomPos, 0.0f, bulletA, spd);
         }
     }
 
-    private IEnumerator MoveBoxScale()
-    {
-        const float SECONDS = 5.1f;
-        while (true)
-        {
-            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateScale(1.2f, SECONDS));
-            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateScale(0.8f, SECONDS));
-        }
-    }
 }

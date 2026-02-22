@@ -12,7 +12,7 @@ public class RadialPatternBow : MonoBehaviour
     void Awake()
     {
         arrowBullet = new Bullet(
-            "bullet_arrow",
+            "bullet_bigarrow",
             Color.yellow,
             0.1f,
             "none"
@@ -20,7 +20,7 @@ public class RadialPatternBow : MonoBehaviour
         homingBullet = new Bullet(
             "bullet_sword",
             Color.yellow,
-            0.1f,
+            0.12f,
             "none"
         );
 
@@ -64,7 +64,7 @@ public class RadialPatternBow : MonoBehaviour
 
     private void DoRadialAttack(Vector3 spawnPos)
     {
-        const int BULLET_COUNT = 51;
+        const int BULLET_COUNT = 24;
 
         for (int i = 0; i < BULLET_COUNT; i++)
         {
