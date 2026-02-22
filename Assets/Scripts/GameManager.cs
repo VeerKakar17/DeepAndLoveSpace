@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI dialogueTextPlayer;
     [SerializeField] private GameObject pressZIndicator;
-    [SerializeField] private GameObject blackOverlay;
+    [SerializeField] private Image blackOverlay;
     private Coroutine pressZCoroutine = null;
 
     public void StartNextEvent()
@@ -401,6 +401,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ConquestLightDialogue()
     {
+        events.Clear();
         events.Add(new PostBattleDialogueEvent(
             "Conquest: Very well human, I suppose I will grant you my clemency. I have been elucidated to this curious prospect of affection. As a reward I shall grant you a title, castle, servants, and plenty of gold. ",
             true
@@ -413,9 +414,11 @@ public class GameManager : MonoBehaviour
             "Conquest: Then this noble one shall accept. ",
             true
         ));
+        yield break;
     }
     public IEnumerator ConquestDarkDialogue()
     {
+        events.Clear();
         events.Add(new PostBattleDialogueEvent(
             "Conquest: You have taught me the pleasures of depraved longing. I shall take away all your possessions so that you have no other choice but to depend on me. You belong to me now.",
             true
@@ -428,10 +431,12 @@ public class GameManager : MonoBehaviour
             "Conquest: Shhh my little peasant. You must call me Master from henceforth. ",
             true
         ));
+        yield break;
     }
 
     public IEnumerator WarLightDialogue()
     {
+        events.Clear();
         events.Add(new PostBattleDialogueEvent(
             "War: I-its not like I like you or anything baka! Here’s a whole treasury of precious weapons. D-don’t get the wrong idea, I just found them lying around and wanted to get rid of them.",
             true
@@ -444,9 +449,11 @@ public class GameManager : MonoBehaviour
             "War: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
             true
         ));
+        yield break;
     }
     public IEnumerator WarDarkDialogue()
     {
+        events.Clear();
         events.Add(new PostBattleDialogueEvent(
             "War: B-BAKA *hits you and you break a rib*. You’re such a charmer KYAAA *breaks your arm*",
             true
@@ -459,5 +466,6 @@ public class GameManager : MonoBehaviour
             "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face and your eye swells up so you can’t see out of it*",
             true
         ));
+        yield break;
     }
 }
