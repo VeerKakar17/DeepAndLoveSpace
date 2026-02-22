@@ -434,6 +434,7 @@ public class GameManager : MonoBehaviour
             "Conquest: Then this noble one shall accept. ",
             true
         ));
+        LoadLevelWar();
         yield break;
     }
     public IEnumerator ConquestDarkDialogue()
@@ -451,6 +452,7 @@ public class GameManager : MonoBehaviour
             "Conquest: Shhh my little peasant. You must call me Master from henceforth. ",
             true
         ));
+        LoadLevelWar();
         yield break;
     }
 
@@ -469,6 +471,7 @@ public class GameManager : MonoBehaviour
             "War: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
             true
         ));
+        LoadLevelFamine();
         yield break;
     }
     public IEnumerator WarDarkDialogue()
@@ -486,6 +489,7 @@ public class GameManager : MonoBehaviour
             "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face and your eye swells up so you can’t see out of it*",
             true
         ));
+        LoadLevelFamine();
         yield break;
     }
 }

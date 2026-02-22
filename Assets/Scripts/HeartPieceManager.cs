@@ -10,9 +10,11 @@ public class HeartPieceManager : MonoBehaviour
 
     private int currentActiveIndex = -1;
     private int snappedCount = 0;
+    private GameManager manager;
 
     void Start()
     {
+        manager = FindObjectOfType<GameManager>();
         // initialize pieces
         for (int i = 0; i < pieces.Length; i++)
         {
@@ -83,5 +85,8 @@ public class HeartPieceManager : MonoBehaviour
         {
             piece.PlayCompleteAnimation();
         }
+
+        // if statement for majority dark/light
+        manager.ConquestLightDialogue();
     }
 }
