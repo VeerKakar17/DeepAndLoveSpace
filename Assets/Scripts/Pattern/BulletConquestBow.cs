@@ -27,6 +27,17 @@ public class BulletConquestBow : MonoBehaviour
             "none"
         );
 
+        StartPattern();
+    }
+
+    public void StartPattern()
+    {
+        BossControl boss = GameManager.Instance.bossControl;
+        if (boss is BossControlConquest bc)
+        {
+            bc.HideBow();
+        }
+
         StateA();
     }
 
@@ -100,7 +111,7 @@ public class BulletConquestBow : MonoBehaviour
                 }
             }
 
-            if (timerA >= 12.0f)
+            if (timerA >= 8.0f)
             {
                 StateB();
             }
@@ -133,10 +144,21 @@ public class BulletConquestBow : MonoBehaviour
 
                 if (timerA >= 16.0f)
                 {
-                    Destroy(gameObject);
-                    GameManager.Instance.currentEvent.EndEvent();
+                    EndPattern();
                 }
             }
         }
+    }
+
+    void EndPattern()
+    {
+        BossControl boss = GameManager.Instance.bossControl;
+        if (boss is BossControlConquest bc)
+        {
+            bc.ShowBow();
+        }
+
+        Destroy(gameObject);
+        GameManager.Instance.currentEvent.EndEvent();
     }
 }

@@ -32,7 +32,7 @@ public class BulletSpawner : MonoBehaviour
     public GameObject bulletPrefab;
     public static BulletSpawner Instance;
 
-    public int poolSize = 1000;
+    public int poolSize = 50;
     Queue<GameObject> pool = new Queue<GameObject>();
     List<GameObject> activeBullets = new List<GameObject>();
 
@@ -57,10 +57,10 @@ public class BulletSpawner : MonoBehaviour
 
     public GameObject PoolGet()
     {
-        if (pool.Count == 0) {
+        if (pool.Count <= 0) {
             var b2 = Instantiate(bulletPrefab, transform);
-            activeBullets.Add(b2);
-            return b2;
+            b2.SetActive(false);
+            pool.Enqueue(b2);
         }
 
         var b = pool.Dequeue();

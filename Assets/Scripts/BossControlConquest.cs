@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossControlConquest : MonoBehaviour
+public class BossControlConquest : BossControl
 {
 
     public GameObject bowObject;
