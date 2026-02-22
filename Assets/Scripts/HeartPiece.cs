@@ -47,8 +47,7 @@ public class HeartPiece : MonoBehaviour
     {
         if (isSnapped) return;
 
-        
-        SoundManager.Instance.Play("cancel");
+        SoundManager.Instance.Play("cancel", 0.2f, 1.4f, 0.1f, true);
 
         isSnapped = true;
         manager.OnPieceSnapped(this);
@@ -56,7 +55,8 @@ public class HeartPiece : MonoBehaviour
 
     public void PlayCompleteAnimation()
     {
-        StartCoroutine(GrowAndGlow());
+        if (gameObject.activeSelf)
+            StartCoroutine(GrowAndGlow());
     }
 
     IEnumerator GrowAndGlow()

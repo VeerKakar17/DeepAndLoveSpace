@@ -28,6 +28,17 @@ public class SnapToTarget : MonoBehaviour
         }
     }
 
+    public void Reactivate()
+    {
+        HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
+        if (darkCycle != null)
+            darkCycle.enabled = true;
+
+        CircleCollider2D col = GetComponent<CircleCollider2D>();
+        if (col != null)
+            col.enabled = true;
+    }
+
     void StartSnapping()
     {
 
@@ -39,13 +50,13 @@ public class SnapToTarget : MonoBehaviour
         {
             darkCycle.FixColor();
             GetComponent<HeartPiece>().isDark = darkCycle.isDark;
-            Destroy(darkCycle);
+            darkCycle.enabled = false;
         }
         // remove circle collider 2d
         CircleCollider2D col = GetComponent<CircleCollider2D>();
         if (col != null)
         {
-            Destroy(col);
+            col.enabled = false;
         }
         // reparent?
         transform.SetParent(snapTarget, true);

@@ -15,7 +15,11 @@ public class SoundManager : MonoBehaviour
     [Header("Add all your SFX here")]
     public SoundEntry[] sounds;
 
-    public float cooldown = 0.05f;
+    public float cooldown = 0.005f;
+
+    public float maxCooldown = 0.01f;
+
+    public float timeLastPlayed = -1f;
 
     Dictionary<string, AudioClip> soundDict;
 
@@ -31,13 +35,15 @@ public class SoundManager : MonoBehaviour
             if (!soundDict.ContainsKey(s.id))
                 soundDict.Add(s.id, s.clip);
         }
+
+        Play("bgm", 0.4f);
     }
 
     public void Play(string id, float volume = 1f, float pitch = 1f, float pitchVariance = 0.2f, bool ignoreCooldown = false)
     {
 
         // cooldown check
-        if (cooldown > 0 && !ignoreCooldown)
+        if (Time.time - timeLastPlayed < cooldown && !ignoreCooldown)
         {
             cooldown -= Time.deltaTime;
             return;
@@ -53,7 +59,14 @@ public class SoundManager : MonoBehaviour
         src.pitch = pitch + Random.Range(-pitchVariance, pitchVariance);
         src.spatialBlend = 0f; 
 
-        cooldown = 0.05f;
+        cooldown = maxCooldown;
+        timeLastPlayed = Time.time;
+
+        // if id = bgm, loop
+        if (id == "bgm")
+        {
+            src.loop = true;
+        }
 
         src.Play();
         Destroy(go, clip.length);

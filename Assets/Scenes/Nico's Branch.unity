@@ -210,6 +210,72 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &8906718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8906720}
+  - component: {fileID: 8906719}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &8906719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bddaabaf2e947e4dad7c9218d28bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  sounds:
+  - id: cancel
+    clip: {fileID: 8300000, guid: bee63e7bc4b7187438c2873dbe25f738, type: 3}
+  - id: damage
+    clip: {fileID: 8300000, guid: c393cb1137426574a8eac588ca904cf5, type: 3}
+  - id: graze
+    clip: {fileID: 8300000, guid: 765d815081df6374bb9a0cecd457454d, type: 3}
+  - id: item
+    clip: {fileID: 8300000, guid: 57f23aec2ad15cb47a26db513449b15a, type: 3}
+  - id: kira1
+    clip: {fileID: 8300000, guid: f5c9fe9e9ab50a24d86eff9e3825b240, type: 3}
+  - id: kira2
+    clip: {fileID: 8300000, guid: 05a4b69a3ce02624ab4f46248d797d25, type: 3}
+  - id: plst
+    clip: {fileID: 8300000, guid: d8d9fc4ee7743bb42b235404a7f02178, type: 3}
+  - id: tan0
+    clip: {fileID: 8300000, guid: 2932384727015a84abc2fca5c98a847b, type: 3}
+  - id: tan1
+    clip: {fileID: 8300000, guid: d67c8eab529b55f4da6c0d2b1c54bfd8, type: 3}
+  - id: tan2
+    clip: {fileID: 8300000, guid: aafc55273f9ca35468ed2cdeb7d90b50, type: 3}
+  cooldown: 0.05
+--- !u!4 &8906720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906718}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &81159570
 GameObject:
   m_ObjectHideFlags: 0
@@ -7729,16 +7795,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   patternContainer: {fileID: 1144221110}
+  heartPieceManager: {fileID: 0}
   slowMoScale: 0.3
   slowMoDuration: 2
   player: {fileID: 1384606630}
   bossControl: {fileID: 2093812370}
-  bossHeartSnapTarget: {fileID: 0}
-  heartPrefab: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  currStagePatterns: []
   lives: 3
   dialogueText: {fileID: 1216660191}
   dialogueTextPlayer: {fileID: 2021198696}
   pressZIndicator: {fileID: 1820557251}
+  blackOverlay: {fileID: 0}
 --- !u!4 &1129643543
 Transform:
   m_ObjectHideFlags: 0
@@ -8680,6 +8747,7 @@ MonoBehaviour:
   - {fileID: 1030989602}
   - {fileID: 1088299841}
   - {fileID: 1102163854}
+  heartSnapTargetGroupTransform: {fileID: 0}
 --- !u!1 &1544088284
 GameObject:
   m_ObjectHideFlags: 0
@@ -9553,6 +9621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52b8ef3d6dea2d4197b829a56735001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  HeartParent: {fileID: 0}
   bowObject: {fileID: 272424021}
 --- !u!1 &2146435652
 GameObject:
@@ -9680,6 +9749,7 @@ SceneRoots:
   - {fileID: 1803235354}
   - {fileID: 2093812369}
   - {fileID: 156475709}
+  - {fileID: 8906720}
   - {fileID: 805631332}
   - {fileID: 769610952}
   - {fileID: 81159571}

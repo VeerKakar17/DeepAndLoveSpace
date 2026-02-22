@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     private bool isSlowMo = false;
 
+    int currentLevel = 0;
+
 
     public List<GameEvent> events = new List<GameEvent>();
     public GameEvent currentEvent;
@@ -248,12 +250,13 @@ public class GameManager : MonoBehaviour
     public void LoadLevel()
     {
         heartPieceManager.heartSnapTargetGroupTransform.SetParent(bossControl.HeartParent, false);
+        heartPieceManager.ResetPieces();
         lives = MAX_LIVES;
     }
 
     public IEnumerator UnLoadLevel()
     {
-        heartPieceManager.heartSnapTargetGroupTransform.SetParent(null, false);
+        heartPieceManager.heartSnapTargetGroupTransform.SetParent(heartPieceManager.transform, false);
 
         // unload all scenes except the active one
         Scene active = SceneManager.GetActiveScene();
@@ -269,8 +272,96 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
 
-        StartCoroutine(LoadLevelConquest());
+        LoadLevelFromNumber(currentLevel);
 
+    }
+
+    public void LoadLevelFromNumber(int i)
+    {
+        if (i == 0)
+        {
+            StartCoroutine(LoadLevelConquest());
+        }
+        else if (i == 1)
+        {
+            StartCoroutine(LoadLevelWar());
+        }
+        else if (i == 2)
+        {
+            StartCoroutine(LoadLevelFamine());
+        }
+        else if (i >= 3)
+        {
+            StartCoroutine(LoadLevelDeath());
+        }
+    }
+
+    public void OnCompleteHeart()
+    {
+        BulletSpawner.Instance.ResetBullets();
+        List<GameObject> ToRemove = new List<GameObject>();
+        foreach (Transform go in patternContainer)
+        {
+            ToRemove.Add(go.gameObject);
+        }
+        foreach (var go in ToRemove)
+        {
+            Destroy(go);
+        }
+
+        //check if dark (more than 3 dark pieces)
+        bool isDark = heartPieceManager.darkCount > 3;
+
+        if (currentLevel == 0)
+        {
+            if (isDark)
+            {
+                StartCoroutine(ConquestDarkDialogue());
+            }
+            else
+            {
+                StartCoroutine(ConquestLightDialogue());
+            }
+        }
+        else if (currentLevel == 1)
+        {
+            if (isDark)
+            {
+                StartCoroutine(WarDarkDialogue());
+            }
+            else
+            {
+                StartCoroutine(WarLightDialogue());
+            }
+        }
+        else if (currentLevel == 2)
+        {
+            if (isDark)
+            {
+                StartCoroutine(FamineDarkDialogue());
+            }
+            else
+            {
+                StartCoroutine(FamineLightDialogue());
+            }
+        }
+         else if (currentLevel == 3)
+         {
+            if (isDark)
+            {
+                StartCoroutine(DeathDarkDialogue());
+            }
+            else
+            {
+                StartCoroutine(DeathLightDialogue());
+            }
+         }
+    }
+
+    public void StartNextLevel()
+    {
+        currentLevel++;
+        LoadLevelFromNumber(currentLevel);
     }
 
     void Update()
@@ -439,7 +530,8 @@ public class GameManager : MonoBehaviour
             "Conquest: Then this noble one shall accept. ",
             true
         ));
-        LoadLevelWar();
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
         yield break;
     }
     public IEnumerator ConquestDarkDialogue()
@@ -457,7 +549,8 @@ public class GameManager : MonoBehaviour
             "Conquest: Shhh my little peasant. You must call me Master from henceforth. ",
             true
         ));
-        LoadLevelWar();
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
         yield break;
     }
 
@@ -476,7 +569,8 @@ public class GameManager : MonoBehaviour
             "War: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
             true
         ));
-        LoadLevelFamine();
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
         yield break;
     }
     public IEnumerator WarDarkDialogue()
@@ -494,7 +588,88 @@ public class GameManager : MonoBehaviour
             "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face so hard your eye swells up so you can’t see out of it*",
             true
         ));
-        LoadLevelFamine();
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
+        yield break;
+    }
+
+    public IEnumerator FamineLightDialogue()
+    {
+        events.Clear();
+        events.Add(new PostBattleDialogueEvent(
+            "ssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "sssssssssssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "ssssssssssssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
+        yield break;
+    }
+
+    public IEnumerator FamineDarkDialogue()
+    {
+        events.Clear();
+        events.Add(new PostBattleDialogueEvent(
+            "ssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "sssssssssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "sssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
+        yield break;
+    }
+
+    public IEnumerator DeathLightDialogue()
+    {
+        events.Clear();
+        events.Add(new PostBattleDialogueEvent(
+            "ssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "sssssssssssssssssssssssssssssssss",
+            true
+        )); 
+        events.Add(new PostBattleDialogueEvent(
+            "ssssssssssssssssssssssssssssssssss",
+            true
+        )); 
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
+        yield break;
+    }
+
+    public IEnumerator DeathDarkDialogue()
+    {
+        events.Clear();
+        events.Add(new PostBattleDialogueEvent(
+            "ssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "sssssssssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "sssssssssssssssssssssssss",
+            true
+        ));
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
         yield break;
     }
 }

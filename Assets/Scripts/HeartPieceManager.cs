@@ -10,6 +10,7 @@ public class HeartPieceManager : MonoBehaviour
 
     private int currentActiveIndex = -1;
     private int snappedCount = 0;
+    public int darkCount = 0;
     private GameManager manager;
 
     void Start()
@@ -69,9 +70,14 @@ public class HeartPieceManager : MonoBehaviour
     {
         snappedCount++;
 
+        if (piece.isDark)
+        {
+            darkCount++;
+        }
+
         Debug.Log("Piece snapped: " + piece.pieceIndex);
 
-        if (snappedCount >= pieces.Length)
+        if (snappedCount >= 1)//pieces.Length)
         {
             OnHeartCompleted();
         }
@@ -86,7 +92,26 @@ public class HeartPieceManager : MonoBehaviour
             piece.PlayCompleteAnimation();
         }
 
-        // if statement for majority dark/light
-        manager.ConquestLightDialogue();
+        GameManager.Instance.OnCompleteHeart();
     }
+
+    public void ResetPieces()
+    {
+        currentActiveIndex = -1;
+        snappedCount = 0;
+        darkCount = 0;
+
+        foreach (HeartPiece piece in pieces)
+        {
+            piece.gameObject.SetActive(false);
+            piece.isSnapped = false;
+
+            SnapToTarget snap = piece.GetComponent<SnapToTarget>();
+            if (snap != null)
+            {
+                snap.Reactivate();
+            }
+        }
+    }
+
 }

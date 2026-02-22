@@ -56,6 +56,8 @@ public class DialogueEvent : GameEvent
         {
             timer -= TIME_BETWEEN_CHARS;
             currCharacter++;
+            
+            SoundManager.Instance.Play("item", 0.2f, 0.6f, 0.2f);
 
             if (currCharacter == dialogueText.Length)
             {
@@ -89,35 +91,81 @@ public class DialogueEvent : GameEvent
 
 }
 
+public class NextLevelEvent : GameEvent
+{
+
+    public NextLevelEvent() : base()
+    {
+    }
+
+    public override void StartEvent()
+    {
+        GameManager.Instance.StartNextLevel();
+    }
+
+    public override void UpdateEvent()
+    {
+    }
+    
+    public override void EndEvent()
+    {
+    }
+
+}
+
 public class PostBattleDialogueEvent : GameEvent
 {
-    private string dialogue;
+    private string dialogueText;
     private bool isEnemy;
+    private int currCharacter;
+    private float timer;
+    private const float TIME_BETWEEN_CHARS = 0.025f;
 
     public PostBattleDialogueEvent(string text, bool enemy)
     {
-        dialogue = text;
+        dialogueText = text;
         isEnemy = enemy;
     }
 
     public override void StartEvent()
     {
-        GameManager.Instance.StartCoroutine(RunDialogue());
+        currCharacter = 0;
+        timer = 0;
+        Debug.Log("Dialogue: " + dialogueText);
     }
 
-    private IEnumerator RunDialogue()
+    public override void UpdateEvent()
     {
-        yield return GameManager.Instance.FadeOverlay(0.7f, 1f);
+        timer += Time.deltaTime;
+        if (currCharacter < dialogueText.Length && TIME_BETWEEN_CHARS <= timer)
+        {
+            timer -= TIME_BETWEEN_CHARS;
+            currCharacter++;
+            
+            SoundManager.Instance.Play("item", 0.2f, 0.6f, 0.2f);
 
-        GameManager.Instance.SetDialogue(dialogue, isEnemy, true);
+            if (currCharacter == dialogueText.Length)
+            {
+                GameManager.Instance.SetDialogue(dialogueText, isEnemy, true);
+            } else
+            {
+                GameManager.Instance.SetDialogue(dialogueText.Substring(0, currCharacter), isEnemy);
+            }
+        }
 
-        yield return new WaitUntil(() => Keyboard.current.zKey.wasPressedThisFrame);
-
-        GameManager.Instance.ClearDialogue();
-
-        yield return GameManager.Instance.FadeOverlay(0f, 1f);
-
-        GameManager.Instance.StartNextEvent();
+        // detect input (skip dialogue)
+        if (Keyboard.current.zKey.wasPressedThisFrame)
+        {
+            if (currCharacter < dialogueText.Length)
+            {
+                timer = 0;
+                currCharacter = dialogueText.Length;
+                GameManager.Instance.SetDialogue(dialogueText, isEnemy, true);
+            } else if (timer > 0.1f)
+            {
+                EndEvent();
+            }
+        }
     }
 }
 
