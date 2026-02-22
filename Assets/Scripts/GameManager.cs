@@ -170,8 +170,12 @@ public class GameManager : MonoBehaviour
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
         events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
         events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
-        
+
+        GameObject patternObj = Resources.Load<GameObject>("FamineAttackPrefab2");
+        events.Add(new PatternEvent(patternObj));
+
         yield return SceneManager.LoadSceneAsync("Main Scene Famine", LoadSceneMode.Additive);
+
 
         LoadLevel();
         Debug.Log("Finished loading scene, starting events.");
@@ -206,7 +210,7 @@ public class GameManager : MonoBehaviour
 
     public void Start() {
 
-        StartCoroutine(LoadLevelWar());
+        StartCoroutine(LoadLevelFamine());
 
     }
 
