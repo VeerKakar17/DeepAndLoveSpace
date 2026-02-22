@@ -48,10 +48,11 @@ public class DeathAttack2 : MonoBehaviour
                 DoOrbiters(randomPos, -1f);
 
                 yield return new WaitForSeconds(0.6f);
+                
             }
 
             yield return new WaitForSeconds(2.6f);
-
+            HeartPieceManager.Instance.ActivateNextPiece();
         }
     }
 
