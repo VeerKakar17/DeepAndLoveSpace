@@ -102,4 +102,16 @@ public class HeartDarkCycle : MonoBehaviour
 
         sr.color = end;
     }
+
+    public void FixColor()
+    {
+        if (isDark)
+        {
+            sr.color = fullDarkColor;
+        }
+        else
+        {
+            sr.color = lightColor;
+        }
+    }
 }

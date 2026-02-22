@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        events.Add(new AttackEvent(e2));
+        events.Add(new AttackEvent(e1));
 
         events.Add(new DialogueEvent("Example Attack Incoming"));
         

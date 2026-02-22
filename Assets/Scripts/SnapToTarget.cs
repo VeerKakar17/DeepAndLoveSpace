@@ -34,6 +34,8 @@ public class SnapToTarget : MonoBehaviour
         HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
         if (darkCycle != null)
         {
+            darkCycle.FixColor();
+            GetComponent<HeartPiece>().isDark = darkCycle.isDark;
             Destroy(darkCycle);
         }
         // remove circle collider 2d
@@ -43,7 +45,7 @@ public class SnapToTarget : MonoBehaviour
             Destroy(col);
         }
         // reparent?
-        // transform.SetParent(snapTarget, true);
+        transform.SetParent(snapTarget, true);
         // stop attack code here
         GameManager.Instance.currentEvent.EndEvent();
 

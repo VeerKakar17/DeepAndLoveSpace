@@ -7,12 +7,13 @@ public class HeartPiece : MonoBehaviour
 
     [HideInInspector]
     public bool isSnapped = false;
+    public bool isDark = false;
 
     private HeartPieceManager manager;
     private SpriteRenderer sr;
 
     Vector3 originalScale;
-    public float rainbowSpeed = .00001f;
+    public float rainbowSpeed = .005f;
     public float glowIntensity = 1.0f;
     private float hue = 0f;
     private Color baseColor;
@@ -20,7 +21,6 @@ public class HeartPiece : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
-        originalScale = transform.localScale;
         baseColor = sr.color;
         
     }
@@ -55,6 +55,7 @@ public class HeartPiece : MonoBehaviour
         float duration = 0.4f;
         float t = 0;
 
+        originalScale = transform.localScale;
         Vector3 targetScale = originalScale * 1.25f;
 
         while (t < duration)
@@ -77,7 +78,10 @@ public class HeartPiece : MonoBehaviour
             float pulse = 1f + Mathf.Sin(Time.time * 3f) * 0.1f;
             transform.localScale = originalScale * 1.25f * pulse;
 
-            sr.color = Color.HSVToRGB(hue, .7f, glowIntensity);
+            if (!isDark)
+            {
+                sr.color = Color.HSVToRGB(hue, .7f, glowIntensity);
+            }
 
             yield return null;
         }
