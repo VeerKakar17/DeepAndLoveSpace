@@ -635,15 +635,15 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "ssssssssssssssssssssss",
+            "Death: I am touched by the love you have for humanity. I shall grant you the gift of immortality and youth, so that you never age nor die.",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
-            "sssssssssssssssssssssssssssssssss",
-            true
+            "What makes humanity so precious is how we choose to spend our limited time. I would like to spend it with you.",
+            false
         )); 
         events.Add(new PostBattleDialogueEvent(
-            "ssssssssssssssssssssssssssssssssss",
+            "Death: Very well, then I will stay on earth to live with you as you grow old, and lay you to rest when your final day comes.",
             true
         )); 
         events.Add(new NextLevelEvent());
@@ -660,11 +660,15 @@ public class GameManager : MonoBehaviour
         ));
         events.Add(new PostBattleDialogueEvent(
             "sssssssssssssssssssssssssssssss",
-            true
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
             "sssssssssssssssssssssssss",
             true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "...",
+            false
         ));
         events.Add(new NextLevelEvent());
         StartNextEvent();
