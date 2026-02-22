@@ -31,81 +31,60 @@ public class WarFireRope : MonoBehaviour
 
     private IEnumerator SurroundingAttack()
     {
-        int attack = 0;
-        if (attack <= 1)
+        while (true)
         {
-            List<BulletMovement> bullets = new List<BulletMovement>();
-            for (int i = 0; i < 10; i++)
+            float attack = Random.Range(0f, 3f);
+            if (attack <= 1)
             {
-                float angleInDegrees = (36f * i);
-                float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
-                Vector2 direction2D = new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
-                Vector2 spawnPos = direction2D * (GameManager.Instance.player.movementBox.radius + 0.5f);
-                bullets.Add(BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees, bulletA, 0f));
-            }
+                List<BulletMovement> bullets = new List<BulletMovement>();
+                for (int i = 0; i < 10; i++)
+                {
+                    float angleInDegrees = (36f * i);
+                    float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
+                    Vector2 direction2D = new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
+                    Vector2 spawnPos = direction2D * (GameManager.Instance.player.movementBox.radius + 0.5f);
+                    bullets.Add(BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees, bulletA, 0f));
+                }
 
-            yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1f);
 
-            const float TIME_BETWEEN_SHOTS = 0.3f;
-            for (int i = 0; i < 10; i++)
+                const float TIME_BETWEEN_SHOTS = 0.3f;
+                for (int i = 0; i < 10; i++)
+                {
+                    yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
+
+                    BulletMovement next = bullets[0];
+                    bullets.RemoveAt(0);
+                    BulletSpawner.Instance.SpawnBullet(next.gameObject.transform.position, (36f * i) - 90, bulletA, 5f);
+                    Destroy(next.gameObject);
+                }
+            } 
+            else if (attack <= 2)
             {
-                yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
-
-                BulletMovement next = bullets[0];
-                bullets.RemoveAt(0);
-                BulletSpawner.Instance.SpawnBullet(next.gameObject.transform.position, (36f * i) - 90, bulletA, 5f);
-                Destroy(next.gameObject);
-            }
-        } 
-        else if (attack <= 2)
-        {
-            List<BulletMovement> bullets = new List<BulletMovement>();
-            for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 8; i++)
+                {
+                    // -3 to 3, 3.68
+                    AnimationCurve spd = new AnimationCurve();
+                    spd.AddKey(0f, 0.5f);
+                    spd.AddKey(1.5f, 0.6f);
+                    spd.AddKey(2.0f, 2.0f);
+                    BulletSpawner.Instance.SpawnBullet(new Vector3(-3+(6f/7f)*i, 3.68f, 2f), 0f, bulletA, spd);
+                }
+            } 
+            else
             {
-                float angleInDegrees = (36f * i);
-                float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
-                Vector2 direction2D = new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
-                Vector2 spawnPos = direction2D * (GameManager.Instance.player.movementBox.radius + 0.5f);
-                bullets.Add(BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees, bulletA, 0f));
+                for (int i = 0; i < 6; i++)
+                {
+                    // 1.5 to -4.25
+                    AnimationCurve spd = new AnimationCurve();
+                    spd.AddKey(0f, 0.5f);
+                    spd.AddKey(1.5f, 0.6f);
+                    spd.AddKey(2.0f, 2.0f);
+                    BulletSpawner.Instance.SpawnBullet(new Vector3(-3, 1f - i, 2f), 90f, bulletA, spd);
+                    BulletSpawner.Instance.SpawnBullet(new Vector3(3, 1.5f - i, 2f), -90f, bulletA, spd);
+                }
             }
-
-            yield return new WaitForSeconds(1f);
-
-            const float TIME_BETWEEN_SHOTS = 0.3f;
-            for (int i = 0; i < 10; i++)
-            {
-                yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
-
-                BulletMovement next = bullets[0];
-                bullets.RemoveAt(0);
-                BulletSpawner.Instance.SpawnBullet(next.gameObject.transform.position, (36f * i) - 90, bulletA, 5f);
-                Destroy(next.gameObject);
-            }
-        } 
-        else
-        {
-            List<BulletMovement> bullets = new List<BulletMovement>();
-            for (int i = 0; i < 10; i++)
-            {
-                float angleInDegrees = (36f * i);
-                float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
-                Vector2 direction2D = new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
-                Vector2 spawnPos = direction2D * (GameManager.Instance.player.movementBox.radius + 0.5f);
-                bullets.Add(BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees, bulletA, 0f));
-            }
-
-            yield return new WaitForSeconds(1f);
-
-            const float TIME_BETWEEN_SHOTS = 0.3f;
-            for (int i = 0; i < 10; i++)
-            {
-                yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
-
-                BulletMovement next = bullets[0];
-                bullets.RemoveAt(0);
-                BulletSpawner.Instance.SpawnBullet(next.gameObject.transform.position, (36f * i) - 90, bulletA, 5f);
-                Destroy(next.gameObject);
-            }
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
     }
 
@@ -113,7 +92,7 @@ public class WarFireRope : MonoBehaviour
     {
         while (true)
         {
-            float waitTime = Random.Range(1f, 5f);
+            float waitTime = Random.Range(1f, 4f);
             yield return new WaitForSeconds(waitTime);
             Vector2 randomInsideUnitCircle = Random.insideUnitCircle;
             randomInsideUnitCircle *= GameManager.Instance.player.movementBox.radius;
@@ -128,14 +107,12 @@ public class WarFireRope : MonoBehaviour
     private IEnumerator SpawnHeart()
     {
         float elapsed = 0;
-        while (true)
+        while (elapsed < 10f)
         {
             elapsed += Time.deltaTime;
-            if (elapsed > 7f)
-            {
-                HeartPieceManager.Instance.ActivateNextPiece();
-            }
             yield return null;
         }
+        HeartPieceManager.Instance.ActivateNextPiece();
+        yield return null;
     }
 }
