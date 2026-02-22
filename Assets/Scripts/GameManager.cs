@@ -217,6 +217,9 @@ public class GameManager : MonoBehaviour
         yield return UnLoadLevel();
 
         events.Clear();
+
+        currStagePatterns = new List<GameObject>();
+
         events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
         events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
@@ -224,11 +227,13 @@ public class GameManager : MonoBehaviour
 
         yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
 
-        currStagePatterns = new List<GameObject>();
         GameObject patternObj = Resources.Load<GameObject>("DeathAttack1");
         events.Add(new PatternEvent(patternObj));
         currStagePatterns.Add(patternObj);
 
+        GameObject patternObj2 = Resources.Load<GameObject>("DeathAttack2");
+        events.Add(new PatternEvent(patternObj2));
+        currStagePatterns.Add(patternObj2);
 
         LoadLevel();
         Debug.Log("Finished loading scene, starting events.");
@@ -301,7 +306,7 @@ public class GameManager : MonoBehaviour
 
         //BulletSpawner.Instance.ResetBullets();
 
-        
+
         SoundManager.Instance.Play("tan1", 0.8f, 0.75f, 0.1f, true);
 
         if (lives < 0)

@@ -38,6 +38,7 @@ public class WarFireAttack : MonoBehaviour
     private IEnumerator RadialCoroutine()
     {
         const int NUM_REPS = 2;
+        int numElapsed = 0;
         while (true)
         {
             for (int i = 0; i < 5; i++)
@@ -52,6 +53,11 @@ public class WarFireAttack : MonoBehaviour
                 yield return new WaitForSeconds(0.2f);
             }
             yield return new WaitForSeconds(1.2f);
+            numElapsed++;
+            if (numElapsed == 2)
+            {
+                HeartPieceManager.Instance.ActivateNextPiece();
+            }
         }
     }
 

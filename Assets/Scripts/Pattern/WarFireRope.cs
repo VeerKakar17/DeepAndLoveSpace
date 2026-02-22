@@ -12,7 +12,7 @@ public class WarFireRope : MonoBehaviour
         bulletA = new Bullet(
             "bullet_big",
             Color.red,
-            0.3f,
+            0.1f,
             "none"
         );
 
@@ -36,27 +36,22 @@ public class WarFireRope : MonoBehaviour
             float attack = Random.Range(0f, 3f);
             if (attack <= 1)
             {
-                List<BulletMovement> bullets = new List<BulletMovement>();
                 for (int i = 0; i < 10; i++)
                 {
                     float angleInDegrees = (36f * i);
                     float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
                     Vector2 direction2D = new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
                     Vector2 spawnPos = direction2D * (GameManager.Instance.player.movementBox.radius + 0.5f);
-                    bullets.Add(BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees, bulletA, 0f));
-                }
+                    
+                    AnimationCurve spd = new AnimationCurve();
+                    float TIME_BETWEEN_BULLETS = 0.15f;
+                    spd.AddKey(0f, 0.5f);
+                    spd.AddKey(TIME_BETWEEN_BULLETS*i, 0.5f);
+                    spd.AddKey(1.5f+TIME_BETWEEN_BULLETS*i, 0f);
+                    spd.AddKey(2.0f+TIME_BETWEEN_BULLETS*i, 4.0f);
 
-                yield return new WaitForSeconds(1f);
+                    BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees-90, bulletA, spd);
 
-                const float TIME_BETWEEN_SHOTS = 0.3f;
-                for (int i = 0; i < 10; i++)
-                {
-                    yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
-
-                    BulletMovement next = bullets[0];
-                    bullets.RemoveAt(0);
-                    BulletSpawner.Instance.SpawnBullet(next.gameObject.transform.position, (36f * i) - 90, bulletA, 5f);
-                    Destroy(next.gameObject);
                 }
             } 
             else if (attack <= 2)
@@ -84,7 +79,7 @@ public class WarFireRope : MonoBehaviour
                     BulletSpawner.Instance.SpawnBullet(new Vector3(3, 1.5f - i, 2f), -90f, bulletA, spd);
                 }
             }
-            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
         }
     }
 
