@@ -44,11 +44,11 @@ public class WarFireRope : MonoBehaviour
                     Vector2 spawnPos = direction2D * (GameManager.Instance.player.movementBox.radius + 0.5f);
                     
                     AnimationCurve spd = new AnimationCurve();
-                    float TIME_BETWEEN_BULLETS = 0.1f;
+                    float TIME_BETWEEN_BULLETS = 0.15f;
                     spd.AddKey(0f, 0.5f);
                     spd.AddKey(TIME_BETWEEN_BULLETS*i, 0.5f);
                     spd.AddKey(1.5f+TIME_BETWEEN_BULLETS*i, 0f);
-                    spd.AddKey(2.0f+TIME_BETWEEN_BULLETS*i, 5.0f);
+                    spd.AddKey(2.0f+TIME_BETWEEN_BULLETS*i, 4.0f);
 
                     BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees-90, bulletA, spd);
 
@@ -79,7 +79,7 @@ public class WarFireRope : MonoBehaviour
                     BulletSpawner.Instance.SpawnBullet(new Vector3(3, 1.5f - i, 2f), -90f, bulletA, spd);
                 }
             }
-            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
         }
     }
 
