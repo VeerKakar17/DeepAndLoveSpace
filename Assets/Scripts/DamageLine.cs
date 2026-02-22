@@ -13,13 +13,17 @@ public class DamageLine : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D col;
-    
+
+    private Sprite boxSprite;
+    private Sprite swordSprite;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = gameObject.GetComponent<BoxCollider2D>();
         col.enabled = false;
         spriteRenderer.color = Color.yellow;
+        swordSprite = Resources.Load<Sprite>("bullet_big_sword");
     }
 
     void Update()
@@ -39,6 +43,7 @@ public class DamageLine : MonoBehaviour
                 state++;
                 timer = 0;
                 spriteRenderer.color = Color.red;
+                spriteRenderer.sprite = swordSprite;
                 col.enabled = true;
             }
         } 
