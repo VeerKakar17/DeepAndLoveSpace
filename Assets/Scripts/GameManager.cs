@@ -597,15 +597,15 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "ssssssssssssssssssssss",
+            "Famine: I like you a lot… I see now that love is more than consumption. I shall grant you all the food you will ever need, so that you never hunger for more.",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
-            "sssssssssssssssssssssssssssssssss",
-            true
+            "I appreciate the offer, but what is more precious to me than food is warmth in connection.",
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "ssssssssssssssssssssssssssssssssss",
+            "Famine: Then I will stay by your side and quench your thirst.",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -617,15 +617,15 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "ssssssssssssssssssssssss",
+            "Famine: I like you a lot, little human! I want you to be a part of me… forever! *takes a bite out of your arm*",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
-            "sssssssssssssssssssssssssssssss",
-            true
+            "ARGHHH AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "sssssssssssssssssssssssss",
+            "Famine: *licks his lips* Don’t worry, I’ll make sure to savor you slowly. You can go talk to my last brother, but don’t keep me waiting for long!",
             true
         ));
         events.Add(new NextLevelEvent());
