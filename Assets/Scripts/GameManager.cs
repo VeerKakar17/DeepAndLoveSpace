@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 {
 
     public GameObject StartingScene;
+    public GameObject IntroScene;
+
     public GameObject EndingScene;
 
     public static GameManager Instance;
@@ -28,8 +30,7 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     private bool isSlowMo = false;
 
-    int currentLevel = -1;
-
+    public int currentLevel = -1;
 
     public List<GameEvent> events = new List<GameEvent>();
     public GameEvent currentEvent;
@@ -278,6 +279,10 @@ public class GameManager : MonoBehaviour
 
         events.Clear();
         events.Add(new WaitForZEvent());
+
+        events.Add(new DialogueEvent("We are the four horsemen of the apocalypse and we come to destroy this world. We will give humanity one last chance to prove they are worthy of redemption.", true));
+        events.Add(new DialogueEvent("I hold deep love for humanity. I will risk my life to convince them to spare us.", false));
+
         events.Add(new NextLevelEvent());
         StartNextEvent();
 
@@ -286,7 +291,7 @@ public class GameManager : MonoBehaviour
     public void LoadLevelFromNumber(int i)
     {
 
-        
+        IntroScene.SetActive(false);
         StartingScene.SetActive(false);
 
         if (i == 0)
