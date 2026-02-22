@@ -101,14 +101,12 @@ public class MovementBox : MonoBehaviour
 
     public void Transform(Vector3 position, float scale, float time)
     {
-        StopAllCoroutines();
         StartCoroutine(updatePosition(position.x, position.y, time));
         StartCoroutine(updateScale(scale, scale, time));
     }
 
     public void TransformImmediate(Vector3 position, float scale)
     {
-        StopAllCoroutines();
         updatePositionImmediate(position.x, position.y);
         updateScaleImmediate(scale, scale);
     }
