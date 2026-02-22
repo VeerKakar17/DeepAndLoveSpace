@@ -11,8 +11,11 @@ public class BulletConquestBow : MonoBehaviour
 
     bool isAiming = false;
     bool isFiringSmall = false;
+    bool isFiringBig = false;
 
     float cooldown = 0.0f;
+
+    float timerA = 0.0f;
 
     void Awake()
     {
@@ -31,8 +34,20 @@ public class BulletConquestBow : MonoBehaviour
     {
         isAiming = true;
         isFiringSmall = true;
+        isFiringBig = false;
+
+        timerA = 0.0f;
     }
 
+    public void StateB()
+    {
+        isAiming = true;
+        isFiringSmall = false;
+        isFiringBig = true;
+
+        timerA = 0.0f;
+        cooldown = 4.0f;
+    }
     void SpawnBigArrow()
     {
         
@@ -60,12 +75,13 @@ public class BulletConquestBow : MonoBehaviour
         {
             float dt = Time.deltaTime;
             cooldown -= dt;
+            timerA += dt;
             
             if (cooldown <= 0)
             {
                 cooldown = 0.2f;
                 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 3; i++)
                 {
 
                     // this facing direction to angle
@@ -82,7 +98,44 @@ public class BulletConquestBow : MonoBehaviour
                     BulletSpawner.Instance.SpawnBullet(randomPos, angle - 90, arrowBullet);
                         
                 }
+            }
 
+            if (timerA >= 12.0f)
+            {
+                StateB();
+            }
+        }
+
+        if (isFiringBig)
+        {
+            float dt = Time.deltaTime;
+            cooldown -= dt;
+            timerA += dt;
+            
+            if (cooldown <= 0)
+            {
+                cooldown = 2.0f;
+                
+                    // this facing direction to angle
+                    float angle = Mathf.Atan2(transform.up.y, transform.up.x) * Mathf.Rad2Deg;
+
+                    // position is center of self transform
+                    Vector3 position = transform.position;
+
+
+                    Instantiate(bigArrowPrefab, position, Quaternion.Euler(0, 0, angle - 90));
+                        
+                }
+
+            if (timerA >= 12.0f)
+            {
+                cooldown = 999f;
+
+                if (timerA >= 16.0f)
+                {
+                    Destroy(gameObject);
+                    GameManager.Instance.currentEvent.EndEvent();
+                }
             }
         }
     }

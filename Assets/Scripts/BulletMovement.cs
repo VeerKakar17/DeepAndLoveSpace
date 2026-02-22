@@ -1,7 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(CircleCollider2D))]
 public class BulletMovement : MonoBehaviour
 {
     public Vector3 direction = Vector3.down;

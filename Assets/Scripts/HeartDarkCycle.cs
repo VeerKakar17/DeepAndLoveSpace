@@ -29,7 +29,7 @@ public class HeartDarkCycle : MonoBehaviour
     private float circleTime = 0f;
     public bool isDark = false;
 
-    void Start()
+    void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         sr.color = lightColor;

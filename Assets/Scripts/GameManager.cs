@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public Transform patternContainer;
+
     [Header("Time Settings")]
     public float slowMoScale = 0.3f;
     public float slowMoDuration = 2f;
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
     public List<GameEvent> events = new List<GameEvent>();
     public GameEvent currentEvent;
 
-    public GameObject player;
+    public PlayerMovement player;
 
 
     public GameObject bossHeartSnapTarget;
@@ -43,9 +45,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject pressZIndicator;
     private Coroutine pressZCoroutine = null;
-
-    [Header("Other Serialize Fields")]
-    [SerializeField] public MovementBox movementBox;
         
     public void StartNextEvent()
     {
@@ -108,7 +107,12 @@ public class GameManager : MonoBehaviour
         lives = MAX_LIVES;
         events.Clear();
 
-        events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf radsgsdr fgserdifgjhyuiersdijgfh sydrfghaesrdgfsrfeg"));
+        GameObject patternObj = Resources.Load<GameObject>("BigBowPrefabTypeA");
+
+        events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf\\"));
+        
+        events.Add(new PatternEvent(patternObj));
+        
         events.Add(new DialogueEvent("Example Attack Incoming"));
         
     }

@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private MovementBox movementBox;
+    public MovementBox movementBox;
 
     InputAction moveAction;
     InputAction focusAction;

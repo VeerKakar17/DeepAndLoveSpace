@@ -89,18 +89,23 @@ public class DialogueEvent : GameEvent
 
 public class PatternEvent : GameEvent
 {
-    public PatternEvent() { }
+
+    public GameObject patternPrefab;
+
+    public PatternEvent(GameObject patternPrefab) : base()
+    {
+        this.patternPrefab = patternPrefab;
+    }
+
     public override void StartEvent()
     {
-        base.StartEvent();
+        GameObject patternObj = GameObject.Instantiate(patternPrefab);
+        patternObj.transform.parent = GameManager.Instance.patternContainer;
     }
 
     public virtual void UpdateEvent()
     {
-        base.UpdateEvent();
     }
-
-    public virtual void SpawnPattern() { }
 
     public virtual void EndEvent() { base.EndEvent();  }
 }
