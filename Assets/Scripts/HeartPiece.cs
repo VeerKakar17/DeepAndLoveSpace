@@ -37,6 +37,12 @@ public class HeartPiece : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void Activate(Vector2 position)
+    {
+        gameObject.transform.position = new Vector3(position.x, position.y, gameObject.transform.position.z);
+        gameObject.SetActive(true);
+    }
+
     public void OnSnapped()
     {
         if (isSnapped) return;

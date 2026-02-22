@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HeartPieceManager : MonoBehaviour
 {
+    public static HeartPieceManager Instance;
+
     public HeartPiece[] pieces;
 
     private int currentActiveIndex = -1;
@@ -14,7 +16,17 @@ public class HeartPieceManager : MonoBehaviour
         {
             pieces[i].Initialize(this, i);
         }
-        ActivateNextPiece();
+    }
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void ActivateNextPiece()
@@ -25,6 +37,16 @@ public class HeartPieceManager : MonoBehaviour
             return;
 
         pieces[currentActiveIndex].Activate();
+    }
+
+    public void ActivateNextPiece(Vector2 position)
+    {
+        currentActiveIndex++;
+
+        if (currentActiveIndex >= pieces.Length)
+            return;
+
+        pieces[currentActiveIndex].Activate(position);
     }
 
     public void OnPieceSnapped(HeartPiece piece)

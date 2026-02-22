@@ -93,6 +93,7 @@ public class PatternEvent : GameEvent
 {
 
     public GameObject patternPrefab;
+    private GameObject patternObj;
 
     public PatternEvent(GameObject patternPrefab) : base()
     {
@@ -101,7 +102,7 @@ public class PatternEvent : GameEvent
 
     public override void StartEvent()
     {
-        GameObject patternObj = GameObject.Instantiate(patternPrefab);
+        patternObj = GameObject.Instantiate(patternPrefab);
         patternObj.transform.parent = GameManager.Instance.patternContainer;
     }
 
@@ -109,5 +110,8 @@ public class PatternEvent : GameEvent
     {
     }
 
-    public virtual void EndEvent() { base.EndEvent();  }
+    public override void EndEvent() {
+        UnityEngine.GameObject.Destroy(patternObj);
+        base.EndEvent();
+    }
 }

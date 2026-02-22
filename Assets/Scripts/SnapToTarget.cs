@@ -83,11 +83,6 @@ public class SnapToTarget : MonoBehaviour
 
             if (heartPiece != null)
                 heartPiece.OnSnapped();
-            if (manager != null)
-            {
-                Debug.Log("Activating next piece");
-                manager.ActivateNextPiece();
-            }
         }
     }
 }

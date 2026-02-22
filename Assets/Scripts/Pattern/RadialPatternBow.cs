@@ -77,12 +77,23 @@ public class RadialPatternBow : MonoBehaviour
     private IEnumerator HomingCoroutine()
     {
         Vector3 startPos = new Vector3(0f, 2.5f, 1f);
+        int nums = 0;
         while (true)
         {
             float waitTime = Random.Range(1f, 3f);
             startPos.x = Random.Range(-2f, 2f);
 
             yield return new WaitForSeconds(waitTime);
+
+            nums++;
+            if (nums == 5)
+            {
+                Vector2 randomInsideUnitCircle = Random.insideUnitCircle;
+                randomInsideUnitCircle *= GameManager.Instance.player.movementBox.radius;
+                randomInsideUnitCircle += new Vector2(GameManager.Instance.player.movementBox.gameObject.transform.position.x, GameManager.Instance.player.movementBox.gameObject.transform.position.y);
+                Debug.Log("randomInsideUni t " + randomInsideUnitCircle.x + randomInsideUnitCircle.y);
+                HeartPieceManager.Instance.ActivateNextPiece(randomInsideUnitCircle);
+            }
 
             float timescale = 1f;
             float offset = 1f;
