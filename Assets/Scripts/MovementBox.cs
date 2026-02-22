@@ -12,9 +12,7 @@ public class MovementBox : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameObject.transform.localScale = new Vector3(3f, 3f, 1f);
-        invincibilityAction = InputSystem.actions.FindAction("Jump");
-        radius = 1.5f;
+        gameObject.transform.localScale = new Vector3(radius * 2, radius * 2, 1f);
     }
 
     // Update is called once per frame

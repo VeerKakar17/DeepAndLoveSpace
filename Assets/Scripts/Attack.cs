@@ -101,7 +101,7 @@ public class Attack {
         // if last entry isn't end, append an end entry
         if (entries.Count == 0 || !(entries[entries.Count - 1] is EndEntry)) {
             entries.Add(new EndEntry());
-            entries[entries.Count - 1].timeToSpawn = entries[entries.Count - 2].timeToSpawn + 2.0f;
+            entries[entries.Count - 1].timeToSpawn = entries[entries.Count - 2].timeToSpawn + 5.0f;
         }
 
         Debug.Log("Attack Initialized with " + entries.Count + " entries. First entry time: " + entries[0].timeToSpawn);

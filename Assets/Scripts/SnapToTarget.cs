@@ -36,6 +36,12 @@ public class SnapToTarget : MonoBehaviour
         {
             Destroy(darkCycle);
         }
+        // remove circle collider 2d
+        CircleCollider2D col = GetComponent<CircleCollider2D>();
+        if (col != null)
+        {
+            Destroy(col);
+        }
         // reparent?
         // transform.SetParent(snapTarget, true);
         // stop attack code here
