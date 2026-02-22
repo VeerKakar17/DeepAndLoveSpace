@@ -13,7 +13,7 @@ public class HeartPiece : MonoBehaviour
     private SpriteRenderer sr;
 
     Vector3 originalScale;
-    public float rainbowSpeed = .005f;
+    public float rainbowSpeed = .05f;
     public float glowIntensity = 1.0f;
     private float hue = 0f;
     private Color baseColor;
