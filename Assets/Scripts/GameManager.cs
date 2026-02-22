@@ -433,7 +433,7 @@ public class GameManager : MonoBehaviour
         ));
         events.Add(new PostBattleDialogueEvent(
             "I have no need for those material riches. All I request of you is to permit this lowly one to be your prince.",
-            true
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
             "Conquest: Then this noble one shall accept. ",
@@ -451,7 +451,7 @@ public class GameManager : MonoBehaviour
         ));
         events.Add(new PostBattleDialogueEvent(
             "But-",
-            true
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
             "Conquest: Shhh my little peasant. You must call me Master from henceforth. ",
@@ -470,7 +470,7 @@ public class GameManager : MonoBehaviour
         ));
         events.Add(new PostBattleDialogueEvent(
             "*smiles* Thank you for the gifts, but what I really want is your hand in marriage.",
-            true
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
             "War: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
@@ -488,7 +488,7 @@ public class GameManager : MonoBehaviour
         ));
         events.Add(new PostBattleDialogueEvent(
             "I’m very fragile please be gentler!",
-            true
+            false
         ));
         events.Add(new PostBattleDialogueEvent(
             "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face and your eye swells up so you can’t see out of it*",
