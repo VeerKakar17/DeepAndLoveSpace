@@ -176,14 +176,22 @@ public class GameManager : MonoBehaviour
             curr = dialogueTextPlayer;
         }
         curr.text = dialogue;
+        curr.ForceMeshUpdate();
         if (addPressZ)
         {
-            // Convert from TMP local space to world space
-
             pressZIndicator.SetActive(true);
-            TMP_CharacterInfo lastChar = curr.textInfo.characterInfo[curr.textInfo.characterCount - 1];
-            Vector3 worldBottomRight = curr.transform.TransformPoint(lastChar.bottomRight);
-            pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y-55f, pressZIndicator.transform.position.z);
+
+            if (isEnemy)
+            {
+                TMP_CharacterInfo lastChar = curr.textInfo.characterInfo[dialogue.Length - 1];
+                Vector3 worldBottomRight = curr.transform.TransformPoint(lastChar.bottomRight);
+                pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y-60f, pressZIndicator.transform.position.z);
+            } else
+            {
+                TMP_CharacterInfo firstChar = curr.textInfo.characterInfo[0];
+                Vector3 worldTopRight = curr.transform.TransformPoint(firstChar.topRight);
+                pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldTopRight.y+15f, pressZIndicator.transform.position.z);
+            }
             
             pressZCoroutine = StartCoroutine(PressZCoroutine());
         }
