@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator LoadLevelConquest()
     {
-        yield return FadeToBlack(1f);
+        
         yield return UnLoadLevel();
         
 
@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return FadeToBlack(1f);
         yield return FadeFromBlack(1f);
 
     }
@@ -279,7 +280,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-
+        FadeToBlack(1f);
         StartingScene.SetActive(true);
 
         events.Clear();
@@ -290,7 +291,7 @@ public class GameManager : MonoBehaviour
 
         events.Add(new NextLevelEvent());
         StartNextEvent();
-
+        FadeFromBlack(1f);
     }
 
     public void LoadLevelFromNumber(int i)
@@ -301,6 +302,7 @@ public class GameManager : MonoBehaviour
 
         if (i == 0)
         {
+            
             StartCoroutine(LoadLevelConquest());
         }
         else if (i == 1)
