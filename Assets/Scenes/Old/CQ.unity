@@ -888,7 +888,7 @@ MonoBehaviour:
   slowMoScale: 0.3
   slowMoDuration: 2
   bossHeartSnapTarget: {fileID: 490957007}
-  heartPrefab: {fileID: 0}
+  heartPrefab: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
   lives: 3
   dialogueText: {fileID: 1550819394}
 --- !u!4 &567292571
@@ -1810,7 +1810,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
