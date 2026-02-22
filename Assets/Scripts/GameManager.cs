@@ -221,10 +221,9 @@ public class GameManager : MonoBehaviour
 
         currStagePatterns = new List<GameObject>();
 
-        events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
-        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
-        events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
-        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
+        events.Add(new DialogueEvent("Death: I see you have managed to convince my brothers to spare you somehow. Beware, for I am not as easily convinced! Death will end all suffering.", true));
+        events.Add(new DialogueEvent("Me: Yes, life brings about much suffering, but it also brings about much joy. I will survive you and show you what true love is!", false));
+        events.Add(new DialogueEvent("Death: Let us see if you can escape from my clutches. Entertain me!", true));
 
         yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
 
