@@ -6,7 +6,7 @@ public class SnapToTarget : MonoBehaviour
     public float snapSpeed = 10f;
     public bool snapInstantly = false;
 
-    private bool snapping = false;
+    public bool snapping = false;
 
     public bool touched = false;
 
@@ -32,15 +32,20 @@ public class SnapToTarget : MonoBehaviour
     {
         HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
         if (darkCycle != null)
-            darkCycle.enabled = true;
+        {
+            
+            //darkCycle.enabled = true;
             darkCycle.isDark = false;
             darkCycle.FixColor();
             
             darkCycle.ResumeCycle();
 
+        }
         CircleCollider2D col = GetComponent<CircleCollider2D>();
         if (col != null)
+        {
             col.enabled = true;
+        }
     }
 
     void StartSnapping()
@@ -54,7 +59,7 @@ public class SnapToTarget : MonoBehaviour
         {
             darkCycle.FixColor();
             GetComponent<HeartPiece>().isDark = darkCycle.isDark;
-            darkCycle.enabled = false;
+            //darkCycle.enabled = false;
             darkCycle.PauseCycle();
         }
         // remove circle collider 2d
@@ -80,6 +85,7 @@ public class SnapToTarget : MonoBehaviour
 
     void Update()
     {
+
         if (!snapping) return;
 
         transform.position = Vector3.Lerp(

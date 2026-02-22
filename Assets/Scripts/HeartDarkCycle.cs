@@ -39,6 +39,9 @@ public class HeartDarkCycle : MonoBehaviour
     public void ResumeCycle()
     {
         isPaused = false;
+        
+        StopAllCoroutines();
+        StartCoroutine(CycleRoutine());
     }
 
     void Awake()
@@ -57,6 +60,9 @@ public class HeartDarkCycle : MonoBehaviour
 
     void HandleCircularMotion()
     {
+
+        if (isPaused) return;
+
         circleTime += Time.deltaTime * circleSpeed;
 
         float x = Mathf.Cos(circleTime) * circleRadius;
@@ -76,6 +82,11 @@ public class HeartDarkCycle : MonoBehaviour
             yield return StartCoroutine(FadeFlash(lightColor, mediumDarkColor));
 
             yield return StartCoroutine(FadeTo(fullDarkColor));
+            
+            while (isPaused) {
+                yield return new WaitForSeconds(1.0f);
+            }
+
             isDark = true;
 
             yield return new WaitForSeconds(darkDuration);
@@ -83,6 +94,11 @@ public class HeartDarkCycle : MonoBehaviour
             yield return StartCoroutine(FadeFlash(fullDarkColor, mediumDarkColor));
 
             yield return StartCoroutine(FadeTo(lightColor));
+            
+            while (isPaused) {
+                yield return new WaitForSeconds(1.0f);
+            }
+
             isDark = false;
         }
     }
@@ -107,6 +123,9 @@ public class HeartDarkCycle : MonoBehaviour
 
         while (time < fadeDuration)
         {
+            while (isPaused) {
+                yield return new WaitForSeconds(1.0f);
+            }
             sr.color = Color.Lerp(start, end, time / fadeDuration);
             time += Time.deltaTime;
             yield return null;
