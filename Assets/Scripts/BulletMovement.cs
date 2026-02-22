@@ -6,6 +6,8 @@ public class BulletMovement : MonoBehaviour
 {
     public Vector3 direction = Vector3.down;
     public float speed = 5f;
+    
+    BulletSpawner pool;
 
     private SpriteRenderer sr;
     private CircleCollider2D col;
@@ -24,12 +26,18 @@ public class BulletMovement : MonoBehaviour
         Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
         if (screenPos.x < -0.1f || screenPos.x > 1.1 || screenPos.y < -0.1f || screenPos.y > 1.1 )
         {
-            Destroy(gameObject);
+            ClearBullet();
         }
+    }
+
+    public void ClearBullet()
+    {
+        pool.PoolReturn(gameObject);
     }
     
     public void Initialize(
-        Vector3 dir,
+        BulletSpawner p,
+        float angle,
         float spd,
         Sprite sprite,
         Color color,
@@ -37,10 +45,18 @@ public class BulletMovement : MonoBehaviour
         string bulletTag
     )
     {
-        direction = dir.normalized;
+        pool = p;
+
+
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+        
+        angle -= 90.0f;
+        
+        direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
+
         speed = spd;
 
-        //sr.sprite = sprite;
+        sr.sprite = sprite;
         sr.color = color;
 
         col.radius = hitboxRadius;

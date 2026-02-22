@@ -1,7 +1,11 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 public class Bullet {
-    public Vector3 direction;
+    public float angle;
     public float speed;
     public string sprite_name;
     public Color color;
@@ -9,7 +13,7 @@ public class Bullet {
     public string tagName;
 
     public Bullet(
-        Vector3 dir,
+        float ang,
         float spd,
         string spr,
         Color col,
@@ -17,7 +21,7 @@ public class Bullet {
         string tag
     )
     {
-        direction = dir.normalized;
+        angle = ang;
         speed = spd;
         sprite_name = spr;
         color = col;
@@ -29,8 +33,11 @@ public class Bullet {
 public class BulletSpawner : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public GameObject heartPrefab;
     public static BulletSpawner Instance;
+
+    public int poolSize = 400;
+    Queue<GameObject> pool = new Queue<GameObject>();
+    List<GameObject> activeBullets = new List<GameObject>();
 
     // instancing
     void Awake()
@@ -43,19 +50,59 @@ public class BulletSpawner : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        for (int i = 0; i < poolSize; i++)
+        {
+            var b = Instantiate(bulletPrefab, transform);
+            b.SetActive(false);
+            pool.Enqueue(b);
+        }
+    }
+
+    public GameObject PoolGet()
+    {
+        if (pool.Count == 0) {
+            var b2 = Instantiate(bulletPrefab, transform);
+            activeBullets.Add(b2);
+            return b2;
+        }
+
+        var b = pool.Dequeue();
+        b.SetActive(true);
+        activeBullets.Add(b);
+        return b;
+    }          
+
+    public void PoolReturn(GameObject b)        
+    {
+        b.SetActive(false);
+        activeBullets.Remove(b);
+        pool.Enqueue(b);
+    }
+
+    static Dictionary<string, Sprite> spriteCache = new();
+
+    Sprite GetSprite(string spriteName)
+    {
+        if (!spriteCache.TryGetValue(spriteName, out Sprite sprite))
+        {
+            sprite = Resources.Load<Sprite>(spriteName);
+            spriteCache[spriteName] = sprite;
+        }
+        return sprite;
     }
 
     public void SpawnBullet(
         Bullet bullet
     )
     {
-        GameObject bulletObj = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform);
+        GameObject bulletObj = PoolGet();
 
-        Sprite sprite = Resources.Load<Sprite>(bullet.sprite_name + ".png");
+        Sprite sprite = GetSprite(bullet.sprite_name);
 
         BulletMovement bm = bulletObj.GetComponent<BulletMovement>();
         bm.Initialize(
-            bullet.direction,
+            this,
+            bullet.angle,
             bullet.speed,
             sprite,
             bullet.color,
@@ -64,20 +111,17 @@ public class BulletSpawner : MonoBehaviour
         );
     }
 
-    public void ClearBullets()
+    public void ResetBullets()
     {
-        foreach (Transform child in transform)
+        List<GameObject> bulletsToClear = new List<GameObject>(activeBullets);
+        foreach (GameObject o in activeBullets)
         {
-            Destroy(child.gameObject);
+            bulletsToClear.Add(o);
+        }
+        foreach (GameObject o in bulletsToClear)
+        {
+            PoolReturn(o);
         }
     }   
 
-    public void SpawnHeart(Vector3 position)
-    {
-        
-        GameObject heartObj = Instantiate(heartPrefab, position, Quaternion.identity, transform);
-
-        SnapToTarget s = heartObj.GetComponent<SnapToTarget>();
-        s.snapTarget = GameManager.Instance.bossHeartSnapTarget.transform;
-    }
 }

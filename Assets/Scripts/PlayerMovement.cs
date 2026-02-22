@@ -41,8 +41,10 @@ public class PlayerMovement : MonoBehaviour
         Vector2 dist = gameObject.transform.position - movementBox.gameObject.transform.position;
         if (dist.magnitude > movementBox.radius)
         {
+            float playerZ = gameObject.transform.position.z;
             Vector2 norm = Vector2.Normalize(dist);
-            gameObject.transform.position = movementBox.gameObject.transform.position + (movementBox.radius * new Vector3(norm.x, norm.y, 0f));
+            Debug.Log("test: " + norm.x + " " + norm.y + " " + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)).x + " " + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)).y);
+            gameObject.transform.position = movementBox.gameObject.transform.position + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)) + new Vector3(0f, 0f, playerZ - movementBox.gameObject.transform.position.z);
         }
 
         // Handle Invincibility

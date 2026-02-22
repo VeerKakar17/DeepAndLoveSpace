@@ -29,6 +29,8 @@ public class SnapToTarget : MonoBehaviour
         }
         // reparent
         transform.SetParent(snapTarget, true);
+        // stop attack
+        GameManager.Instance.currentEvent.EndEvent();
 
         snapping = true;
 

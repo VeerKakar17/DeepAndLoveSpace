@@ -44,7 +44,7 @@ public class HeartEntry : AttackEntry
 
     public override void Process()
     {
-        BulletSpawner.Instance.SpawnHeart(position);
+        GameManager.Instance.SpawnHeart(position);
         Debug.Log("Spawning Heart at position: " + position);
     }
 }

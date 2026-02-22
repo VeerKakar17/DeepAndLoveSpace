@@ -22,7 +22,7 @@ public class GameEvent
 
     public virtual void EndEvent()
     {
-        BulletSpawner.Instance.ClearBullets();
+        BulletSpawner.Instance.ResetBullets();
         GameManager.Instance.StartNextEvent();
     }
 
