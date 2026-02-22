@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8576180187297329068}
   - component: {fileID: 2035515440426473695}
   - component: {fileID: 8868947479499169983}
-  - component: {fileID: 3555331135686720857}
   - component: {fileID: 774824992526145002}
   - component: {fileID: 8984295303294759619}
   m_Layer: 0
@@ -111,33 +110,6 @@ MonoBehaviour:
   snapSpeed: 5
   snapInstantly: 0
   touched: 0
---- !u!50 &3555331135686720857
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6884689951715011312}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 1
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &774824992526145002
 MonoBehaviour:
   m_ObjectHideFlags: 0

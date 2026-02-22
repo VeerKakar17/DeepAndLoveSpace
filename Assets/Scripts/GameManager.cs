@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
 
     public List<GameEvent> events = new List<GameEvent>();
     public GameEvent currentEvent;
+
+    [Header("Health Settings")]
+    public const int MAX_LIVES = 3;
+    public int lives = MAX_LIVES;
         
     public void StartNextEvent()
     {
@@ -78,7 +82,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadSampleLevel() {
-        
+        lives = MAX_LIVES;
         events.Clear();
 
         events.Add(new DialogueEvent("Example Dialogue Hello"));
@@ -88,7 +92,7 @@ public class GameManager : MonoBehaviour
             float angle = Random.Range(-20f, 20f);
             angle -= 90.0f;
             Vector3 dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
-            e1.addEntry(i * 0.25f, new BulletEntry(new Bullet(dir, 2f, "bullet_base", Color.yellow, 0.1f, "none")));
+            e1.addEntry(i * 0.25f, new BulletEntry(new Bullet(dir, 2f, "bullet_base", Color.yellow, 0.1f, "Bullet")));
         }
 
         Attack e2 = new Attack();
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
             float angle = Random.Range(-20f, 20f);
             angle -= 90.0f;
             Vector3 dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
-            e2.addEntry(i * 0.25f, new BulletEntry(new Bullet(dir, 2f, "bullet_big", Color.red, 0.25f, "none")));
+            e2.addEntry(i * 0.25f, new BulletEntry(new Bullet(dir, 2f, "bullet_big", Color.red, 0.25f, "Bullet")));
 
             if (i == 4) {
                 e2.addEntry(i * 0.25f + 0.125f, new HeartEntry(new Vector3(0, -1.0f, 0)));
@@ -138,5 +142,17 @@ public class GameManager : MonoBehaviour
         }
 
         currentEvent?.UpdateEvent();
+    }
+
+    public void LoseLife()
+    {
+        lives--;
+        Debug.Log("Lives: " + lives + " left.");
+        if (lives < 0)
+        {
+            Debug.Log("Player lost");
+            BulletSpawner.Instance.ClearBullets();
+            LoadSampleLevel();
+        }
     }
 }
