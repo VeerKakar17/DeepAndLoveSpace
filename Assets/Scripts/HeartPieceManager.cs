@@ -111,6 +111,8 @@ public class HeartPieceManager : MonoBehaviour
             {
                 snap.Reactivate();
             }
+
+            
         }
     }
 

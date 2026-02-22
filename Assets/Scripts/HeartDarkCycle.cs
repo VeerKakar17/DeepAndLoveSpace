@@ -29,6 +29,18 @@ public class HeartDarkCycle : MonoBehaviour
     private float circleTime = 0f;
     public bool isDark = false;
 
+    public bool isPaused = false;
+
+    public void PauseCycle()
+    {
+        isPaused = true;
+    }
+
+    public void ResumeCycle()
+    {
+        isPaused = false;
+    }
+
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -105,6 +117,7 @@ public class HeartDarkCycle : MonoBehaviour
 
     public void FixColor()
     {
+        if (sr == null) return;
         if (isDark)
         {
             sr.color = fullDarkColor;

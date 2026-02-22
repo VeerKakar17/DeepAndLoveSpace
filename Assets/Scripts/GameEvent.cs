@@ -91,6 +91,29 @@ public class DialogueEvent : GameEvent
 
 }
 
+
+
+public class WaitForZEvent : GameEvent
+{
+
+    public WaitForZEvent() : base()
+    {
+    }
+
+    public override void StartEvent()
+    {
+    }
+
+    public override void UpdateEvent()
+    {
+        if (Keyboard.current.zKey.wasPressedThisFrame)
+        {
+            EndEvent();
+        }
+    }
+
+}
+
 public class NextLevelEvent : GameEvent
 {
 

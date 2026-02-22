@@ -33,6 +33,10 @@ public class SnapToTarget : MonoBehaviour
         HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
         if (darkCycle != null)
             darkCycle.enabled = true;
+            darkCycle.isDark = false;
+            darkCycle.FixColor();
+            
+            darkCycle.ResumeCycle();
 
         CircleCollider2D col = GetComponent<CircleCollider2D>();
         if (col != null)
@@ -51,6 +55,7 @@ public class SnapToTarget : MonoBehaviour
             darkCycle.FixColor();
             GetComponent<HeartPiece>().isDark = darkCycle.isDark;
             darkCycle.enabled = false;
+            darkCycle.PauseCycle();
         }
         // remove circle collider 2d
         CircleCollider2D col = GetComponent<CircleCollider2D>();

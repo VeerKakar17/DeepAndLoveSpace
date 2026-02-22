@@ -11,6 +11,10 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+
+    public GameObject StartingScene;
+    public GameObject EndingScene;
+
     public static GameManager Instance;
 
     public Transform patternContainer;
@@ -24,7 +28,7 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     private bool isSlowMo = false;
 
-    int currentLevel = 0;
+    int currentLevel = -1;
 
 
     public List<GameEvent> events = new List<GameEvent>();
@@ -270,12 +274,21 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
 
-        LoadLevelFromNumber(currentLevel);
+        StartingScene.SetActive(true);
+
+        events.Clear();
+        events.Add(new WaitForZEvent());
+        events.Add(new NextLevelEvent());
+        StartNextEvent();
 
     }
 
     public void LoadLevelFromNumber(int i)
     {
+
+        
+        StartingScene.SetActive(false);
+
         if (i == 0)
         {
             StartCoroutine(LoadLevelConquest());
@@ -288,9 +301,15 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(LoadLevelFamine());
         }
-        else if (i >= 3)
+        else if (i == 3)
         {
             StartCoroutine(LoadLevelDeath());
+        }
+        else
+        {
+            Debug.Log("No more levels to load. Ending game.");
+            StartingScene.SetActive(false);
+            EndingScene.SetActive(true);
         }
     }
 
