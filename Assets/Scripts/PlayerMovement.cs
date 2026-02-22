@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
 
     InputAction moveAction;
     InputAction focusAction;
-    InputAction invincibilityAction;
 
     const float MOVE_SPEED = 5f;
     const float FOCUS_SPEED = MOVE_SPEED / 3;
@@ -27,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     {
         moveAction = InputSystem.actions.FindAction("Move");
         focusAction = InputSystem.actions.FindAction("Sprint");
-        invincibilityAction = InputSystem.actions.FindAction("Jump");
 
         rb = gameObject.GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
@@ -49,47 +47,6 @@ public class PlayerMovement : MonoBehaviour
             Vector2 norm = Vector2.Normalize(dist);
             gameObject.transform.position = movementBox.gameObject.transform.position + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)) + new Vector3(0f, 0f, playerZ - movementBox.gameObject.transform.position.z);
         }
-
-        // Handle Invincibility
-        if (invincible)
-        {
-            timer += Time.deltaTime;
-            if (timer >= invincibleTime)
-            {
-                invincible = false;
-                timer -= invincibleTime;
-                
-                Color materialColor = renderer.material.color;
-                materialColor.a = 1f;
-                renderer.material.color = materialColor;
-
-                Debug.Log("Stopped Invincible");
-            }
-        } else if (timer < INVINCIBLE_COOLDOWN_TIME)
-        {
-            timer += Time.deltaTime;
-            if (timer >= INVINCIBLE_COOLDOWN_TIME)
-            {
-                Debug.Log("Cooldown Done");
-            }
-        }
-
-        if (invincibilityAction.IsPressed() && canGoInvincible())
-        {
-            invincible = true;
-
-            Color materialColor = renderer.material.color;
-            materialColor.a = INVINCIBLE_FADED_ALPHA;
-            renderer.material.color = materialColor;
-
-            timer = 0;
-            Debug.Log("Went Invincible");
-        }
-    }
-
-    private bool canGoInvincible()
-    {
-        return !invincible && timer >= INVINCIBLE_COOLDOWN_TIME;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -103,6 +60,15 @@ public class PlayerMovement : MonoBehaviour
             timer = 0;
             GameManager.Instance.LoseLife();
             other.gameObject.GetComponent<BulletMovement>().ClearBullet();
+
+            StartCoroutine(DeathRoutine());
+        } else if (other.CompareTag("DamageZone"))
+        {
+            if (invincible) return;
+
+            invincible = true;
+            timer = 0;
+            GameManager.Instance.LoseLife();
 
             StartCoroutine(DeathRoutine());
         }

@@ -86,7 +86,7 @@ public class BulletSpawner : MonoBehaviour
         return sprite;
     }
 
-    public void SpawnBullet(
+    public BulletMovement SpawnBullet(
         Vector3 position,
         float angle,
         Bullet bullet,
@@ -108,9 +108,11 @@ public class BulletSpawner : MonoBehaviour
             bullet.hitboxRadius,
             bullet.tagName
         );
+
+        return bm;
     }
 
-    public void SpawnBullet(
+    public BulletMovement SpawnBullet(
         Vector3 position,
         float angle,
         Bullet bullet,
@@ -118,7 +120,7 @@ public class BulletSpawner : MonoBehaviour
     )
     {
         AnimationCurve speedCurve = new AnimationCurve(new Keyframe(0, speed));
-        SpawnBullet(position, angle, bullet, speedCurve);
+        return SpawnBullet(position, angle, bullet, speedCurve);
     }
 
     public void ResetBullets()

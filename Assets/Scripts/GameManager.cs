@@ -140,11 +140,16 @@ public class GameManager : MonoBehaviour
         yield return UnLoadLevel();
 
         events.Clear();
-        events.Add(new DialogueEvent("WAR: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
-        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
-        events.Add(new DialogueEvent("WAR: You dare imply that I am ignorant? You� wretched thing?", true));
-        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
-        
+        events.Add(new DialogueEvent("WAR: I will chop off all your limbs if you disappoint me. Speak now, human!\r\n", true));
+        events.Add(new DialogueEvent("Calm your fury. Through your neverending violence you have yet to consider the tender embrace of love. I will teach you.\r\n", false));
+        events.Add(new DialogueEvent("WAR: This mere human dares to challenge me? Prepare yourself to be impaled by my sword!\r\n", true));
+
+        GameObject patternObj = Resources.Load<GameObject>("WarAttackPrefab2");
+        events.Add(new PatternEvent(patternObj));
+
+        GameObject patternObj2 = Resources.Load<GameObject>("WarAttackPrefab1");
+        events.Add(new PatternEvent(patternObj2));
+
         yield return SceneManager.LoadSceneAsync("Main Scene War", LoadSceneMode.Additive);
 
         LoadLevel();
@@ -201,7 +206,7 @@ public class GameManager : MonoBehaviour
 
     public void Start() {
 
-        StartCoroutine(LoadLevelConquest());
+        StartCoroutine(LoadLevelWar());
 
     }
 
@@ -236,7 +241,7 @@ public class GameManager : MonoBehaviour
         lives--;
         Debug.Log("Lives: " + lives + " left.");
 
-        BulletSpawner.Instance.ResetBullets();
+        //BulletSpawner.Instance.ResetBullets();
 
         if (lives < 0)
         {
