@@ -112,50 +112,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Heart1_0
-      rect:
-        serializedVersion: 2
-        x: 167
-        y: 674
-        width: 54
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bb4475f996d0ca480800000000000000
-      internalID: -8886713217412807493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heart1_1
-      rect:
-        serializedVersion: 2
-        x: 223
-        y: 619
-        width: 55
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7137093fe4fbfc820800000000000000
-      internalID: 2940779427510907671
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Heart1_2
       rect:
         serializedVersion: 2
@@ -164,7 +120,7 @@ TextureImporter:
         width: 264
         height: 364
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -177,55 +133,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Heart1_3
-      rect:
-        serializedVersion: 2
-        x: 282
-        y: 356
-        width: 99
-        height: 295
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a59a8a8a77a8cc870800000000000000
-      internalID: 8704484426335693146
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heart1_4
-      rect:
-        serializedVersion: 2
-        x: 566
-        y: 544
-        width: 168
-        height: 123
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d9e056ea96f3d7ad0800000000000000
-      internalID: -2702934478222455139
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3b4404d37813b481ea592e6115e74725
     internalID: 0
     vertices: []
     indices: 
@@ -240,6 +152,7 @@ TextureImporter:
       Heart1_2: 5784153309599565916
       Heart1_3: 8704484426335693146
       Heart1_4: -2702934478222455139
+      Heart1_5: -760596885
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
