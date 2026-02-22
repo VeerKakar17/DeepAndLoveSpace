@@ -66,5 +66,10 @@ public class WarFireLine : MonoBehaviour
             GameObject line = Instantiate(damageLinePrefab, new Vector3(x, -2.16f, GameManager.Instance.player.gameObject.transform.position.z + 1), Quaternion.identity);
             line.transform.parent = gameObject.transform;
         }
+
+        if (timerA >= 8f)
+        {
+            HeartPieceManager.Instance.ActivateNextPiece();
+        }
     }
 }
