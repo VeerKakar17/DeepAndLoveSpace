@@ -97,6 +97,8 @@ public class BulletSpawner : MonoBehaviour
 
         Sprite sprite = GetSprite(bullet.sprite_name);
 
+        position.z = this.transform.position.z; // ensure bullet is on the same plane as spawner
+
         BulletMovement bm = bulletObj.GetComponent<BulletMovement>();
         bm.Initialize(
             this,
