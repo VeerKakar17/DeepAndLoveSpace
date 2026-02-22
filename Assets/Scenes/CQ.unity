@@ -186,7 +186,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 948176324317147129, guid: 6d8239d42adeb4b5d89735ebaca883b2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -396,6 +396,59 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+--- !u!1 &167921745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167921747}
+  - component: {fileID: 167921746}
+  m_Layer: 0
+  m_Name: HeartPieceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &167921746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167921745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3119d36cb17c746019be9c0cc93f7bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPieceManager
+  pieces:
+  - {fileID: 383774169}
+  - {fileID: 535297559}
+  - {fileID: 1252484163}
+  - {fileID: 2082910875}
+  - {fileID: 1618819476}
+  - {fileID: 2024121879}
+  - {fileID: 633503411}
+  - {fileID: 331477191}
+--- !u!4 &167921747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167921745}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.30538, y: 0.17098, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &283544526
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +540,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &331477191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 602801108}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &374965558
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,6 +642,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &383774169 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 500720946}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &490957007
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +772,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart_Piece (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.15
@@ -762,6 +841,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+--- !u!114 &535297559 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 62698257}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &567292569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +1090,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+--- !u!114 &633503411 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 2135309478}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &782750981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1376,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+--- !u!114 &1252484163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 1213700817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &1403481350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,6 +1927,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1618819476 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 1427733608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &1665931208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,7 +2005,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5784153309599565916, guid: 570868aad498d44d68a930340854eefa, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2213,6 +2336,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2024121879 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 2040942794}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1 &2033654815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2397,6 +2531,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+--- !u!114 &2082910875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6525869616747619086, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  m_PrefabInstance: {fileID: 104474044}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179eb9661a4d04a55805d6c2192e22f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartPiece
 --- !u!1001 &2135309478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2517,3 +2662,4 @@ SceneRoots:
   - {fileID: 2040942794}
   - {fileID: 2135309478}
   - {fileID: 602801108}
+  - {fileID: 167921747}

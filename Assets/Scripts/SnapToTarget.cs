@@ -11,10 +11,12 @@ public class SnapToTarget : MonoBehaviour
     public bool touched = false;
 
     private HeartPiece heartPiece;
+    private HeartPieceManager manager;
 
     void Start()
     {
         heartPiece = GetComponent<HeartPiece>();
+        manager = GetComponent<HeartPieceManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -34,9 +36,9 @@ public class SnapToTarget : MonoBehaviour
         {
             Destroy(darkCycle);
         }
-        // reparent
-        transform.SetParent(snapTarget, true);
-        // stop attack
+        // reparent?
+        // transform.SetParent(snapTarget, true);
+        // stop attack code here
         GameManager.Instance.currentEvent.EndEvent();
 
         snapping = true;
@@ -73,6 +75,11 @@ public class SnapToTarget : MonoBehaviour
 
             if (heartPiece != null)
                 heartPiece.OnSnapped();
+            if (manager != null)
+            {
+                Debug.Log("Activating next piece");
+                manager.ActivateNextPiece();
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ public class HeartPiece : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         originalScale = transform.localScale;
+        
     }
 
     public void Initialize(HeartPieceManager m, int index)

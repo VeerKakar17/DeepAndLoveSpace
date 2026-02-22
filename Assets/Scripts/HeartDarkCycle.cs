@@ -45,7 +45,6 @@ public class HeartDarkCycle : MonoBehaviour
 
     void HandleCircularMotion()
     {
-    
         circleTime += Time.deltaTime * circleSpeed;
 
         float x = Mathf.Cos(circleTime) * circleRadius;

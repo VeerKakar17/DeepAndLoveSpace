@@ -14,6 +14,7 @@ public class HeartPieceManager : MonoBehaviour
         {
             pieces[i].Initialize(this, i);
         }
+        ActivateNextPiece();
     }
 
     public void ActivateNextPiece()
