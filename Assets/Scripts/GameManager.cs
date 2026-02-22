@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueTextPlayer;
     [SerializeField] private GameObject pressZIndicator;
     private Coroutine pressZCoroutine = null;
-        
+
     public void StartNextEvent()
     {
         if (events.Count > 0)
@@ -104,7 +104,8 @@ public class GameManager : MonoBehaviour
         isSlowMo = false;
     }
 
-    public IEnumerator LoadLevelConquest() {
+    public IEnumerator LoadLevelConquest()
+    {
 
         yield return UnLoadLevel();
 
@@ -117,13 +118,13 @@ public class GameManager : MonoBehaviour
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
         events.Add(new DialogueEvent("CONQUEST: You dare imply that I am ignorant? You� wretched thing?", true));
         events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
-        
+
         events.Add(new PatternEvent(patternObj));
-        
+
         events.Add(new DialogueEvent("Example Attack Incoming", true));
 
         events.Add(new PatternEvent(patternObj2));
-        
+
         yield return SceneManager.LoadSceneAsync("Main Scene Conquest", LoadSceneMode.Additive);
 
         LoadLevel();
@@ -131,11 +132,12 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
-        
+
     }
 
-    
-    public IEnumerator LoadLevelWar() {
+
+    public IEnumerator LoadLevelWar()
+    {
 
         yield return UnLoadLevel();
 
@@ -153,9 +155,6 @@ public class GameManager : MonoBehaviour
         GameObject patternObj2 = Resources.Load<GameObject>("WarAttackPrefab1");
         events.Add(new PatternEvent(patternObj2));
 
-        GameObject patternObj = Resources.Load<GameObject>("WarAttackPrefab2");
-        events.Add(new PatternEvent(patternObj));        
-
         yield return SceneManager.LoadSceneAsync("Main Scene War", LoadSceneMode.Additive);
 
         LoadLevel();
@@ -163,11 +162,12 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
-        
+
     }
 
 
-    public IEnumerator LoadLevelFamine() {
+    public IEnumerator LoadLevelFamine()
+    {
 
         yield return UnLoadLevel();
 
@@ -177,12 +177,8 @@ public class GameManager : MonoBehaviour
         events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
         events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
 
-        GameObject patternObj = Resources.Load<GameObject>("FamineAttackPrefab2");
-        events.Add(new PatternEvent(patternObj));
-
         yield return SceneManager.LoadSceneAsync("Main Scene Famine", LoadSceneMode.Additive);
 
-        
         GameObject patternObj2 = Resources.Load<GameObject>("FamineAttackPrefab2");
         events.Add(new PatternEvent(patternObj2));
 
@@ -195,21 +191,46 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
-        
+
+    }
+
+    public IEnumerator LoadLevelDeath()
+    {
+
+        yield return UnLoadLevel();
+
+        events.Clear();
+        events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
+        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
+        events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
+        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
+
+        yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
+
+        GameObject patternObj = Resources.Load<GameObject>("DeathAttack1");
+        events.Add(new PatternEvent(patternObj));
+
+
+        LoadLevel();
+        Debug.Log("Finished loading scene, starting events.");
+
+        StartNextEvent();
+        Debug.Log("Started first event.");
+
     }
 
 
 
     public void LoadLevel()
     {
-        heartPieceManager.heartSnapTargetGroupTransform.SetParent(bossControl.HeartParent,false);
+        heartPieceManager.heartSnapTargetGroupTransform.SetParent(bossControl.HeartParent, false);
         lives = MAX_LIVES;
     }
 
     public IEnumerator UnLoadLevel()
     {
-        heartPieceManager.heartSnapTargetGroupTransform.SetParent(null,false);
-        
+        heartPieceManager.heartSnapTargetGroupTransform.SetParent(null, false);
+
         // unload all scenes except the active one
         Scene active = SceneManager.GetActiveScene();
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -221,9 +242,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Start() {
+    public void Start()
+    {
 
-        StartCoroutine(LoadLevelFamine());
+        StartCoroutine(LoadLevelDeath());
 
     }
 
@@ -273,7 +295,8 @@ public class GameManager : MonoBehaviour
         if (isEnemy)
         {
             curr = dialogueText;
-        } else
+        }
+        else
         {
             curr = dialogueTextPlayer;
         }
@@ -287,14 +310,15 @@ public class GameManager : MonoBehaviour
             {
                 TMP_CharacterInfo lastChar = curr.textInfo.characterInfo[dialogue.Length - 1];
                 Vector3 worldBottomRight = curr.transform.TransformPoint(lastChar.bottomRight);
-                pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y-60f, pressZIndicator.transform.position.z);
-            } else
+                pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y - 60f, pressZIndicator.transform.position.z);
+            }
+            else
             {
                 TMP_CharacterInfo firstChar = curr.textInfo.characterInfo[0];
                 Vector3 worldTopRight = curr.transform.TransformPoint(firstChar.topRight);
-                pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldTopRight.y+15f, pressZIndicator.transform.position.z);
+                pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldTopRight.y + 15f, pressZIndicator.transform.position.z);
             }
-            
+
             pressZCoroutine = StartCoroutine(PressZCoroutine());
         }
     }
