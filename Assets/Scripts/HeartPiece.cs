@@ -12,8 +12,8 @@ public class HeartPiece : MonoBehaviour
     private SpriteRenderer sr;
 
     Vector3 originalScale;
-    public float rainbowSpeed = .1f;
-    public float glowIntensity = 1.5f;
+    public float rainbowSpeed = .00001f;
+    public float glowIntensity = 1.0f;
     private float hue = 0f;
     private Color baseColor;
 
@@ -77,7 +77,7 @@ public class HeartPiece : MonoBehaviour
             float pulse = 1f + Mathf.Sin(Time.time * 3f) * 0.1f;
             transform.localScale = originalScale * 1.25f * pulse;
 
-            sr.color = Color.HSVToRGB(hue, 1f, glowIntensity);
+            sr.color = Color.HSVToRGB(hue, .7f, glowIntensity);
 
             yield return null;
         }
