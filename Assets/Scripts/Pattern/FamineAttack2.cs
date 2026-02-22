@@ -7,6 +7,7 @@ public class FamineAttack2 : MonoBehaviour
     private Coroutine radialCoroutine = null;
 
     public RectTransform spawnRect;
+    private float BOX_SIZE = 4f;
 
     Bullet bulletA;
 
@@ -19,6 +20,9 @@ public class FamineAttack2 : MonoBehaviour
             "no"
         );
 
+        StartCoroutine(MoveBoxX());
+        StartCoroutine(MoveBoxY());
+        StartCoroutine(MoveBoxScale());
         radialCoroutine = StartCoroutine(RadialCoroutine());
     }
 
@@ -41,8 +45,15 @@ public class FamineAttack2 : MonoBehaviour
             }
             
             yield return new WaitForSeconds(2.6f);
-
+            SpawnHeart();
         }
+    }
+    private void SpawnHeart()
+    {
+        float y = Random.Range(-4f, 0f);
+        int x = Random.Range(2, 3);
+        x *= (Random.Range(0, 2) == 0 ? 1 : -1);
+        HeartPieceManager.Instance.ActivateNextPiece(new Vector2(x, y));
     }
 
     private void DoRadialAttack(Vector3 spawnPos)
@@ -62,4 +73,38 @@ public class FamineAttack2 : MonoBehaviour
         }
     }
 
+    private IEnumerator MoveBoxX()
+    {
+        const float SECONDS = 4f;
+        yield return StartCoroutine(GameManager.Instance.player.movementBox.updateXPos(1.5f-GameManager.Instance.player.movementBox.gameObject.transform.position.x, SECONDS / 2));
+        while (true)
+        {
+            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateXPos(-3f, SECONDS));
+            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateXPos(3f, SECONDS));
+        }
+    }
+
+    private IEnumerator MoveBoxScale()
+    {
+        const float SECONDS = 5.1f;
+
+        yield return StartCoroutine(GameManager.Instance.player.movementBox.setScale(1.2f * BOX_SIZE, SECONDS / 2));
+        while (true)
+        {
+            yield return StartCoroutine(GameManager.Instance.player.movementBox.setScale(1.3f * BOX_SIZE, SECONDS));
+            yield return StartCoroutine(GameManager.Instance.player.movementBox.setScale(1.2f * BOX_SIZE, SECONDS));
+        }
+    }
+
+    private IEnumerator MoveBoxY()
+    {
+        const float SECONDS = 2.8f;
+        yield return StartCoroutine(GameManager.Instance.player.movementBox.updateYPos(-2.85f - GameManager.Instance.player.movementBox.gameObject.transform.position.y, SECONDS / 2));
+
+        while (true)
+        {
+            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateYPos(0.75f, SECONDS));
+            yield return StartCoroutine(GameManager.Instance.player.movementBox.updateYPos(-0.75f, SECONDS));
+        }
+    }
 }

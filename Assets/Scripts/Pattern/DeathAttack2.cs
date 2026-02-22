@@ -10,11 +10,20 @@ public class DeathAttack2 : MonoBehaviour
 
     Bullet bulletA;
 
+    Bullet bulletB;
+
     void Awake()
     {
         bulletA = new Bullet(
-            "bullet_drop",
-            new Color(0.4f, 0.1f, 0.45f),
+            "bullet_moon",
+            new Color(0.2f, 0.1f, 0.92f),
+            0.12f,
+            "no"
+        );
+
+        bulletB = new Bullet(
+            "bullet_dot",
+            new Color(1f, 0.85f, 1f),
             0.12f,
             "no"
         );
@@ -35,7 +44,8 @@ public class DeathAttack2 : MonoBehaviour
                     + spawnRect.right * Random.Range(-spawnRect.rect.width / 2f, spawnRect.rect.width / 2f)
                     + spawnRect.up * Random.Range(-spawnRect.rect.height / 2f, spawnRect.rect.height / 2f);
 
-                DoSpiralAttack(randomPos);
+                DoRotatingCross(randomPos, 1f);
+                DoOrbiters(randomPos, -1f);
 
                 yield return new WaitForSeconds(0.6f);
             }
@@ -45,58 +55,38 @@ public class DeathAttack2 : MonoBehaviour
         }
     }
 
-    // Spiral attack, basic.
-    private float spiralAngle = 0f;
-
-    // Coroutine for spiral.
-    private IEnumerator SpiralCoroutine(Vector3 spawnPos)
+    private void DoRotatingCross(Vector3 spawnPos, float direction)
     {
-        while (true)
+        float rotation = Time.time * 120f * direction;
+
+        for (int i = 0; i < 4; i++)
         {
-            // For speed of spiral.
-            spiralAngle += 8f;
-            BulletSpawner.Instance.SpawnBullet(spawnPos, spiralAngle, bulletA, 3f);
-            yield return new WaitForSeconds(0.03f);
-        }
-    }
+            float angle = rotation + i * 90f;
 
-    private IEnumerator SpiralRadialCoroutine(Vector3 spawnPos)
-    {
-        const int BULLET_COUNT = 20;
-        const float ROTATION_SPEED = 30f;
-        const float FIRE_RATE = 0.1f;
-        const float DURATION = 5f;
-
-        float elapsed = 0f;
-        float rotationOffset = 0f;
-
-        while (elapsed < DURATION)
-        {
-            rotationOffset += ROTATION_SPEED * FIRE_RATE;
-
-            for (int i = 0; i < BULLET_COUNT; i++)
+            for (int j = -4; j <= 4; j++)
             {
-                float angle = rotationOffset + (360f / BULLET_COUNT) * i;
-
-                AnimationCurve spd = new AnimationCurve();
-                spd.AddKey(0f, 1f);
-                spd.AddKey(0.5f, 3f);
-
-                BulletSpawner.Instance.SpawnBullet(spawnPos, angle, bulletA, spd);
+                float offset = j * 10f;
+                BulletSpawner.Instance.SpawnBullet(spawnPos, angle + offset, bulletA, 4f);
             }
-
-            yield return new WaitForSeconds(FIRE_RATE);
-            elapsed += FIRE_RATE;
         }
     }
 
-    private Coroutine spiralRoutine;
-    private void DoSpiralAttack(Vector3 spawnPos)
+    private void DoOrbiters(Vector3 spawnPos, float direction)
     {
-        if (spiralRoutine != null)
-            StopCoroutine(spiralRoutine);
+        const int BULLET_COUNT = 8;
 
-        spiralRoutine = StartCoroutine(SpiralRadialCoroutine(spawnPos));
+        float rotation = Time.time * 90f * direction;
+
+        for (int i = 0; i < BULLET_COUNT; i++)
+        {
+            float angle = rotation + (360f / BULLET_COUNT) * i;
+
+            AnimationCurve spd = new AnimationCurve();
+            spd.AddKey(0f, 1f);
+            spd.AddKey(1.5f, 2f);
+
+            BulletSpawner.Instance.SpawnBullet(spawnPos, angle, bulletB, spd);
+        }
     }
 
 }
