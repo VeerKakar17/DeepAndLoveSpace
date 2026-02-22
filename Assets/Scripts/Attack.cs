@@ -29,7 +29,7 @@ public class BulletEntry : AttackEntry
 
     public override void Process()
     {
-        BulletSpawner.Instance.SpawnBullet(bullet);
+        //BulletSpawner.Instance.SpawnBullet(bullet);
     }
 }
 

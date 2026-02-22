@@ -37,6 +37,7 @@ public class BulletMovement : MonoBehaviour
     
     public void Initialize(
         BulletSpawner p,
+        Vector3 pos,
         float angle,
         float spd,
         Sprite sprite,
@@ -47,7 +48,7 @@ public class BulletMovement : MonoBehaviour
     {
         pool = p;
 
-
+        transform.position = pos;
         transform.rotation = Quaternion.Euler(0, 0, angle);
         
         angle -= 90.0f;

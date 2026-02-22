@@ -5,7 +5,6 @@ using UnityEngine;
 
 
 public class Bullet {
-    public float angle;
     public float speed;
     public string sprite_name;
     public Color color;
@@ -13,7 +12,6 @@ public class Bullet {
     public string tagName;
 
     public Bullet(
-        float ang,
         float spd,
         string spr,
         Color col,
@@ -21,7 +19,6 @@ public class Bullet {
         string tag
     )
     {
-        angle = ang;
         speed = spd;
         sprite_name = spr;
         color = col;
@@ -92,6 +89,8 @@ public class BulletSpawner : MonoBehaviour
     }
 
     public void SpawnBullet(
+        Vector3 position,
+        float angle,
         Bullet bullet
     )
     {
@@ -102,7 +101,8 @@ public class BulletSpawner : MonoBehaviour
         BulletMovement bm = bulletObj.GetComponent<BulletMovement>();
         bm.Initialize(
             this,
-            bullet.angle,
+            position,
+            angle,
             bullet.speed,
             sprite,
             bullet.color,

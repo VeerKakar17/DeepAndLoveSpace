@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public List<GameEvent> events = new List<GameEvent>();
     public GameEvent currentEvent;
 
+    public GameObject player;
+
 
     public GameObject bossHeartSnapTarget;
     public GameObject heartPrefab;
@@ -105,34 +107,8 @@ public class GameManager : MonoBehaviour
 
         events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf radsgsdr fgserdifgjhyuiersdijgfh sydrfghaesrdgfsrfeg"));
 
-        Attack e1 = new Attack();
-        for (int i = 0; i < 24; i++) {
-            float angle = Random.Range(-25f, 25f);
-            float speed = Random.Range(2.5f, 3.5f);
-            e1.addEntry(i * 0.15f, new BulletEntry(new Bullet(angle, speed, "bullet_arrow", Color.yellow, 0.1f, "none")));
-        }
-        for (int i = 25; i < 35; i++) {
-            float angle = Random.Range(-15f, 15f);
-            float speed = Random.Range(2.0f, 2.5f);
-            e1.addEntry(i * 0.15f, new BulletEntry(new Bullet(angle, speed, "bullet_bigarrow", Color.yellow, 0.2f, "none")));
-        }
-
-        Attack e2 = new Attack();
-        for (int i = 0; i < 48; i++) {
-            float angle = Random.Range(-15f, 15f);
-            Vector3 dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
-            e2.addEntry(i * 0.25f, new BulletEntry(new Bullet(angle, 2.2f, "bullet_big", Color.red, 0.25f, "none")));
-
-            if (i == 4) {
-                e2.addEntry(i * 0.25f + 0.125f, new HeartEntry(new Vector3(0, -1.0f, 0)));
-            }
-        }
-
-        events.Add(new AttackEvent(e1));
-
         events.Add(new DialogueEvent("Example Attack Incoming"));
         
-        events.Add(new AttackEvent(e1));
     }
 
     public void Start() {
