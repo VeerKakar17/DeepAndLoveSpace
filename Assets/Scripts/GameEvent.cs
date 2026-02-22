@@ -190,6 +190,12 @@ public class PostBattleDialogueEvent : GameEvent
             }
         }
     }
+
+    public override void EndEvent()
+    {
+        GameManager.Instance.ClearDialogue();
+        GameManager.Instance.StartNextEvent();
+    }
 }
 
 public class PatternEvent : GameEvent

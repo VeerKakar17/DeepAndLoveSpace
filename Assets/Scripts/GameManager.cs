@@ -460,6 +460,7 @@ public class GameManager : MonoBehaviour
 
     public void ClearDialogue()
     {
+        Debug.Log("test");
         dialogueText.text = "";
         dialogueTextPlayer.text = "";
         pressZIndicator.SetActive(false);

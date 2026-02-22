@@ -40,7 +40,7 @@ public class DeathAttack1 : MonoBehaviour
                 yield return new WaitForSeconds(0.6f);
             }
 
-            yield return new WaitForSeconds(2.6f);
+            yield return new WaitForSeconds(3.5f);
             HeartPieceManager.Instance.ActivateNextPiece();
         }
     }
