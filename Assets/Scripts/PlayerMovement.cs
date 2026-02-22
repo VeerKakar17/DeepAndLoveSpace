@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
     private const float INVINCIBLE_COOLDOWN_TIME = 2f;
     private float invincibleTime = 0.5f;
     private float timer = INVINCIBLE_COOLDOWN_TIME;
+    private const float INVINCIBLE_FADED_ALPHA = 0.4f;
 
     private Rigidbody2D rb;
+    Renderer renderer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         invincibilityAction = InputSystem.actions.FindAction("Jump");
 
         rb = gameObject.GetComponent<Rigidbody2D>();
+        renderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -55,6 +59,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 invincible = false;
                 timer -= invincibleTime;
+                
+                Color materialColor = renderer.material.color;
+                materialColor.a = 1f;
+                renderer.material.color = materialColor;
+
                 Debug.Log("Stopped Invincible");
             }
         } else if (timer < INVINCIBLE_COOLDOWN_TIME)
@@ -69,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
         if (invincibilityAction.IsPressed() && canGoInvincible())
         {
             invincible = true;
+
+            Color materialColor = renderer.material.color;
+            materialColor.a = INVINCIBLE_FADED_ALPHA;
+            renderer.material.color = materialColor;
+
             timer = 0;
             Debug.Log("Went Invincible");
         }
@@ -89,9 +103,54 @@ public class PlayerMovement : MonoBehaviour
             invincible = true;
             timer = 0;
             GameManager.Instance.LoseLife();
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<BulletMovement>().ClearBullet();
 
-            gameObject.transform.position = movementBox.gameObject.transform.position;
+            StartCoroutine(DeathRoutine());
         }
     }
+
+    private IEnumerator DeathRoutine()
+    {
+        // Fade color
+        Color materialColor = renderer.material.color;
+        materialColor.a = INVINCIBLE_FADED_ALPHA;
+        renderer.material.color = materialColor;
+
+        // Lerp to center
+        Vector2 startPos = gameObject.transform.position;
+        float elapsed = 0;
+        const float SECONDS = 0.2f;
+
+        while (elapsed < SECONDS)
+        {
+            float t = elapsed / SECONDS;
+            Vector2 lerpPos = Vector2.Lerp(startPos, movementBox.gameObject.transform.position, t);
+            gameObject.transform.position = new Vector3(lerpPos.x, lerpPos.y, gameObject.transform.position.z);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        gameObject.transform.position = new Vector3(movementBox.gameObject.transform.position.x, movementBox.gameObject.transform.position.y, gameObject.transform.position.z);
+        
+        timer = 0;
+        
+        // Flash invincibility
+        elapsed = 0;
+        bool isFaded = true;
+        for (int i = 0; i < 2; i++)
+        {
+            isFaded = !isFaded;
+
+            materialColor.a = isFaded? INVINCIBLE_FADED_ALPHA : 1f;
+            renderer.material.color = materialColor;
+
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        materialColor.a = 1f;
+        renderer.material.color = materialColor;
+        invincible = false;
+        timer = 0;
+    }
+
 }

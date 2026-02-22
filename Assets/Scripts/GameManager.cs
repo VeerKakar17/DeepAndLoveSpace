@@ -145,12 +145,13 @@ public class GameManager : MonoBehaviour
 
                 if (key == Keyboard.current.spaceKey)
                 {
-                    //TogglePause();
+                    // TogglePause();
                 }
 
                 if (key == Keyboard.current.leftShiftKey)
                 {
                     //TriggerSlowMotion();
+
                 }
             }
         }
