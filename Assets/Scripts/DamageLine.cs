@@ -22,8 +22,8 @@ public class DamageLine : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = gameObject.GetComponent<BoxCollider2D>();
         col.enabled = false;
-        spriteRenderer.color = Color.yellow;
-        swordSprite = Resources.Load<Sprite>("bullet_big_sword");
+        spriteRenderer.color = new Color(1f, 1f, 0f, 0f);
+        swordSprite = Resources.Load<Sprite>("Bullet_big_sword");
     }
 
     void Update()
@@ -31,13 +31,16 @@ public class DamageLine : MonoBehaviour
         timer += Time.deltaTime;
         if (state == 0)
         {
+            float alpha = Mathf.Clamp01(timer / ChargeTime);
             if (timer - lastTimestamp >= FlashTime)
             {
                 lastTimestamp = timer;
 
                 yellowColor = !yellowColor;
-                spriteRenderer.color = yellowColor ? Color.yellow : Color.orange;
             }
+            Color baseColor = yellowColor ? Color.yellow : new Color(1f, 0.5f, 0f);
+            spriteRenderer.color = new Color(baseColor.r, baseColor.g, baseColor.b, alpha);
+
             if (timer >= ChargeTime)
             {
                 state++;
