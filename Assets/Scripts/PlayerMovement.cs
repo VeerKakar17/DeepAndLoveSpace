@@ -113,30 +113,50 @@ public class PlayerMovement : MonoBehaviour
     {
         // Fade color
         Color materialColor = renderer.material.color;
-        materialColor.a = INVINCIBLE_FADED_ALPHA;
+        materialColor.a = 1f;
         renderer.material.color = materialColor;
 
-        // Lerp to center
-        Vector2 startPos = gameObject.transform.position;
+        // Fade Out
         float elapsed = 0;
-        const float SECONDS = 0.2f;
+        const float SECONDS = 0.1f;
 
         while (elapsed < SECONDS)
         {
             float t = elapsed / SECONDS;
-            Vector2 lerpPos = Vector2.Lerp(startPos, movementBox.gameObject.transform.position, t);
-            gameObject.transform.position = new Vector3(lerpPos.x, lerpPos.y, gameObject.transform.position.z);
+
+            materialColor.a = Mathf.Lerp(1f, 0f, t);
+            renderer.material.color = materialColor;
 
             elapsed += Time.deltaTime;
             yield return null;
         }
+        materialColor.a = 0f;
+        renderer.material.color = materialColor;
+
+        // Goto center
         gameObject.transform.position = new Vector3(movementBox.gameObject.transform.position.x, movementBox.gameObject.transform.position.y, gameObject.transform.position.z);
-        
         timer = 0;
+
+        // Fade in
+        elapsed = 0;
+
+        while (elapsed < SECONDS)
+        {
+            float t = elapsed / SECONDS;
+
+            materialColor.a = Mathf.Lerp(0f, 1f, t);
+            renderer.material.color = materialColor;
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        materialColor.a = 1f;
+        renderer.material.color = materialColor;
+
         
         // Flash invincibility
         elapsed = 0;
-        bool isFaded = true;
+        bool isFaded = false;
         for (int i = 0; i < 2; i++)
         {
             isFaded = !isFaded;
