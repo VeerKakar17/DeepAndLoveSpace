@@ -16,7 +16,7 @@ public class SnapToTarget : MonoBehaviour
     void Start()
     {
         heartPiece = GetComponent<HeartPiece>();
-        manager = GetComponent<HeartPieceManager>();
+        manager = FindObjectOfType<HeartPieceManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
