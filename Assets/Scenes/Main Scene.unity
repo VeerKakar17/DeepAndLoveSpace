@@ -3267,7 +3267,7 @@ MonoBehaviour:
   heartPieceManager: {fileID: 1457650310}
   slowMoScale: 0.3
   slowMoDuration: 2
-  currentLevel: 2
+  currentLevel: 0
   player: {fileID: 1384606630}
   bossControl: {fileID: 0}
   currStagePatterns: []

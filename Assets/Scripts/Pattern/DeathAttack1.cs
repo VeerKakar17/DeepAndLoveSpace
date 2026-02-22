@@ -27,7 +27,7 @@ public class DeathAttack1 : MonoBehaviour
         while (true)
         {
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 12; i++)
             {
 
                 // position is random position inside of spawn rect
@@ -35,12 +35,14 @@ public class DeathAttack1 : MonoBehaviour
                     + spawnRect.right * Random.Range(-spawnRect.rect.width / 2f, spawnRect.rect.width / 2f)
                     + spawnRect.up * Random.Range(-spawnRect.rect.height / 2f, spawnRect.rect.height / 2f);
 
-                DoSpiralAttack(randomPos);
+                float direction = i % 2 == 0 ? 1f : -1f;
 
-                yield return new WaitForSeconds(0.6f);
+                DoSpiralAttack(randomPos, direction);
+
+                yield return new WaitForSeconds(1.3f);
             }
 
-            yield return new WaitForSeconds(3.5f);
+            yield return new WaitForSeconds(1.5f);
             HeartPieceManager.Instance.ActivateNextPiece();
         }
     }
@@ -60,12 +62,12 @@ public class DeathAttack1 : MonoBehaviour
         }
     }
 
-    private IEnumerator SpiralRadialCoroutine(Vector3 spawnPos)
+    private IEnumerator SpiralRadialCoroutine(Vector3 spawnPos, float direction)
     {
         const int BULLET_COUNT = 20;
-        const float ROTATION_SPEED = 30f;
+        float ROTATION_SPEED = 30f * direction;
         const float FIRE_RATE = 0.1f;
-        const float DURATION = 5f;
+        const float DURATION = 0.9f;
 
         float elapsed = 0f;
         float rotationOffset = 0f;
@@ -91,12 +93,12 @@ public class DeathAttack1 : MonoBehaviour
     }
 
     private Coroutine spiralRoutine;
-    private void DoSpiralAttack(Vector3 spawnPos)
+    private void DoSpiralAttack(Vector3 spawnPos, float direction)
     {
         if (spiralRoutine != null)
             StopCoroutine(spiralRoutine);
 
-        spiralRoutine = StartCoroutine(SpiralRadialCoroutine(spawnPos));
+        spiralRoutine = StartCoroutine(SpiralRadialCoroutine(spawnPos, direction));
     }
 
 }

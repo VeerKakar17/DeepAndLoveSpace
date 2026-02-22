@@ -24,7 +24,7 @@ public class DeathAttack2 : MonoBehaviour
         bulletB = new Bullet(
             "bullet_dot",
             new Color(1f, 0.85f, 1f),
-            0.12f,
+            0.06f,
             "no"
         );
 
@@ -64,17 +64,17 @@ public class DeathAttack2 : MonoBehaviour
         {
             float angle = rotation + i * 90f;
 
-            for (int j = -4; j <= 4; j++)
+            for (int j = -3; j <= 3; j++)
             {
-                float offset = j * 10f;
-                BulletSpawner.Instance.SpawnBullet(spawnPos, angle + offset, bulletA, 4f);
+                float offset = j * 12f;
+                BulletSpawner.Instance.SpawnBullet(spawnPos, angle + offset, bulletA, 3f);
             }
         }
     }
 
     private void DoOrbiters(Vector3 spawnPos, float direction)
     {
-        const int BULLET_COUNT = 8;
+        const int BULLET_COUNT = 12;
 
         float rotation = Time.time * 90f * direction;
 
@@ -83,8 +83,8 @@ public class DeathAttack2 : MonoBehaviour
             float angle = rotation + (360f / BULLET_COUNT) * i;
 
             AnimationCurve spd = new AnimationCurve();
-            spd.AddKey(0f, 1f);
-            spd.AddKey(1.5f, 2f);
+            spd.AddKey(0f, 3.2f);
+            spd.AddKey(1.5f, 0.8f);
 
             BulletSpawner.Instance.SpawnBullet(spawnPos, angle, bulletB, spd);
         }

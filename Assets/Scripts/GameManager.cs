@@ -255,17 +255,29 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public static void SetParentKeepScale(Transform child, Transform newParent)
+    {
+        Vector3 worldScale = child.lossyScale;
+
+        child.SetParent(newParent, false); 
+
+        child.localScale = new Vector3(
+            worldScale.x / newParent.lossyScale.x,
+            worldScale.y / newParent.lossyScale.y,
+            worldScale.z / newParent.lossyScale.z
+        );
+    }
 
     public void LoadLevel()
     {
-        heartPieceManager.heartSnapTargetGroupTransform.SetParent(bossControl.HeartParent, false);
+        SetParentKeepScale(heartPieceManager.heartSnapTargetGroupTransform, bossControl.HeartParent);
         heartPieceManager.ResetPieces();
         lives = MAX_LIVES;
     }
 
     public IEnumerator UnLoadLevel()
     {
-        heartPieceManager.heartSnapTargetGroupTransform.SetParent(heartPieceManager.transform, false);
+        SetParentKeepScale(heartPieceManager.heartSnapTargetGroupTransform, heartPieceManager.transform);
 
         // unload all scenes except the active one
         Scene active = SceneManager.GetActiveScene();
