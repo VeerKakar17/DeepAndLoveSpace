@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject pressZIndicator;
     private Coroutine pressZCoroutine = null;
+
+    [Header("Other Serialize Fields")]
+    [SerializeField] public MovementBox movementBox;
         
     public void StartNextEvent()
     {
@@ -106,7 +109,6 @@ public class GameManager : MonoBehaviour
         events.Clear();
 
         events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf radsgsdr fgserdifgjhyuiersdijgfh sydrfghaesrdgfsrfeg"));
-
         events.Add(new DialogueEvent("Example Attack Incoming"));
         
     }

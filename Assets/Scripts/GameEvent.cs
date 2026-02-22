@@ -87,24 +87,20 @@ public class DialogueEvent : GameEvent
 
 }
 
-public class AttackEvent : GameEvent
+public class PatternEvent : GameEvent
 {
-
-    public Attack attack;
-
-    public AttackEvent(Attack a) : base()
-    {
-        attack = a;
-    }
-
+    public PatternEvent() { }
     public override void StartEvent()
     {
-        Debug.Log("Attack Event Started");
-        attack.Init();
+        base.StartEvent();
     }
 
-    public override void UpdateEvent()
+    public virtual void UpdateEvent()
     {
-        attack.Update();
+        base.UpdateEvent();
     }
+
+    public virtual void SpawnPattern() { }
+
+    public virtual void EndEvent() { base.EndEvent();  }
 }
