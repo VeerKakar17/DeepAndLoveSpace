@@ -89,6 +89,38 @@ public class DialogueEvent : GameEvent
 
 }
 
+public class PostBattleDialogueEvent : GameEvent
+{
+    private string dialogue;
+    private bool isEnemy;
+
+    public PostBattleDialogueEvent(string text, bool enemy)
+    {
+        dialogue = text;
+        isEnemy = enemy;
+    }
+
+    public override void StartEvent()
+    {
+        GameManager.Instance.StartCoroutine(RunDialogue());
+    }
+
+    private IEnumerator RunDialogue()
+    {
+        yield return GameManager.Instance.FadeOverlay(0.7f, 1f);
+
+        GameManager.Instance.SetDialogue(dialogue, isEnemy, true);
+
+        yield return new WaitUntil(() => Keyboard.current.zKey.wasPressedThisFrame);
+
+        GameManager.Instance.ClearDialogue();
+
+        yield return GameManager.Instance.FadeOverlay(0f, 1f);
+
+        GameManager.Instance.StartNextEvent();
+    }
+}
+
 public class PatternEvent : GameEvent
 {
 

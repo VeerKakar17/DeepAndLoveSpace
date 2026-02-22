@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI dialogueTextPlayer;
     [SerializeField] private GameObject pressZIndicator;
+    [SerializeField] private Image blackOverlay;
     private Coroutine pressZCoroutine = null;
 
     public void StartNextEvent()
@@ -219,6 +220,30 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public IEnumerator LoadLevelDeath() {
+
+        yield return UnLoadLevel();
+
+        events.Clear();
+        events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
+        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
+        events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
+        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
+
+        GameObject patternObj = Resources.Load<GameObject>("DeathAttackPrefab2");
+        events.Add(new PatternEvent(patternObj));
+
+        yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
+
+
+        LoadLevel();
+        Debug.Log("Finished loading scene, starting events.");
+
+        StartNextEvent();
+        Debug.Log("Started first event.");
+        
+    }
+
 
 
     public void LoadLevel()
@@ -374,5 +399,88 @@ public class GameManager : MonoBehaviour
             currentColor.a = MIN_ALPHA;
             pressZTmp.color = currentColor;
         }
+    }
+    public IEnumerator FadeOverlay(float targetAlpha, float duration)
+    {
+        float startAlpha = blackOverlay.color.a;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            float t = time / duration;
+
+            Color c = blackOverlay.color;
+            c.a = Mathf.Lerp(startAlpha, targetAlpha, t);
+            blackOverlay.color = c;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        Color final = blackOverlay.color;
+        final.a = targetAlpha;
+        blackOverlay.color = final;
+    }
+
+    public IEnumerator ConquestLightDialogue()
+    {
+        events.Add(new PostBattleDialogueEvent(
+            "Conquest: Very well human, I suppose I will grant you my clemency. I have been elucidated to this curious prospect of affection. As a reward I shall grant you a title, castle, servants, and plenty of gold. ",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "I have no need for those material riches. All I request of you is to permit this lowly one to be your prince.",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "Conquest: Then this noble one shall accept. ",
+            true
+        ));
+    }
+    public IEnumerator ConquestDarkDialogue()
+    {
+        events.Add(new PostBattleDialogueEvent(
+            "Conquest: You have taught me the pleasures of depraved longing. I shall take away all your possessions so that you have no other choice but to depend on me. You belong to me now.",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "But-",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "Conquest: Shhh my little peasant. You must call me Master from henceforth. ",
+            true
+        ));
+    }
+
+    public IEnumerator WarLightDialogue()
+    {
+        events.Add(new PostBattleDialogueEvent(
+            "War: I-its not like I like you or anything baka! Here’s a whole treasury of precious weapons. D-don’t get the wrong idea, I just found them lying around and wanted to get rid of them.",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "*smiles* Thank you for the gifts, but what I really want is your hand in marriage.",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "War: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
+            true
+        ));
+    }
+    public IEnumerator WarDarkDialogue()
+    {
+        events.Add(new PostBattleDialogueEvent(
+            "War: B-BAKA *hits you and you break a rib*. You’re such a charmer KYAAA *breaks your arm*",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "I’m very fragile please be gentler!",
+            true
+        ));
+        events.Add(new PostBattleDialogueEvent(
+            "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face and your eye swells up so you can’t see out of it*",
+            true
+        ));
     }
 }
