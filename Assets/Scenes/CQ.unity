@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4
+      value: 0.56999993
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -337,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.01
+      value: -0.88000005
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -699,7 +699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.33
+      value: -1.23
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -782,7 +782,9 @@ MonoBehaviour:
   slowMoScale: 0.3
   slowMoDuration: 2
   bossHeartSnapTarget: {fileID: 490957007}
+  heartPrefab: {fileID: 0}
   lives: 3
+  dialogueText: {fileID: 0}
 --- !u!4 &567292571
 Transform:
   m_ObjectHideFlags: 0
@@ -913,6 +915,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart_Piece (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.15
@@ -927,7 +933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.24
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1198,7 +1204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.56
+      value: -0.45000005
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1628,7 +1634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.69
+      value: -1.71
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1769,7 +1775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletSpawner
   bulletPrefab: {fileID: 2426275236159700441, guid: 7b55066fef9b738459090a357e4fa085, type: 3}
-  heartPrefab: {fileID: 6884689951715011312, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
+  poolSize: 400
 --- !u!4 &1586482309
 Transform:
   m_ObjectHideFlags: 0
@@ -2312,7 +2318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.05
+      value: 0.09999995
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2401,7 +2407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.93
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 8576180187297329068, guid: 791ece5a058004e3eb79e7e62664e2da, type: 3}
       propertyPath: m_LocalPosition.y
