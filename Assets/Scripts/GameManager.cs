@@ -561,7 +561,6 @@ public class GameManager : MonoBehaviour
         events.Add(new NextLevelEvent());
         
         StartNextEvent();
-        yield return FadeToBlack(1f);
         yield break;
     }
     public IEnumerator ConquestDarkDialogue()
@@ -582,7 +581,6 @@ public class GameManager : MonoBehaviour
         events.Add(new NextLevelEvent());
         
         StartNextEvent();
-        yield return FadeToBlack(1f);
         yield break;
     }
 
@@ -603,6 +601,7 @@ public class GameManager : MonoBehaviour
         ));
         events.Add(new NextLevelEvent());
         StartNextEvent();
+        
         yield break;
     }
     public IEnumerator WarDarkDialogue()
