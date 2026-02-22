@@ -2225,6 +2225,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1216660191}
   dialogueTextPlayer: {fileID: 2021198696}
   pressZIndicator: {fileID: 1820557251}
+  blackOverlay: {fileID: 873863198}
 --- !u!4 &1129643543
 Transform:
   m_ObjectHideFlags: 0
