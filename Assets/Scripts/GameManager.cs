@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         if (lives < 0)
         {
             Debug.Log("Player lost");
-            BulletSpawner.Instance.ClearBullets();
+            BulletSpawner.Instance.ResetBullets();
             LoadSampleLevel();
         }
     }
