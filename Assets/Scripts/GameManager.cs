@@ -655,15 +655,15 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "ssssssssssssssssssssssss",
+            "Death: I want you to stay with me forever. I will kill every other human on earth, everyone you have ever loved, so that you will have no choice but to love me! You will never escape me <3",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
-            "sssssssssssssssssssssssssssssss",
+            "No… please no!",
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "sssssssssssssssssssssssss",
+            "Death: You can only think of me. I will kill my brothers if you even spare them a glance. You will be mine for all eternity!",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
