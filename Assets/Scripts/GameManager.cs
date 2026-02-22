@@ -117,8 +117,9 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator LoadLevelConquest()
     {
-
+        yield return FadeToBlack(1f);
         yield return UnLoadLevel();
+        
 
         events.Clear();
 
@@ -129,6 +130,7 @@ public class GameManager : MonoBehaviour
         currStagePatterns.Add(patternObj);
         currStagePatterns.Add(patternObj2);
 
+        
         events.Add(new DialogueEvent("CONQUEST: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
         events.Add(new DialogueEvent("CONQUEST: You dare imply that I am ignorant? You� wretched thing?", true));
@@ -145,13 +147,14 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return FadeFromBlack(1f);
 
     }
 
 
     public IEnumerator LoadLevelWar()
     {
-
+        yield return FadeToBlack(1f);
         yield return UnLoadLevel();
 
         events.Clear();
@@ -181,13 +184,14 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return FadeFromBlack(1f);
 
     }
 
 
     public IEnumerator LoadLevelFamine()
     {
-
+        yield return FadeToBlack(1f);
         yield return UnLoadLevel();
 
         events.Clear();
@@ -214,12 +218,13 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return FadeFromBlack(1f);
 
     }
 
     public IEnumerator LoadLevelDeath()
     {
-
+        yield return FadeToBlack(1f);
         yield return UnLoadLevel();
 
         events.Clear();
@@ -245,7 +250,7 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
-
+        yield return FadeFromBlack(1f);
     }
 
 
@@ -554,7 +559,9 @@ public class GameManager : MonoBehaviour
             true
         ));
         events.Add(new NextLevelEvent());
+        
         StartNextEvent();
+        yield return FadeToBlack(1f);
         yield break;
     }
     public IEnumerator ConquestDarkDialogue()
@@ -573,7 +580,9 @@ public class GameManager : MonoBehaviour
             true
         ));
         events.Add(new NextLevelEvent());
+        
         StartNextEvent();
+        yield return FadeToBlack(1f);
         yield break;
     }
 
@@ -698,5 +707,36 @@ public class GameManager : MonoBehaviour
         events.Add(new NextLevelEvent());
         StartNextEvent();
         yield break;
+    }
+    public IEnumerator FadeToBlack(float duration)
+    {
+        blackOverlay.gameObject.SetActive(true);
+
+        Color color = blackOverlay.color;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            color.a = Mathf.Clamp01(t / duration);
+            blackOverlay.color = color;
+            yield return null;
+        }
+    }
+
+    public IEnumerator FadeFromBlack(float duration)
+    {
+        Color color = blackOverlay.color;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            color.a = 1f - Mathf.Clamp01(t / duration);
+            blackOverlay.color = color;
+            yield return null;
+        }
+
+        blackOverlay.gameObject.SetActive(false);
     }
 }
