@@ -34,10 +34,12 @@ public class DialogueEvent : GameEvent
     private int currCharacter;
     private float timer;
     private const float TIME_BETWEEN_CHARS = 0.025f;
+    private bool isEnemy;
 
-    public DialogueEvent(string dialogueText) : base()
+    public DialogueEvent(string dialogueText, bool isEnemy) : base()
     {
         this.dialogueText = dialogueText;
+        this.isEnemy = isEnemy;
     }
 
     public override void StartEvent()
@@ -57,10 +59,10 @@ public class DialogueEvent : GameEvent
 
             if (currCharacter == dialogueText.Length)
             {
-                GameManager.Instance.SetDialogue(dialogueText, true);
+                GameManager.Instance.SetDialogue(dialogueText, isEnemy, true);
             } else
             {
-                GameManager.Instance.SetDialogue(dialogueText.Substring(0, currCharacter));
+                GameManager.Instance.SetDialogue(dialogueText.Substring(0, currCharacter), isEnemy);
             }
         }
 
@@ -71,7 +73,7 @@ public class DialogueEvent : GameEvent
             {
                 timer = 0;
                 currCharacter = dialogueText.Length;
-                GameManager.Instance.SetDialogue(dialogueText, true);
+                GameManager.Instance.SetDialogue(dialogueText, isEnemy, true);
             } else if (timer > 0.1f)
             {
                 EndEvent();

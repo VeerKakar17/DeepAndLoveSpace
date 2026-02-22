@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Dialogue Settings")]
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI dialogueTextPlayer;
     [SerializeField] private GameObject pressZIndicator;
     private Coroutine pressZCoroutine = null;
         
@@ -109,11 +110,14 @@ public class GameManager : MonoBehaviour
 
         GameObject patternObj = Resources.Load<GameObject>("BigBowRadialPrefab");
 
-        events.Add(new DialogueEvent("Example Dialogue Hello fgouoisdjf\\"));
+        events.Add(new DialogueEvent("CONQUEST: NEIGH. I will hear this peasant’s pleas first. Speak, human.", true));
+        events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
+        events.Add(new DialogueEvent("CONQUEST: You dare imply that I am ignorant? You… wretched thing?", true));
+        events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
         
         events.Add(new PatternEvent(patternObj));
         
-        events.Add(new DialogueEvent("Example Attack Incoming"));
+        events.Add(new DialogueEvent("Example Attack Incoming", true));
         
     }
 
@@ -160,17 +164,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetDialogue(string dialogue, bool addPressZ = false)
+    public void SetDialogue(string dialogue, bool isEnemy, bool addPressZ = false)
     {
-        dialogueText.text = dialogue;
+        TextMeshProUGUI curr;
+        if (isEnemy)
+        {
+            curr = dialogueText;
+        } else
+        {
+            curr = dialogueTextPlayer;
+        }
+        curr.text = dialogue;
         if (addPressZ)
         {
             // Convert from TMP local space to world space
 
             pressZIndicator.SetActive(true);
-            TMP_CharacterInfo lastChar = dialogueText.textInfo.characterInfo[dialogueText.textInfo.characterCount - 1];
-            Vector3 worldBottomRight = dialogueText.transform.TransformPoint(lastChar.bottomRight);
-            pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y-60f, pressZIndicator.transform.position.z);
+            TMP_CharacterInfo lastChar = curr.textInfo.characterInfo[curr.textInfo.characterCount - 1];
+            Vector3 worldBottomRight = curr.transform.TransformPoint(lastChar.bottomRight);
+            pressZIndicator.transform.position = new Vector3(pressZIndicator.transform.position.x, worldBottomRight.y-55f, pressZIndicator.transform.position.z);
             
             pressZCoroutine = StartCoroutine(PressZCoroutine());
         }
@@ -179,6 +191,7 @@ public class GameManager : MonoBehaviour
     public void ClearDialogue()
     {
         dialogueText.text = "";
+        dialogueTextPlayer.text = "";
         pressZIndicator.SetActive(false);
         if (pressZCoroutine != null)
         {
