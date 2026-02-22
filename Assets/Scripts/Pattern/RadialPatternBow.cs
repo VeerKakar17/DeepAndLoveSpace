@@ -84,13 +84,9 @@ public class RadialPatternBow : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
 
             nums++;
-            if (nums == 5)
+            if (nums == 3)
             {
-                Vector2 randomInsideUnitCircle = Random.insideUnitCircle;
-                randomInsideUnitCircle *= GameManager.Instance.player.movementBox.radius;
-                randomInsideUnitCircle += new Vector2(GameManager.Instance.player.movementBox.gameObject.transform.position.x, GameManager.Instance.player.movementBox.gameObject.transform.position.y);
-                Debug.Log("randomInsideUni t " + randomInsideUnitCircle.x + randomInsideUnitCircle.y);
-                HeartPieceManager.Instance.ActivateNextPiece(randomInsideUnitCircle);
+                HeartPieceManager.Instance.ActivateNextPiece();
             }
 
             float timescale = 1f;

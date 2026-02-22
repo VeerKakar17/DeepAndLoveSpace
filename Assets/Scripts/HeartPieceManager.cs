@@ -33,16 +33,28 @@ public class HeartPieceManager : MonoBehaviour
 
     public void ActivateNextPiece()
     {
+        if (snappedCount <= currentActiveIndex)
+        {
+            return;
+        }
         currentActiveIndex++;
 
         if (currentActiveIndex >= pieces.Length)
             return;
 
-        pieces[currentActiveIndex].Activate();
+        Vector2 randomInsideUnitCircle = Random.insideUnitCircle;
+        randomInsideUnitCircle *= GameManager.Instance.player.movementBox.radius;
+        randomInsideUnitCircle += new Vector2(GameManager.Instance.player.movementBox.gameObject.transform.position.x, GameManager.Instance.player.movementBox.gameObject.transform.position.y);
+
+        pieces[currentActiveIndex].Activate(randomInsideUnitCircle);
     }
 
     public void ActivateNextPiece(Vector2 position)
     {
+        if (snappedCount <= currentActiveIndex)
+        {
+            return;
+        }
         currentActiveIndex++;
 
         if (currentActiveIndex >= pieces.Length)

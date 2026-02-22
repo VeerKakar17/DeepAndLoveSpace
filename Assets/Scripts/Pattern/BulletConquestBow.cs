@@ -132,8 +132,8 @@ public class BulletConquestBow : MonoBehaviour
 
 
                     Instantiate(bigArrowPrefab, position, Quaternion.Euler(0, 0, angle - 90));
-                        
-                }
+                    HeartPieceManager.Instance.ActivateNextPiece();
+            }
 
             if (timerA >= 12.0f)
             {

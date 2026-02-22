@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerMovement player;
     public BossControl bossControl;
+    public List<GameObject> currStagePatterns;
 
     [Header("Health Settings")]
     public const int MAX_LIVES = 3;
@@ -54,7 +55,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No more events to start.");
+            currentEvent = new PatternEvent(currStagePatterns[Random.Range(0, currStagePatterns.Count)]);
+            currentEvent.StartEvent();
         }
     }
 
@@ -113,8 +115,12 @@ public class GameManager : MonoBehaviour
 
         events.Clear();
 
+        currStagePatterns = new List<GameObject>();
+
         GameObject patternObj = Resources.Load<GameObject>("BigBowRadialPrefab");
         GameObject patternObj2 = Resources.Load<GameObject>("BigBowPrefabTypeA");
+        currStagePatterns.Add(patternObj);
+        currStagePatterns.Add(patternObj2);
 
         events.Add(new DialogueEvent("CONQUEST: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
@@ -122,8 +128,6 @@ public class GameManager : MonoBehaviour
         events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
 
         events.Add(new PatternEvent(patternObj));
-
-        events.Add(new DialogueEvent("Example Attack Incoming", true));
 
         events.Add(new PatternEvent(patternObj2));
 
@@ -144,18 +148,24 @@ public class GameManager : MonoBehaviour
         yield return UnLoadLevel();
 
         events.Clear();
+
+        currStagePatterns = new List<GameObject>();
+
         events.Add(new DialogueEvent("WAR: I will chop off all your limbs if you disappoint me. Speak now, human!\r\n", true));
         events.Add(new DialogueEvent("Calm your fury. Through your neverending violence you have yet to consider the tender embrace of love. I will teach you.\r\n", false));
         events.Add(new DialogueEvent("WAR: This mere human dares to challenge me? Prepare yourself to be impaled by my sword!\r\n", true));
 
         GameObject patternObj3 = Resources.Load<GameObject>("WarAttackPrefab3");
         events.Add(new PatternEvent(patternObj3));
+        currStagePatterns.Add(patternObj3);
 
         GameObject patternObj = Resources.Load<GameObject>("WarAttackPrefab2");
         events.Add(new PatternEvent(patternObj));
+        currStagePatterns.Add(patternObj);
 
         GameObject patternObj2 = Resources.Load<GameObject>("WarAttackPrefab1");
         events.Add(new PatternEvent(patternObj2));
+        currStagePatterns.Add(patternObj2);
 
         yield return SceneManager.LoadSceneAsync("Main Scene War", LoadSceneMode.Additive);
 
@@ -174,6 +184,9 @@ public class GameManager : MonoBehaviour
         yield return UnLoadLevel();
 
         events.Clear();
+
+        currStagePatterns = new List<GameObject>();
+
         events.Add(new DialogueEvent("Famine: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
         events.Add(new DialogueEvent("Famine: You dare imply that I am ignorant? You wretched thing?", true));
@@ -183,9 +196,11 @@ public class GameManager : MonoBehaviour
 
         GameObject patternObj2 = Resources.Load<GameObject>("FamineAttackPrefab2");
         events.Add(new PatternEvent(patternObj2));
+        currStagePatterns.Add(patternObj2);
 
         GameObject patternObj = Resources.Load<GameObject>("FamineAttackPrefab1");
         events.Add(new PatternEvent(patternObj));
+        currStagePatterns.Add(patternObj);
 
 
         LoadLevel();
@@ -209,8 +224,10 @@ public class GameManager : MonoBehaviour
 
         yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
 
+        currStagePatterns = new List<GameObject>();
         GameObject patternObj = Resources.Load<GameObject>("DeathAttack1");
         events.Add(new PatternEvent(patternObj));
+        currStagePatterns.Add(patternObj);
 
 
         LoadLevel();
@@ -247,7 +264,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
 
-        StartCoroutine(LoadLevelDeath());
+        StartCoroutine(LoadLevelConquest());
 
     }
 
