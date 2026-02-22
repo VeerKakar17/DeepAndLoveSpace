@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4333759381497893594, guid: 11a3f8a48c58b514b8443d82051be186, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
@@ -128,7 +128,7 @@ MonoBehaviour:
   randomDelayMax: 2
   flashCount: 2
   fadeDuration: 0.3
-  lightColor: {r: 1, g: 1, b: 1, a: 1}
+  lightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   mediumDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   fullDarkColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   circleRadius: 0.1
