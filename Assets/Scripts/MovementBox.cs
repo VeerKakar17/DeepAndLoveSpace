@@ -44,6 +44,12 @@ public class MovementBox : MonoBehaviour
         gameObject.transform.localScale = end;
     }
 
+    public void updateScaleImmediate(float scaleX, float scaleY)
+    {
+        Vector3 end = new Vector3(gameObject.transform.localScale.x * scaleX, gameObject.transform.localScale.y * scaleY, 1f);
+        gameObject.transform.localScale = end;
+    }
+
     public IEnumerator updateRotation(float degrees, float seconds)
     {
         Quaternion start = gameObject.transform.localRotation;
@@ -64,6 +70,11 @@ public class MovementBox : MonoBehaviour
         gameObject.transform.localRotation = end;
     }
 
+    public void updateRotationImmediate(float degrees)
+    {
+        gameObject.transform.Rotate(0, 0, degrees);
+    }
+
     public IEnumerator updatePosition(float x, float y, float seconds)
     {
         Vector3 start = gameObject.transform.position;
@@ -80,5 +91,25 @@ public class MovementBox : MonoBehaviour
             yield return null;
         }
         gameObject.transform.position = end;
+    }
+
+    public void updatePositionImmediate(float x, float y)
+    {
+        Vector3 end = gameObject.transform.position + new Vector3(x, y, 0f);
+        gameObject.transform.position = end;
+    }
+
+    public void Transform(Vector3 position, float scale, float time)
+    {
+        StopAllCoroutines();
+        StartCoroutine(updatePosition(position.x, position.y, time));
+        StartCoroutine(updateScale(scale, scale, time));
+    }
+
+    public void TransformImmediate(Vector3 position, float scale)
+    {
+        StopAllCoroutines();
+        updatePositionImmediate(position.x, position.y);
+        updateScaleImmediate(scale, scale);
     }
 }

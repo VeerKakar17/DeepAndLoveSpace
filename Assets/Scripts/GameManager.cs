@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameEvent currentEvent;
 
     public PlayerMovement player;
+    public BossControl bossControl;
 
 
     public GameObject bossHeartSnapTarget;
