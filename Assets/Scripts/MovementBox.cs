@@ -158,15 +158,21 @@ public class MovementBox : MonoBehaviour
         gameObject.transform.position = end;
     }
 
+    public void setPositionInstant(float x, float y)
+    {
+        Vector3 end = new Vector3(x, y, gameObject.transform.position.z);
+        gameObject.transform.position = end;
+    }
+
     public void Transform(Vector3 position, float scale, float time)
     {
         StartCoroutine(updatePosition(position.x, position.y, time));
         StartCoroutine(updateScale(scale, scale, time));
     }
 
-    public void TransformImmediate(Vector3 position, float scale)
+    public void SetTransformImmediate(Vector3 position, float scale)
     {
-        updatePositionImmediate(position.x, position.y);
-        updateScaleImmediate(scale, scale);
+        setPositionInstant(position.x, position.y);
+        setScaleInstant(scale);
     }
 }

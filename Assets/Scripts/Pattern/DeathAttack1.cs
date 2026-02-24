@@ -20,6 +20,7 @@ public class DeathAttack1 : MonoBehaviour
         );
 
         radialCoroutine = StartCoroutine(RadialCoroutine());
+
     }
 
     private IEnumerator RadialCoroutine()
@@ -27,7 +28,7 @@ public class DeathAttack1 : MonoBehaviour
         while (true)
         {
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 7; i++)
             {
 
                 // position is random position inside of spawn rect
@@ -39,10 +40,10 @@ public class DeathAttack1 : MonoBehaviour
 
                 DoSpiralAttack(randomPos, direction);
 
-                yield return new WaitForSeconds(1.3f);
+                yield return new WaitForSeconds(0.9f);
             }
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.1f);
             HeartPieceManager.Instance.ActivateNextPiece();
         }
     }
@@ -66,8 +67,8 @@ public class DeathAttack1 : MonoBehaviour
     {
         const int BULLET_COUNT = 20;
         float ROTATION_SPEED = 30f * direction;
-        const float FIRE_RATE = 0.1f;
-        const float DURATION = 0.9f;
+        const float FIRE_RATE = 0.08f;
+        const float DURATION = 0.7f;
 
         float elapsed = 0f;
         float rotationOffset = 0f;

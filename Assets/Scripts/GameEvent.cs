@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GameEvent
 {
@@ -23,6 +23,17 @@ public class GameEvent
     public virtual void EndEvent()
     {
         BulletSpawner.Instance.ResetBullets();
+
+        List<GameObject> ToRemove = new List<GameObject>();
+        foreach (Transform go in GameManager.Instance.patternContainer)
+        {
+            ToRemove.Add(go.gameObject);
+        }
+        foreach (var go in ToRemove)
+        {
+            GameManager.Instance.DestroyGameObject(go);
+        }
+
         GameManager.Instance.StartNextEvent();
     }
 
@@ -96,6 +107,8 @@ public class DialogueEvent : GameEvent
 public class WaitForZEvent : GameEvent
 {
 
+    bool haspressed = false;
+
     public WaitForZEvent() : base()
     {
     }
@@ -106,11 +119,11 @@ public class WaitForZEvent : GameEvent
 
     public override void UpdateEvent()
     {
+        if (haspressed) return;
         if (Keyboard.current.zKey.wasPressedThisFrame)
         {
-            EndEvent();
-            GameManager.Instance.StartingScene.SetActive(false);
-            GameManager.Instance.IntroScene.SetActive(true);
+            haspressed = true;
+            GameManager.Instance.OnLoadIntro();
         }
     }
 

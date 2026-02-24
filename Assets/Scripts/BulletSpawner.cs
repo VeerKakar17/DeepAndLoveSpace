@@ -31,6 +31,11 @@ public class BulletSpawner : MonoBehaviour
     public static BulletSpawner Instance;
 
     public int poolSize = 50;
+
+    // for debugging
+    public int QueueBulletCount = 0;
+    public int ActiveBulletCount = 0;
+
     Queue<GameObject> pool = new Queue<GameObject>();
     List<GameObject> activeBullets = new List<GameObject>();
 
@@ -50,28 +55,48 @@ public class BulletSpawner : MonoBehaviour
             var b = Instantiate(bulletPrefab, transform);
             b.SetActive(false);
             pool.Enqueue(b);
+            QueueBulletCount++;
         }
     }
 
     public GameObject PoolGet()
     {
-        if (pool.Count <= 0) {
-            var b2 = Instantiate(bulletPrefab, transform);
-            b2.SetActive(false);
-            pool.Enqueue(b2);
+        GameObject b;
+
+        if (pool.Count > 0)
+        {
+            b = pool.Dequeue();
+            QueueBulletCount--;
+        }
+        else
+        {
+            b = Instantiate(bulletPrefab, transform);
         }
 
-        var b = pool.Dequeue();
         b.SetActive(true);
         activeBullets.Add(b);
-        return b;
-    }          
+        ActiveBulletCount++;
 
-    public void PoolReturn(GameObject b)        
+        return b;
+    }    
+
+    public void PoolReturn(GameObject b)
     {
-        b.SetActive(false);
-        activeBullets.Remove(b);
-        pool.Enqueue(b);
+        if (b == null) return;
+
+        if (activeBullets.Contains(b))
+        {
+            activeBullets.Remove(b);
+            b.SetActive(false);
+            pool.Enqueue(b);
+
+            ActiveBulletCount--;
+            QueueBulletCount++;
+        }
+        else
+        {
+            Debug.LogWarning("Attempted to return a bullet that's not active!");
+        }
     }
 
     static Dictionary<string, Sprite> spriteCache = new();
@@ -100,7 +125,7 @@ public class BulletSpawner : MonoBehaviour
         position.z = this.transform.position.z; // ensure bullet is on the same plane as spawner
 
         // play tan1 or tan2 random
-        float rand = Random.value;
+        //float rand = Random.value;
         SoundManager.Instance.Play("tan2", 0.2f, 1.2f, 0.1f);
 
         BulletMovement bm = bulletObj.GetComponent<BulletMovement>();
@@ -131,14 +156,13 @@ public class BulletSpawner : MonoBehaviour
 
     public void ResetBullets()
     {
-        List<GameObject> bulletsToClear = new List<GameObject>(activeBullets);
         foreach (GameObject o in activeBullets)
         {
-            bulletsToClear.Add(o);
-        }
-        foreach (GameObject o in bulletsToClear)
-        {
-            PoolReturn(o);
+            BulletMovement bm = o.GetComponent<BulletMovement>();
+            if (bm != null)
+            {
+                bm.ClearBullet();
+            }
         }
     }   
 

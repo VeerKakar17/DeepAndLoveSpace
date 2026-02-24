@@ -29,12 +29,12 @@ public class FamineAttack1 : MonoBehaviour
 
             Spawn();
             num_spawns++;
-            if (num_spawns == 4)
+            if (num_spawns == 5)
             {
                 HeartPieceManager.Instance.ActivateNextPiece();
             }
             
-            yield return new WaitForSeconds(2.8f);
+            yield return new WaitForSeconds(1.8f);
 
         }
     }
@@ -47,9 +47,9 @@ public class FamineAttack1 : MonoBehaviour
         {
             AnimationCurve spd = new AnimationCurve();
             spd.AddKey(0f, 0.0f);
-            spd.AddKey(0.5f, 0.1f);
-            spd.AddKey(1.5f, 0.8f);
-            spd.AddKey(2.0f, 1.4f);
+            spd.AddKey(0.1f, 0.1f);
+            spd.AddKey(0.8f, 0.9f);
+            spd.AddKey(1.6f, 1.8f);
 
             // position is random position inside of spawn rect
             Vector3 randomPos = spawnRect.position

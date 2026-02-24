@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BulletConquestBow : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class BulletConquestBow : MonoBehaviour
     {
         arrowBullet = new Bullet(
             "bullet_arrow",
-            Color.yellow,
+            new Color(1f, 0.9f, 0.31f),
             0.1f,
             "none"
         );
@@ -56,7 +57,7 @@ public class BulletConquestBow : MonoBehaviour
         isFiringBig = true;
 
         timerA = 0.0f;
-        cooldown = 2.0f;
+        cooldown = 0.0f;
     }
     void SpawnBigArrow()
     {
@@ -108,7 +109,7 @@ public class BulletConquestBow : MonoBehaviour
                 }
             }
 
-            if (timerA >= 8.0f)
+            if (timerA >= 5.0f)
             {
                 StateB();
             }
@@ -122,7 +123,7 @@ public class BulletConquestBow : MonoBehaviour
             
             if (cooldown <= 0)
             {
-                cooldown = 2.3f;
+                cooldown = 2.0f;
                 
                     // this facing direction to angle
                     float angle = Mathf.Atan2(transform.up.y, transform.up.x) * Mathf.Rad2Deg;
@@ -131,15 +132,19 @@ public class BulletConquestBow : MonoBehaviour
                     Vector3 position = transform.position;
 
 
-                    Instantiate(bigArrowPrefab, position, Quaternion.Euler(0, 0, angle - 90));
-                    HeartPieceManager.Instance.ActivateNextPiece();
+                    Instantiate(bigArrowPrefab, position, Quaternion.Euler(0, 0, angle - 90), GameManager.Instance.patternContainer);
+
+                    if (timerA >= 4.0f)
+                    {
+                        HeartPieceManager.Instance.ActivateNextPiece();
+                    }
             }
 
             if (timerA >= 12.0f)
             {
                 cooldown = 999f;
 
-                if (timerA >= 16.0f)
+                if (timerA >= 15.0f)
                 {
                     EndPattern();
                 }

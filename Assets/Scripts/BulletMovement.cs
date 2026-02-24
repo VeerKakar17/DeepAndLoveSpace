@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Util
 {
@@ -38,7 +39,9 @@ public class BulletMovement : MonoBehaviour
 
     AnimationCurve speedCurve;
 
-    string tag;
+    bool isClearing = false;
+
+    string BulletTag;
 
     float cooldown = 0f;
     int counter = 0;
@@ -50,8 +53,9 @@ public class BulletMovement : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         col = GetComponent<CircleCollider2D>();
+        
     }
-
+    
     void Update()
     {
 
@@ -63,16 +67,16 @@ public class BulletMovement : MonoBehaviour
 
         transform.position += direction * speed * Time.deltaTime;
 
-        if (tag == "famine_a_spawner")
+        if (BulletTag == "famine_a_spawner")
         {
             UpdateSpecialFamineASpawner();
         }
 
         // if offscreen: destroy
-        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
-        if (screenPos.x < -0.2f || screenPos.x > 1.2 || screenPos.y < -0.2f || screenPos.y > 1.2 )
+        Vector3 wPos = transform.position;
+        if (t > 0.3f && (wPos.x < -5.0f || wPos.x > 5.0f || wPos.y < -6.0f || wPos.y > 6.0f))
         {
-            ClearBullet();
+            ClearBulletImmediate();
         }
     }
 
@@ -102,7 +106,7 @@ public class BulletMovement : MonoBehaviour
 
                     Vector3 position = transform.position;
 
-                    float waittime = 3.0f - 0.1f * counter;
+                    float waittime = 2.4f - 0.06f * counter;
                     if (waittime < 0.5f) waittime = 0.5f;
 
                     AnimationCurve spd = new AnimationCurve();
@@ -123,11 +127,46 @@ public class BulletMovement : MonoBehaviour
         }
     }
 
+    Coroutine removeCoroutine;
     public void ClearBullet()
     {
+        if (!isClearing)
+            removeCoroutine = StartCoroutine(FadeAndClear());
+    }
+
+    public void ClearBulletImmediate()
+    {
+        if (isClearing)
+        {
+            StopCoroutine(removeCoroutine);
+        }
+        pool.PoolReturn(gameObject);
+        
+    }
+
+    private IEnumerator FadeAndClear()
+    {
+        isClearing = true;
+
+        float duration = 0.5f;
+        float t = 0f;
+
+        col.enabled = false;
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color startColor = sr.color;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(startColor.a, 0f, t / duration);
+            sr.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+            yield return null;
+        }
+
         pool.PoolReturn(gameObject);
     }
-    
+
     public void Initialize(
         BulletSpawner p,
         Vector3 pos,
@@ -158,13 +197,16 @@ public class BulletMovement : MonoBehaviour
 
         createTime = Time.time;
 
-        this.tag = bulletTag;
+        this.BulletTag = bulletTag;
+
+        col.enabled = true;
+        isClearing = false;
 
         this.cooldown = 0f;
 
-        if (tag == "famine_a_spawner")
+        if (BulletTag == "famine_a_spawner")
         {
-            cooldown = 1.5f;
+            cooldown = 0.9f;
         }
     }
 }

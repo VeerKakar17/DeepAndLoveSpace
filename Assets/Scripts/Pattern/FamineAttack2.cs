@@ -31,7 +31,7 @@ public class FamineAttack2 : MonoBehaviour
         while (true)
         {
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 12; i++)
             {
                 
                 // position is random position inside of spawn rect
@@ -41,10 +41,10 @@ public class FamineAttack2 : MonoBehaviour
 
                 DoRadialAttack(randomPos);
                 
-                yield return new WaitForSeconds(0.6f);
+                yield return new WaitForSeconds(0.4f);
             }
             
-            yield return new WaitForSeconds(2.6f);
+            yield return new WaitForSeconds(1.6f);
             SpawnHeart();
         }
     }
@@ -64,7 +64,7 @@ public class FamineAttack2 : MonoBehaviour
         {
             
             AnimationCurve spd = new AnimationCurve();
-            spd.AddKey(0f, 8.0f);
+            spd.AddKey(0f, 12.0f);
             spd.AddKey(1.0f, 1.2f);
             spd.AddKey(1.1f, 1.2f);
             spd.AddKey(1.5f, 1.2f);

@@ -90,7 +90,7 @@ public class HeartPieceManager : MonoBehaviour
 
         Debug.Log("Piece snapped: " + piece.pieceIndex);
 
-        if (snappedCount >= pieces.Length)
+        if (snappedCount >= GameManager.Instance.heartPiecesRequired)
         {
             OnHeartCompleted();
         }

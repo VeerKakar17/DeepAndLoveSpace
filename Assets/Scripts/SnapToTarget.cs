@@ -28,6 +28,8 @@ public class SnapToTarget : MonoBehaviour
         }
     }
 
+    public GameObject particleEffect;
+
     public void Reactivate()
     {
         HeartDarkCycle darkCycle = GetComponent<HeartDarkCycle>();
@@ -46,10 +48,18 @@ public class SnapToTarget : MonoBehaviour
         {
             col.enabled = true;
         }
+
+        particleEffect.SetActive(true);
+        
+        transform.SetParent(GameManager.Instance.heartPieceManager.transform, false); 
+        transform.localScale = new Vector3(0.15f, 0.15f, 1f);
+
     }
 
     void StartSnapping()
     {
+
+        particleEffect.SetActive(false);
 
         SoundManager.Instance.Play("kira1");
 
@@ -69,7 +79,9 @@ public class SnapToTarget : MonoBehaviour
             col.enabled = false;
         }
         // reparent?
-        transform.SetParent(snapTarget, true);
+        transform.SetParent(GameManager.Instance.heartPieceManager.transform, false); 
+        transform.localScale = new Vector3(0.15f, 0.15f, 1f);
+        GameManager.SetParentKeepScale(transform, snapTarget);
         // stop attack code here
         GameManager.Instance.currentEvent.EndEvent();
 

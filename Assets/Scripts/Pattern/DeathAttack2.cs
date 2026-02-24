@@ -36,23 +36,31 @@ public class DeathAttack2 : MonoBehaviour
         while (true)
         {
 
-            for (int i = 0; i < 7; i++)
+            for (int j = 0; j < 2; j++)
             {
+                for (int i = 0; i < 12; i++)
+                {
 
-                // position is random position inside of spawn rect
-                Vector3 randomPos = spawnRect.position
-                    + spawnRect.right * Random.Range(-spawnRect.rect.width / 2f, spawnRect.rect.width / 2f)
-                    + spawnRect.up * Random.Range(-spawnRect.rect.height / 2f, spawnRect.rect.height / 2f);
+                    // position is random position inside of spawn rect
+                    Vector3 randomPos = spawnRect.position
+                        + spawnRect.right * Random.Range(-spawnRect.rect.width / 2f, spawnRect.rect.width / 2f)
+                        + spawnRect.up * Random.Range(-spawnRect.rect.height / 2f, spawnRect.rect.height / 2f);
 
-                DoRotatingCross(randomPos, 1f);
-                DoOrbiters(randomPos, -1f);
+                    DoRotatingCross(randomPos, 1f);
+                    DoOrbiters(randomPos, -1f);
 
-                yield return new WaitForSeconds(0.6f);
-                
+                    yield return new WaitForSeconds(0.4f);
+                    
+                    if (i == 5 && j == 1)
+                    {
+                        HeartPieceManager.Instance.ActivateNextPiece();
+                    }
+                    
+                }
+                yield return new WaitForSeconds(0.8f);
             }
 
-            yield return new WaitForSeconds(2.6f);
-            HeartPieceManager.Instance.ActivateNextPiece();
+            yield return new WaitForSeconds(1.0f);
         }
     }
 
@@ -64,9 +72,9 @@ public class DeathAttack2 : MonoBehaviour
         {
             float angle = rotation + i * 90f;
 
-            for (int j = -3; j <= 3; j++)
+            for (int j = -2; j <= 2; j++)
             {
-                float offset = j * 12f;
+                float offset = j * 15f;
                 BulletSpawner.Instance.SpawnBullet(spawnPos, angle + offset, bulletA, 3f);
             }
         }

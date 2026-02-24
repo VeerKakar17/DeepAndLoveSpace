@@ -17,7 +17,7 @@ public class BulletConquestBigArrow : MonoBehaviour
     {
         leafBullet = new Bullet(
             "bullet_leaf",
-            Color.yellow,
+            new Color(1f, 0.9f, 0.31f),
             0.1f,
             "none"
         );

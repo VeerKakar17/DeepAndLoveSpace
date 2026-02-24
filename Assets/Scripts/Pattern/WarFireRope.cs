@@ -18,7 +18,7 @@ public class WarFireRope : MonoBehaviour
 
         Debug.Log("Started");
 
-        StartCoroutine(SurroundingAttack());
+        //StartCoroutine(SurroundingAttack());
         StartCoroutine(DamageSpots());
         StartCoroutine(SpawnHeart());
     }
@@ -48,7 +48,7 @@ public class WarFireRope : MonoBehaviour
                     spd.AddKey(0f, 0.5f);
                     spd.AddKey(TIME_BETWEEN_BULLETS*i, 0.5f);
                     spd.AddKey(1.5f+TIME_BETWEEN_BULLETS*i, 0f);
-                    spd.AddKey(2.0f+TIME_BETWEEN_BULLETS*i, 4.0f);
+                    spd.AddKey(2.0f+TIME_BETWEEN_BULLETS*i, 2.7f);
 
                     BulletSpawner.Instance.SpawnBullet(GameManager.Instance.player.movementBox.gameObject.transform.position + new Vector3(spawnPos.x, spawnPos.y, -14f), angleInDegrees-90, bulletA, spd);
 
@@ -87,22 +87,30 @@ public class WarFireRope : MonoBehaviour
     {
         while (true)
         {
-            float waitTime = Random.Range(1f, 4f);
-            yield return new WaitForSeconds(waitTime);
-            Vector2 randomInsideUnitCircle = Random.insideUnitCircle;
-            randomInsideUnitCircle *= GameManager.Instance.player.movementBox.radius;
-            randomInsideUnitCircle += new Vector2(GameManager.Instance.player.movementBox.gameObject.transform.position.x, GameManager.Instance.player.movementBox.gameObject.transform.position.y);
+            for (int i = 0; i < 6; i++)
+            {
+                float waitTime2 = Random.Range(0.5f, 0.6f);
+                yield return new WaitForSeconds(waitTime2);
+                Vector2 randomInsideUnitCircle = Random.insideUnitCircle;
+                randomInsideUnitCircle *= GameManager.Instance.player.movementBox.radius;
+                randomInsideUnitCircle += new Vector2(GameManager.Instance.player.movementBox.gameObject.transform.position.x, GameManager.Instance.player.movementBox.gameObject.transform.position.y);
 
-            GameObject spot = Instantiate(damageSpotPrefab, new Vector3(randomInsideUnitCircle.x, randomInsideUnitCircle.y, GameManager.Instance.player.gameObject.transform.position.z+1), Quaternion.identity);
-            spot.transform.parent = gameObject.transform;
-            yield return null;
+                
+                SoundManager.Instance.Play("tan2", 0.2f, 0.75f, 0.1f);
+
+                GameObject spot = Instantiate(damageSpotPrefab, new Vector3(randomInsideUnitCircle.x, randomInsideUnitCircle.y, GameManager.Instance.player.gameObject.transform.position.z+1), Quaternion.identity, GameManager.Instance.patternContainer);
+                spot.transform.parent = gameObject.transform;
+                yield return null;
+            }
+            float waitTime = Random.Range(2.6f, 2.8f);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 
     private IEnumerator SpawnHeart()
     {
         float elapsed = 0;
-        while (elapsed < 10f)
+        while (elapsed < 8f)
         {
             elapsed += Time.deltaTime;
             yield return null;

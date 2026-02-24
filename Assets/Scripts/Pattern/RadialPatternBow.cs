@@ -13,13 +13,13 @@ public class RadialPatternBow : MonoBehaviour
     {
         arrowBullet = new Bullet(
             "bullet_bigarrow",
-            Color.yellow,
+            new Color(1f, 0.9f, 0.31f),
             0.1f,
             "none"
         );
         homingBullet = new Bullet(
             "bullet_sword",
-            Color.yellow,
+            new Color(1f, 0.99f, 0.65f),
             0.12f,
             "none"
         );
@@ -51,12 +51,12 @@ public class RadialPatternBow : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                DoRadialAttack(new Vector3(-2f, 2.5f, 1f));
+                DoRadialAttack(new Vector3(-2f, 3.2f, 1f));
                 yield return new WaitForSeconds(1f);
             }
             for (int i = 0; i < 2; i++)
             {
-                DoRadialAttack(new Vector3(2f, 2.5f, 1f));
+                DoRadialAttack(new Vector3(2f, 3.2f, 1f));
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -74,7 +74,7 @@ public class RadialPatternBow : MonoBehaviour
 
     private IEnumerator HomingCoroutine()
     {
-        Vector3 startPos = new Vector3(0f, 2.5f, 1f);
+        Vector3 startPos = new Vector3(0f, 3.2f, 1f);
         int nums = 0;
         while (true)
         {

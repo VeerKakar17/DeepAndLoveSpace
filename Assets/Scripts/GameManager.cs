@@ -12,16 +12,20 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 
+    public GameObject deathEffectPrefab;
     public GameObject StartingScene;
     public GameObject IntroScene;
 
     public GameObject EndingScene;
+    public TextMeshProUGUI EndingSceneDeathCounter;
 
     public static GameManager Instance;
 
     public Transform patternContainer;
 
     public HeartPieceManager heartPieceManager;
+
+    public int heartPiecesRequired = 8;
 
     [Header("Time Settings")]
     public float slowMoScale = 0.3f;
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
     [Header("Health Settings")]
     public const int MAX_LIVES = 3;
     public int lives = MAX_LIVES;
+    public int deaths = 0;
 
     [Header("Dialogue Settings")]
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -118,8 +123,12 @@ public class GameManager : MonoBehaviour
     public IEnumerator LoadLevelConquest()
     {
         
-        yield return UnLoadLevel();
+        yield return FadeToBlack(1f);
         
+        IntroScene.SetActive(false);
+        StartingScene.SetActive(false);
+        
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
 
         events.Clear();
 
@@ -131,9 +140,9 @@ public class GameManager : MonoBehaviour
         currStagePatterns.Add(patternObj2);
 
         
-        events.Add(new DialogueEvent("CONQUEST: NEIGH. I will hear this peasant�s pleas first. Speak, human.", true));
+        events.Add(new DialogueEvent("CONQUEST: NEIGH. I will hear this peasant’s pleas first. Speak, human.", true));
         events.Add(new DialogueEvent("My king, you wish to destroy humanity because you have not yet seen the joys of love that our species has to offer. Despite our mortality, the beauties of humanity are beyond your perception.", false));
-        events.Add(new DialogueEvent("CONQUEST: You dare imply that I am ignorant? You� wretched thing?", true));
+        events.Add(new DialogueEvent("CONQUEST: You dare imply that I am ignorant? You... wretched thing?", true));
         events.Add(new DialogueEvent("Fear not, my king. I will show you what love is.", false));
 
         events.Add(new PatternEvent(patternObj));
@@ -147,7 +156,7 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
-        yield return FadeToBlack(1f);
+        yield return new WaitForSeconds(0.25f);
         yield return FadeFromBlack(1f);
 
     }
@@ -156,7 +165,13 @@ public class GameManager : MonoBehaviour
     public IEnumerator LoadLevelWar()
     {
         yield return FadeToBlack(1f);
+        
+        IntroScene.SetActive(false);
+        StartingScene.SetActive(false);
+
         yield return UnLoadLevel();
+        
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
 
         events.Clear();
 
@@ -185,6 +200,7 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return new WaitForSeconds(0.25f);
         yield return FadeFromBlack(1f);
 
     }
@@ -193,15 +209,21 @@ public class GameManager : MonoBehaviour
     public IEnumerator LoadLevelFamine()
     {
         yield return FadeToBlack(1f);
+        
+        IntroScene.SetActive(false);
+        StartingScene.SetActive(false);
+        
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
+
         yield return UnLoadLevel();
 
         events.Clear();
 
         currStagePatterns = new List<GameObject>();
 
-        events.Add(new DialogueEvent("Famine: Hi little human! Sorry about my brothers, they can be so overbearing at times.", true));
+        events.Add(new DialogueEvent("FAMINE: Hi little human! Sorry about my brothers, they can be so overbearing at times.", true));
         events.Add(new DialogueEvent("Will you consider sparing humanity?", false));
-        events.Add(new DialogueEvent("Famine: Hmmm… I don’t want to! But you are so cute… I just really want to… gobble you up!", true));
+        events.Add(new DialogueEvent("FAMINE: Hmmm... I don’t want to! But you are so cute... I just really want to... gobble you up!", true));
 
         yield return SceneManager.LoadSceneAsync("Main Scene Famine", LoadSceneMode.Additive);
 
@@ -219,6 +241,7 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return new WaitForSeconds(0.25f);
         yield return FadeFromBlack(1f);
 
     }
@@ -226,15 +249,21 @@ public class GameManager : MonoBehaviour
     public IEnumerator LoadLevelDeath()
     {
         yield return FadeToBlack(1f);
+        
+        IntroScene.SetActive(false);
+        StartingScene.SetActive(false);
+        
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
+
         yield return UnLoadLevel();
 
         events.Clear();
 
         currStagePatterns = new List<GameObject>();
 
-        events.Add(new DialogueEvent("Death: I see you have managed to convince my brothers to spare you somehow. Beware, for I am not as easily convinced! Death will end all suffering.", true));
+        events.Add(new DialogueEvent("DEATH: I see you have managed to convince my brothers to spare you somehow. Beware, for I am not as easily convinced! Death will end all suffering.", true));
         events.Add(new DialogueEvent("Me: Yes, life brings about much suffering, but it also brings about much joy. I will survive you and show you what true love is!", false));
-        events.Add(new DialogueEvent("Death: Let us see if you can escape from my clutches. Entertain me!", true));
+        events.Add(new DialogueEvent("DEATH: Let us see if you can escape from my clutches. Entertain me!", true));
 
         yield return SceneManager.LoadSceneAsync("Main Scene Death", LoadSceneMode.Additive);
 
@@ -251,12 +280,14 @@ public class GameManager : MonoBehaviour
 
         StartNextEvent();
         Debug.Log("Started first event.");
+        yield return new WaitForSeconds(0.25f);
         yield return FadeFromBlack(1f);
     }
 
 
     public static void SetParentKeepScale(Transform child, Transform newParent)
     {
+
         Vector3 worldScale = child.lossyScale;
 
         child.SetParent(newParent, false); 
@@ -289,28 +320,44 @@ public class GameManager : MonoBehaviour
                 yield return SceneManager.UnloadSceneAsync(s);
         }
     }
-
-    public void Start()
+    
+    public IEnumerator OnLoadIntroCoroutine()
     {
-        FadeToBlack(1f);
-        StartingScene.SetActive(true);
-
+        yield return FadeToBlack(1f);
         events.Clear();
-        events.Add(new WaitForZEvent());
+        
+        StartingScene.SetActive(false);
+        IntroScene.SetActive(true);
 
         events.Add(new DialogueEvent("We are the four horsemen of the apocalypse and we come to destroy this world. We will give humanity one last chance to prove they are worthy of redemption.", true));
         events.Add(new DialogueEvent("I hold deep love for humanity. I will risk my life to convince them to spare us.", false));
 
         events.Add(new NextLevelEvent());
         StartNextEvent();
-        FadeFromBlack(1f);
+        yield return new WaitForSeconds(0.25f);
+        yield return FadeFromBlack(1f);
+
+        yield return null;
+    }
+    
+    public void OnLoadIntro()
+    {
+        Debug.Log("Loading intro scene.");
+        StartCoroutine(OnLoadIntroCoroutine());
+    }
+
+    public void Start()
+    {
+        StartingScene.SetActive(true);
+
+        events.Clear();
+        events.Add(new WaitForZEvent());
+        StartNextEvent();
+
     }
 
     public void LoadLevelFromNumber(int i)
     {
-
-        IntroScene.SetActive(false);
-        StartingScene.SetActive(false);
 
         if (i == 0)
         {
@@ -331,12 +378,44 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No more levels to load. Ending game.");
-            StartingScene.SetActive(false);
-            EndingScene.SetActive(true);
+            StartCoroutine(LoadEnd());
         }
     }
 
+    public IEnumerator LoadEnd()
+    {
+        yield return FadeToBlack(1f);
+        yield return UnLoadLevel();
+
+        events.Clear();
+
+        Debug.Log("No more levels to load. Ending game.");
+        StartingScene.SetActive(false);
+        EndingScene.SetActive(true);
+
+        EndingSceneDeathCounter.text = "After dying " + deaths + " times...";
+
+        player.gameObject.SetActive(false);
+        player.movementBox.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.25f);
+        yield return FadeFromBlack(1f);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+            SoundManager.Instance.Play("horse", 1.0f, 1.0f, 0.2f, true);
+            float random_wait_time = Random.Range(13f, 40f);
+            yield return new WaitForSeconds(random_wait_time);
+        }
+
+    }
+
+    public void DestroyGameObject(GameObject go)
+    {
+        Destroy(go);
+    }
+    
     public void OnCompleteHeart()
     {
         BulletSpawner.Instance.ResetBullets();
@@ -433,6 +512,7 @@ public class GameManager : MonoBehaviour
 
     public void LoseLife()
     {
+        deaths++;
         lives--;
         Debug.Log("Lives: " + lives + " left.");
 
@@ -444,7 +524,9 @@ public class GameManager : MonoBehaviour
         if (lives < 0)
         {
             Debug.Log("Player lost");
-            BulletSpawner.Instance.ResetBullets();
+            //BulletSpawner.Instance.ResetBullets();
+
+            // todo: clear bullet inside of clock
         }
     }
 
@@ -561,7 +643,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "Conquest: Very well human, I suppose I will grant you my clemency. I have been elucidated to this curious prospect of affection. As a reward I shall grant you a title, castle, servants, and plenty of gold. ",
+            "CONQUEST: Very well human, I suppose I will grant you my clemency. I have been elucidated to this curious prospect of affection. As a reward I shall grant you a title, castle, servants, and plenty of gold. ",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -569,7 +651,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "Conquest: Then this noble one shall accept. ",
+            "CONQUEST: Then this noble one shall accept. ",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -581,7 +663,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "Conquest: You have taught me the pleasures of depraved longing. I shall take away all your possessions so that you have no other choice but to depend on me. You belong to me now.",
+            "CONQUEST: You have taught me the pleasures of depraved longing. I shall take away all your possessions so that you have no other choice but to depend on me. You belong to me now.",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -589,7 +671,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "Conquest: Shhh my little peasant. You must call me Master from henceforth. ",
+            "CONQUEST: Shhh my little peasant. You must call me Master from henceforth. ",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -602,7 +684,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "War: I-its not like I like you or anything baka! Here’s a whole treasury of precious weapons. D-don’t get the wrong idea, I just found them lying around and wanted to get rid of them.",
+            "WAR: I-its not like I like you or anything baka! Here’s a whole treasury of precious weapons. D-don’t get the wrong idea, I just found them lying around and wanted to get rid of them.",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -610,7 +692,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "War: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
+            "WAR: WHAT! F-fine BAKA I guess I will accept because you begged me for it. *blushes*",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -622,7 +704,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "War: B-BAKA *hits you and you break a rib*. You’re such a charmer KYAAA *breaks your arm*",
+            "WAR: B-BAKA *hits you and you break a rib*. You’re such a charmer KYAAA *breaks your arm*",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -630,7 +712,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "War: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face so hard your eye swells up so you can’t see out of it*",
+            "WAR: W-what are you saying? It’s not like I think you’re so big and strong and would be able to handle me or anything! BAKA *slaps your face so hard your eye swells up so you can’t see out of it*",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -642,7 +724,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "Famine: I like you a lot… I see now that love is more than consumption. I shall grant you all the food you will ever need, so that you never hunger for more.",
+            "FAMINE: I like you a lot... I see now that love is more than consumption. I shall grant you all the food you will ever need, so that you never hunger for more.",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -650,7 +732,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "Famine: Then I will stay by your side and quench your thirst.",
+            "FAMINE: Then I will stay by your side and quench your thirst.",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -662,7 +744,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "Famine: I like you a lot, little human! I want you to be a part of me… forever! *takes a bite out of your arm*",
+            "FAMINE: I like you a lot, little human! I want you to be a part of me... forever! *takes a bite out of your arm*",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -670,7 +752,7 @@ public class GameManager : MonoBehaviour
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "Famine: *licks his lips* Don’t worry, I’ll make sure to savor you slowly. You can go talk to my last brother, but don’t keep me waiting for long!",
+            "FAMINE: *licks his lips* Don’t worry, I’ll make sure to savor you slowly. You can go talk to my last brother, but don’t keep me waiting for long!",
             true
         ));
         events.Add(new NextLevelEvent());
@@ -682,7 +764,7 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "Death: I am touched by the love you have for humanity. I shall grant you the gift of immortality and youth, so that you never age nor die.",
+            "DEATH: I am touched by the love you have for humanity. I shall grant you the gift of immortality and youth, so that you never age nor die.",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
@@ -690,7 +772,7 @@ public class GameManager : MonoBehaviour
             false
         )); 
         events.Add(new PostBattleDialogueEvent(
-            "Death: Very well, then I will stay on earth to live with you as you grow old, and lay you to rest when your final day comes.",
+            "DEATH: Very well, then I will stay on earth to live with you as you grow old, and lay you to rest when your final day comes.",
             true
         )); 
         events.Add(new NextLevelEvent());
@@ -702,15 +784,15 @@ public class GameManager : MonoBehaviour
     {
         events.Clear();
         events.Add(new PostBattleDialogueEvent(
-            "Death: I want you to stay with me forever. I will kill every other human on earth, everyone you have ever loved, so that you will have no choice but to love me! You will never escape me <3",
+            "DEATH: I want you to stay with me forever. I will kill every other human on earth, everyone you have ever loved, so that you will have no choice but to love me! You will never escape me <3",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
-            "No… please no!",
+            "No... please no!",
             false
         ));
         events.Add(new PostBattleDialogueEvent(
-            "Death: You can only think of me. I will kill my brothers if you even spare them a glance. You will be mine for all eternity!",
+            "DEATH: You can only think of me. I will kill my brothers if you even spare them a glance. You will be mine for all eternity!",
             true
         ));
         events.Add(new PostBattleDialogueEvent(
