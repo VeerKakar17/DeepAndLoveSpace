@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
         IntroScene.SetActive(false);
         StartingScene.SetActive(false);
         
-        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), 5.0f);
 
         events.Clear();
 
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
 
         yield return UnLoadLevel();
         
-        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), 5.0f);
 
         events.Clear();
 
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
         IntroScene.SetActive(false);
         StartingScene.SetActive(false);
         
-        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), 5.0f);
 
         yield return UnLoadLevel();
 
@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour
         IntroScene.SetActive(false);
         StartingScene.SetActive(false);
         
-        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), GameManager.Instance.player.movementBox.radius * 2f);
+        player.movementBox.SetTransformImmediate(new Vector3(0f, -1.89f, 0f), 5.0f);
 
         yield return UnLoadLevel();
 
@@ -397,6 +397,7 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(false);
         player.movementBox.gameObject.SetActive(false);
+        heartPieceManager.heartSnapTargetGroupTransform.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(0.25f);
         yield return FadeFromBlack(1f);

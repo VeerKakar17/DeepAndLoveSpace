@@ -36,6 +36,14 @@ public class WarFireLine : MonoBehaviour
         );
         lineWaitTime = 4.5f;
         Debug.Log("Started");
+
+        StartCoroutine(BoxMoveCoroutine());
+        
+    }
+
+    private IEnumerator BoxMoveCoroutine()
+    {
+        yield return GameManager.Instance.player.movementBox.setScale(5.5f, 0.5f);
     }
 
     // Update is called once per frame

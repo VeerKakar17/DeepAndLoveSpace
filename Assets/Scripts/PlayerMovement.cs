@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     const float FOCUS_SPEED = MOVE_SPEED / 3;
 
     private bool invincible = false;
-    private const float INVINCIBLE_COOLDOWN_TIME = 2f;
+    private const float INVINCIBLE_COOLDOWN_TIME = 1f;
     private float invincibleTime = 0.5f;
     private float timer = INVINCIBLE_COOLDOWN_TIME;
     private const float INVINCIBLE_FADED_ALPHA = 0.4f;
@@ -55,6 +55,16 @@ public class PlayerMovement : MonoBehaviour
             Vector2 norm = Vector2.Normalize(dist);
             gameObject.transform.position = movementBox.gameObject.transform.position + (movementBox.radius * new Vector3(norm.x, norm.y, 0f)) + new Vector3(0f, 0f, playerZ - movementBox.gameObject.transform.position.z);
         }
+
+        if (invincible)
+        {
+            timer += Time.deltaTime;
+            if (timer >= INVINCIBLE_COOLDOWN_TIME)
+            {
+                invincible = false;
+                timer = 0;
+            }
+        }           
     }
 
     void clearAllBulletInBox()
@@ -69,6 +79,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    
+    private Coroutine deathCoroutine;
+    
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -84,7 +97,9 @@ public class PlayerMovement : MonoBehaviour
 
             clearAllBulletInBox();
 
-            StartCoroutine(DeathRoutine());
+            if (deathCoroutine != null) StopCoroutine(deathCoroutine);
+            deathCoroutine = StartCoroutine(DeathRoutine());
+
         } else if (other.CompareTag("DamageZone"))
         {
             if (invincible) return;
@@ -95,7 +110,8 @@ public class PlayerMovement : MonoBehaviour
             
             clearAllBulletInBox();
 
-            StartCoroutine(DeathRoutine());
+            if (deathCoroutine != null) StopCoroutine(deathCoroutine);
+            deathCoroutine = StartCoroutine(DeathRoutine());
         }
     }
 

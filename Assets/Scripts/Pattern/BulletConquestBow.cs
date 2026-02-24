@@ -129,8 +129,7 @@ public class BulletConquestBow : MonoBehaviour
                     float angle = Mathf.Atan2(transform.up.y, transform.up.x) * Mathf.Rad2Deg;
 
                     // position is center of self transform
-                    Vector3 position = transform.position;
-
+                    Vector3 position = new Vector3(transform.position.x, transform.position.y, -8.5f);
 
                     Instantiate(bigArrowPrefab, position, Quaternion.Euler(0, 0, angle - 90), GameManager.Instance.patternContainer);
 

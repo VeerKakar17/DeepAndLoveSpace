@@ -89,6 +89,8 @@ public class BulletMovement : MonoBehaviour
     
     void UpdateSpecialFamineASpawner()
     {
+
+        if (isClearing) return;
         
         if (IsInScreen())
         {
