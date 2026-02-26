@@ -36,7 +36,7 @@ public class SoundManager : MonoBehaviour
                 soundDict.Add(s.id, s.clip);
         }
 
-        Play("bgm", 0.2f, 1.0f, 0.0f, true);
+        Play("bgm", 0.32f, 1.0f, 0.0f, true);
     }
 
     public void Play(string id, float volume = 1f, float pitch = 1f, float pitchVariance = 0.2f, bool ignoreCooldown = false)

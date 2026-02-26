@@ -3,6 +3,7 @@ using System.Collections;
 
 public class FamineAttack1 : MonoBehaviour
 {
+    private Coroutine boxCoroutine = null;
     private Coroutine radialCoroutine = null;
 
     public RectTransform spawnRect;
@@ -19,6 +20,13 @@ public class FamineAttack1 : MonoBehaviour
         );
 
         radialCoroutine = StartCoroutine(RadialCoroutine());
+        
+        StartCoroutine(ResetBoxRoutine());
+    }
+    
+    private IEnumerator ResetBoxRoutine()
+    {
+        yield return GameManager.Instance.player.movementBox.setPosition(0f, -1.89f, 1.0f);
     }
 
     private IEnumerator RadialCoroutine()

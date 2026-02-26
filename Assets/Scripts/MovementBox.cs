@@ -116,6 +116,23 @@ public class MovementBox : MonoBehaviour
         }
         gameObject.transform.position = end;
     }
+    public IEnumerator setPosition(float x, float y, float seconds)
+    {
+        Vector3 start = gameObject.transform.position;
+        Vector3 end = new Vector3(x, y, 0f);
+        float elapsedTime = 0;
+
+        while (elapsedTime < seconds)
+        {
+            float t = elapsedTime / seconds;
+
+            gameObject.transform.position = Vector3.Lerp(start, end, t);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        gameObject.transform.position = end;
+    }
 
     public IEnumerator updateXPos(float x, float seconds)
     {
